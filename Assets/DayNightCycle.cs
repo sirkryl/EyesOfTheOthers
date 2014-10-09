@@ -28,6 +28,8 @@ public class DayNightCycle : MonoBehaviour {
 	public int speed = 30;
 	public float sunCycle = 0;
 	public Light sun;
+	public Light moon;
+	private bool moonOut = false;
 	private float helperValue;
 	public Material darkSkyBoxMaterial;
 	public Material brightSkyBoxMaterial;
@@ -62,9 +64,12 @@ public class DayNightCycle : MonoBehaviour {
 			sunCycle = (1-cycleValue);
 
 		sun.intensity = (sunCycle - 0.2f) * 1.7f;
+		if (moonOut)
+			moon.intensity = (1-sunCycle*2)*0.1f;
 
 		if(helperValue < 4) //timeOfDay >= 20 && timeOfDay < 4) //helperValue < 4)
 		{
+			moonOut = true;
 			//Debug.Log ("Night");
 			RenderSettings.skybox = darkSkyBoxMaterial;
 			RenderSettings.skybox.SetFloat("_Blend", 0);
@@ -74,6 +79,7 @@ public class DayNightCycle : MonoBehaviour {
 		}
 		else if (helperValue > 4 && helperValue < 6)//(timeOfDay >= 18 && timeOfDay < 20) || (timeOfDay >= 4 && timeOfDay < 6)) 
 		{
+			moonOut = true;
 			//Debug.Log ("Dusk");
 			RenderSettings.skybox = darkSkyBoxMaterial;
 			RenderSettings.skybox.SetFloat("_Blend", 0);
@@ -84,6 +90,7 @@ public class DayNightCycle : MonoBehaviour {
 		}
 		else if (helperValue > 6 && helperValue < 8) //timeOfDay >= 4 && timeOfDay < 8)
 		{
+			moonOut = true;
 			//Debug.Log ("Morning");
 			RenderSettings.skybox = brightSkyBoxMaterial;
 			RenderSettings.skybox.SetFloat("_Blend", 0);
@@ -94,6 +101,7 @@ public class DayNightCycle : MonoBehaviour {
 		}
 		else if (helperValue > 8 && helperValue < 10)//timeOfDay >= 8 && timeOfDay < 16)
 		{
+			moonOut = false;
 			//Debug.Log ("Noon");
 			RenderSettings.ambientLight = noonAmbientLight;
 			RenderSettings.skybox = brightSkyBoxMaterial;
