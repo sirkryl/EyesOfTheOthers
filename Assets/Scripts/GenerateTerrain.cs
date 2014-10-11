@@ -4,10 +4,10 @@ using System.Collections;
 public class GenerateTerrain : MonoBehaviour {
 
 	
-	private GameObject[] tiles;
+	private Transform[] tiles;
 	private Vector3[] positions;
 	private int random;
-	public GameObject tile;
+	public Transform block1Fab;
 
 	
 	// Use this for initialization
@@ -21,10 +21,10 @@ public class GenerateTerrain : MonoBehaviour {
 		positions [5] = new Vector3 (600, 1, 300);
 		positions [6] = new Vector3 (600, 1, 0);
 		positions [7] = new Vector3 (300, 1, 0);
-		tiles = new GameObject[8];
+		tiles = new Transform[8];
 		for (int i=0; i<8; i++){
 			//tiles[i] = (GameObject) GameObject.Instantiate(Resources.Load("block1"));
-			tiles[i] = (GameObject) GameObject.Instantiate(tile);
+			tiles[i] = Instantiate(block1Fab) as Transform;
 			/*switch (i) {
 			case 0: cube.renderer.material.color = Color.red; break;
 			case 1: cube.renderer.material.color = Color.blue; break;
@@ -35,18 +35,18 @@ public class GenerateTerrain : MonoBehaviour {
 			case 6: cube.renderer.material.color = Color.cyan; break;
 			case 7: cube.renderer.material.color = Color.magenta; break;
 			}*/
-			/*random = Random.Range(0,4);
+			/*tiles[i].localRotation = Quaternion.identity;
+			random = Random.Range(0,4);
 			switch (random){
 			case 0: break;
-			case 1: tiles[i].transform.Rotate(new Vector3(0,90,0)); break;
-			case 2: tiles[i].transform.Rotate(new Vector3(0,180,0)); break;
-			case 3: tiles[i].transform.Rotate(new Vector3(0,270,0)); break;
+			case 1: tiles[i].Rotate(new Vector3(0,90,0)); break;
+			case 2: tiles[i].Rotate(new Vector3(0,180,0)); break;
+			case 3: tiles[i].Rotate(new Vector3(0,270,0)); break;
 			}*/
 		}
-		Destroy (tile);
 		Vector3[] positions_random = shuffle(positions);
 		for (int i=0; i<8; i++) {
-			tiles[i].transform.position = positions_random[i];
+			tiles[i].position = positions_random[i];
 		}
 	}
 	
