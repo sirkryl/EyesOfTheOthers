@@ -3,7 +3,7 @@
 		_Color ("Main Color", Color) = (1,1,1,1)
 		_RimColor ("Rim Color", Color) = (0.97,0.88,1,0.75)
 		_RimPower ("Rim Power", Float) = 2.5
-		_MainTex ("Diffuse (RGB) Alpha (A)", 2D) = "white" {}
+		_MainTex ("Diffuse (RGB) Alpha (A)", 2D) = "orange" {}
 		_BumpMap ("Normal (Normal)", 2D) = "bump" {}
 		_SpecularTex ("Specular Level (R) Gloss (G) Rim Mask (B)", 2D) = "gray" {}
 		_RampTex ("Toon Ramp (RGB)", 2D) = "white" {}
