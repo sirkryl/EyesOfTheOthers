@@ -18334,7 +18334,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pressButton: 101
+  name: mechanic
   dialogDistance: 2
+  npcName: {fileID: 0}
+  npcText: {fileID: 0}
+  playerText: {fileID: 0}
+  playerName: {fileID: 0}
+  dialogOptions: {fileID: 0}
+  dialogElementPrefab: {fileID: 0}
+  dialogList: {fileID: 0}
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 1
