@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-
+//using System.Collections.Generic;
 public class Inventory : MonoBehaviour {
 
 	//will likely change to something like an ItemData[]
@@ -11,7 +11,7 @@ public class Inventory : MonoBehaviour {
 	private float timer = 3;
 	private ArrayList items;
 	public GameObject itemList;
-	public Transform itemLabelFab;
+	public Image itemLabelFab;
 	public GameObject infoPanel;
 	public Text itemName; 
 	public Image itemImage;
@@ -51,26 +51,17 @@ public class Inventory : MonoBehaviour {
 		newItemName = item.name;
 		items.Add (item);
 		justPickedUp = true;
-		/* buggy
-		Transform itemLabel = Instantiate (itemLabelFab) as Transform;
-		itemLabel.parent = itemList.transform;*/
 
-		//temporary measure
-		if (items.Count <= 4)
-		{
-			string labelName = "Item" + items.Count + "Label";
-			GameObject label = GameObject.Find (labelName);
-			label.GetComponent<Text>().enabled = true;
-			label.GetComponent<Button>().enabled = true;
-			label.GetComponent<Text>().text = item.name;
-			label.GetComponent<Item>().name = item.name;
-			label.GetComponent<Item>().type = item.type;
-			label.GetComponent<Item>().description = item.description;
-			label.GetComponent<Item>().icon = item.icon;
-		}
-		//label.GComponent<Item>() = item;
-		//itemLabel.text = item.name;
-		//addItem
+		Image itemListElement = Instantiate (itemLabelFab, new Vector3(0,-10-((items.Count-1)*18),0), Quaternion.identity) as Image;
+		itemListElement.transform.SetParent (itemList.transform, false);
+		itemListElement.GetComponentInChildren<Text>().enabled = true;
+		itemListElement.GetComponentInChildren<Text>().text = item.name + " (1)";
+
+		itemListElement.GetComponent<Button>().onClick.AddListener(() => { GUIShowItemInfo(itemListElement.GetComponent<Item>()); });
+		itemListElement.GetComponent<Item>().name = item.name;
+		itemListElement.GetComponent<Item>().type = item.type;
+		itemListElement.GetComponent<Item>().description = item.description;
+		itemListElement.GetComponent<Item>().icon = item.icon;
 	}
 
 	public void RemoveItem()

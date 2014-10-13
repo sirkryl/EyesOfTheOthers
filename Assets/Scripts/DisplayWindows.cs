@@ -5,6 +5,7 @@ public class DisplayWindows : MonoBehaviour {
 
 	public Canvas inventoryCanvas;
 	public Canvas debugCanvas;
+	public Canvas characterCanvas;
 	public GameObject infoPanel;
 	public GameObject player;
 	public GameObject camera;
@@ -38,6 +39,7 @@ public class DisplayWindows : MonoBehaviour {
 		}
 		else if (Input.GetKeyUp("i"))
 		{
+			DeactivateOtherWindows("i");
 			inventoryCanvas.GetComponent<Canvas>().enabled = !inventoryCanvas.GetComponent<Canvas>().enabled;
 			inventoryCanvas.GetComponent<GraphicRaycaster>().enabled = !inventoryCanvas.GetComponent<GraphicRaycaster>().enabled;
 			if(inventoryCanvas.enabled)
@@ -50,6 +52,36 @@ public class DisplayWindows : MonoBehaviour {
 				playerMouseLook.enabled = true;
 				cameraMouseLook.enabled = true;
 			}
+		}
+		else if (Input.GetKeyUp("c"))
+		{
+			DeactivateOtherWindows("c");
+			characterCanvas.GetComponent<Canvas>().enabled = !characterCanvas.GetComponent<Canvas>().enabled;
+			characterCanvas.GetComponent<GraphicRaycaster>().enabled = !characterCanvas.GetComponent<GraphicRaycaster>().enabled;
+			if(characterCanvas.enabled)
+			{
+				playerMouseLook.enabled = false;
+				cameraMouseLook.enabled = false;
+			}
+			else
+			{
+				playerMouseLook.enabled = true;
+				cameraMouseLook.enabled = true;
+			}
+		}
+	}
+
+	void DeactivateOtherWindows(string hotkey)
+	{
+		if (hotkey != "c")
+		{
+			characterCanvas.GetComponent<Canvas>().enabled = false;
+			characterCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+		}
+		if (hotkey != "i")
+		{
+			inventoryCanvas.GetComponent<Canvas>().enabled = false;
+			inventoryCanvas.GetComponent<GraphicRaycaster>().enabled = false;
 		}
 	}
 }

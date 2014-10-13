@@ -35,7 +35,7 @@ public class SpeedChanges : MonoBehaviour
 			speed = runSpeed;           
 		}
 		
-		if (Input.GetKey("c"))
+		if (Input.GetKey("left ctrl"))
 		{ // press C to crouch
 			vScale = 0.5f;
 			speed = crchSpeed; // slow down when crouching
