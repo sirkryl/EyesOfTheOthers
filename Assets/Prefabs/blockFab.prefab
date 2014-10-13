@@ -5534,7 +5534,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &100662
 GameObject:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
@@ -5542,23 +5542,9 @@ GameObject:
   - 4: {fileID: 400662}
   - 137: {fileID: 13700000}
   - 65: {fileID: 6500002}
+  - 114: {fileID: 11400028}
   m_Layer: 0
   m_Name: Bip001 Pelvis
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &100664
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 400664}
-  m_Layer: 0
-  m_Name: Bip001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9387,7 +9373,7 @@ Transform:
   - {fileID: 400526}
   - {fileID: 400400}
   - {fileID: 400666}
-  - {fileID: 400664}
+  - {fileID: 400662}
   - {fileID: 400688}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -10317,24 +10303,11 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100662}
-  m_LocalRotation: {x: -.499999642, y: .500000358, z: .499999642, w: .500000358}
-  m_LocalPosition: {x: .000100830002, y: .0716200024, z: -.000278660009}
-  m_LocalScale: {x: 1.25523055, y: 1.25523031, z: 1.25523031}
+  m_LocalRotation: {x: -.491582572, y: .491582692, z: -.508278072, w: .508278072}
+  m_LocalPosition: {x: 78.9006958, y: 51.2296715, z: 252.717117}
+  m_LocalScale: {x: 125.523056, y: 125.523026, z: 125.523026}
   m_Children:
   - {fileID: 400660}
-  m_Father: {fileID: 400664}
-  m_RootOrder: 0
---- !u!4 &400664
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100664}
-  m_LocalRotation: {x: -.49158299, y: -.508277655, z: -.508277774, w: .49158299}
-  m_LocalPosition: {x: 71.7430267, y: 51.2575378, z: 252.467941}
-  m_LocalScale: {x: 100, y: 100, z: 100}
-  m_Children:
-  - {fileID: 400662}
   m_Father: {fileID: 400520}
   m_RootOrder: 7
 --- !u!4 &400666
@@ -18349,6 +18322,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pressButton: 101
   pickUpDistance: 2
+--- !u!114 &11400028
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f8cd356695eb074e8126ca84bc47590, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressButton: 101
+  dialogDistance: 2
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -10,9 +10,10 @@ public class Inventory : MonoBehaviour {
 	private string newItemName;
 	private float timer = 3;
 	private ArrayList items;
-	public GameObject itemList;
+	public Image itemList;
 	public Image itemLabelFab;
 	public GameObject infoPanel;
+	public GameObject imagePanel;
 	public Text itemName; 
 	public Image itemImage;
 	public Text itemType;
@@ -62,6 +63,7 @@ public class Inventory : MonoBehaviour {
 		itemListElement.GetComponent<Item>().type = item.type;
 		itemListElement.GetComponent<Item>().description = item.description;
 		itemListElement.GetComponent<Item>().icon = item.icon;
+		Debug.Log ("itemList height: "+itemList.rectTransform.sizeDelta.x+" oder "+itemList.rectTransform.sizeDelta.y);
 	}
 
 	public void RemoveItem()
@@ -72,6 +74,7 @@ public class Inventory : MonoBehaviour {
 	public void GUIShowItemInfo(Item item)
 	{
 		infoPanel.GetComponent<Mask>().enabled = false;
+		imagePanel.GetComponent<Mask>().enabled = false;
 		itemName.text = item.name;
 		//itemImage.sprite = Sprite.
 		itemType.text = item.type;

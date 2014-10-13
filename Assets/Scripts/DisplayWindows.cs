@@ -7,15 +7,17 @@ public class DisplayWindows : MonoBehaviour {
 	public Canvas debugCanvas;
 	public Canvas characterCanvas;
 	public GameObject infoPanel;
+	public GameObject imagePanel;
 	public GameObject player;
 	public GameObject camera;
-
+	public Canvas dialogCanvas;
 	private MouseLook playerMouseLook;
 	private MouseLook cameraMouseLook;
 	
 	// Use this for initialization
 	void Start () {
 		infoPanel.GetComponent<Mask>().enabled = true;
+		imagePanel.GetComponent<Mask>().enabled = true;
 		playerMouseLook = player.GetComponent<MouseLook>();
 		cameraMouseLook = camera.GetComponent<MouseLook>();
 	}
@@ -39,6 +41,8 @@ public class DisplayWindows : MonoBehaviour {
 		}
 		else if (Input.GetKeyUp("i"))
 		{
+			infoPanel.GetComponent<Mask>().enabled = true;
+			imagePanel.GetComponent<Mask>().enabled = true;
 			DeactivateOtherWindows("i");
 			inventoryCanvas.GetComponent<Canvas>().enabled = !inventoryCanvas.GetComponent<Canvas>().enabled;
 			inventoryCanvas.GetComponent<GraphicRaycaster>().enabled = !inventoryCanvas.GetComponent<GraphicRaycaster>().enabled;
@@ -84,4 +88,21 @@ public class DisplayWindows : MonoBehaviour {
 			inventoryCanvas.GetComponent<GraphicRaycaster>().enabled = false;
 		}
 	}
+
+	public void ShowDialogWindow()
+	{
+		playerMouseLook.enabled = false;
+		cameraMouseLook.enabled = false;
+		dialogCanvas.GetComponent<Canvas>().enabled = true;
+		dialogCanvas.GetComponent<GraphicRaycaster>().enabled = true;
+	}
+
+	public void HideDialogWindow()
+	{
+		playerMouseLook.enabled = true;
+		cameraMouseLook.enabled = true;
+		dialogCanvas.GetComponent<Canvas>().enabled = false;
+		dialogCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+	}
+
 }
