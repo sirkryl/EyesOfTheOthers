@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 //using System.Collections.Generic;
 public class Inventory : MonoBehaviour {
 
@@ -14,6 +15,7 @@ public class Inventory : MonoBehaviour {
 	public Image itemLabelFab;
 	public GameObject infoPanel;
 	public GameObject imagePanel;
+	private Dictionary<string, Item> itemMap;
 	public Text itemName; 
 	public Image itemImage;
 	public Text itemType;
@@ -22,6 +24,7 @@ public class Inventory : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		items = new ArrayList();
+		itemMap = new Dictionary<string, Item>();
 	}
 	
 	// Update is called once per frame
@@ -46,11 +49,11 @@ public class Inventory : MonoBehaviour {
 		}
 	}
 
-
 	public void AddItem(Item item)
 	{
 		newItemName = item.name;
 		items.Add (item);
+		itemMap.Add (item.name, item);
 		justPickedUp = true;
 
 		Image itemListElement = Instantiate (itemLabelFab, new Vector3(0,-10-((items.Count-1)*18),0), Quaternion.identity) as Image;
@@ -69,6 +72,11 @@ public class Inventory : MonoBehaviour {
 	public void RemoveItem()
 	{
 		//remove item
+	}
+
+	public bool GotItem(string name)
+	{
+		return itemMap.ContainsKey (name);
 	}
 
 	public void GUIShowItemInfo(Item item)

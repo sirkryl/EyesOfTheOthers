@@ -20,6 +20,8 @@ public class DisplayWindows : MonoBehaviour {
 		imagePanel.GetComponent<Mask>().enabled = true;
 		playerMouseLook = player.GetComponent<MouseLook>();
 		cameraMouseLook = camera.GetComponent<MouseLook>();
+		MainComponentManager.CreateInstance ();
+		//GlobalState.gameState.StartState();
 	}
 	
 	// Update is called once per frame

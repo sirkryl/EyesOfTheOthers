@@ -3,9 +3,12 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
+
 public class Dialog : DialogIO {
 
 	private Dictionary<int, DialogElement> dialogMap;
+
+	private Dictionary<string, int> localVariables;
 	private List<GameObject> uiDialogElements;
 	private List<GameObject> uiChoiceElements;
 	private DialogElement activeDialogElement;
@@ -37,6 +40,7 @@ public class Dialog : DialogIO {
 	void Start () {
 		uiDialogElements = new List<GameObject>();
 		uiChoiceElements = new List<GameObject>();
+		localVariables = new Dictionary<string, int>();
 		mainCamera = Camera.main;
 		player = GameObject.FindWithTag ("Player") as GameObject;
 		dialogList = GameObject.Find ("DialogList") as GameObject;
@@ -99,7 +103,10 @@ public class Dialog : DialogIO {
 					{
 						dialogData = Load (name);
 						CreateDialogMap();
+						CreateLocalVariableMap();
 					}
+					Debug.Log ("spokenCount: "+localVariables["spokenCount"]);
+					Debug.Log ("ranAway: "+localVariables["ranAway"]);
 					activeDialogElement = dialogMap[dialogData.startsWith];
 					inDialog = true;
 					newDialogElement = true;
@@ -151,6 +158,92 @@ public class Dialog : DialogIO {
 						answerCnt++;
 					}
 				}
+				else if (activeDialogElement.type == "increaseValue")
+				{
+					//Debug.Log ("increaseValue");
+					if(activeDialogElement.vartype == "global")
+						VariableManager.SharedInstance.SetGlobalVariable (activeDialogElement.variable, 
+						                VariableManager.SharedInstance.GetGlobalVariable(activeDialogElement.variable)+1);
+					else 
+						localVariables[activeDialogElement.variable]++;
+					/*if (localVariables[activeDialogElement.variable].type == "int")
+					{
+						int value = int.Parse (localVariables[activeDialogElement.variable].value);
+						value++;
+						string strValue = value.ToString();
+						localVariables[activeDialogElement.variable].value = strValue;
+					}*/
+					if(activeDialogElement.leadsTo == 0)
+					{
+						EndDialog ();
+						return;
+					}
+					activeDialogElement = dialogMap[activeDialogElement.leadsTo];
+					newDialogElement = true;
+				}
+				else if (activeDialogElement.type == "switch")
+				{
+					foreach(DialogCase dialogCase in activeDialogElement.dialogCases)
+					{
+
+						bool pass = false;
+						int value = 0;
+						if(dialogCase.variable != null)
+						{
+							if (dialogCase.vartype == "global")
+								value = VariableManager.SharedInstance.GetGlobalVariable(dialogCase.variable);
+							else
+								value = localVariables[dialogCase.variable];
+							if(dialogCase.type == "equal")
+							{
+								if(value == dialogCase.value)
+									pass = true;
+							}
+							else if(dialogCase.type == "greaterThan")
+							{
+								if(value > dialogCase.value)
+									pass = true;
+							}
+							else if(dialogCase.type == "lessThan")
+							{
+								if(value < dialogCase.value)
+									pass = true;
+							}
+						}
+						if(dialogCase.type == "default")
+							pass = true;
+
+						if(dialogCase.item != null)
+						{
+							if (player.GetComponentInChildren<Inventory>().GotItem (dialogCase.item))
+							{
+								pass = true;
+							}
+						}
+						//Debug.Log ("pass: "+pass);
+						if (pass)
+						{
+							if (dialogCase.variable != null)
+							{
+									if(dialogCase.reset)
+									{
+										if (dialogCase.vartype == "global")
+											VariableManager.SharedInstance.SetGlobalVariable(dialogCase.variable,value+1);
+										else
+											localVariables[dialogCase.variable] = 0;
+									}
+							}
+							if(dialogCase.leadsTo == 0)
+							{
+								EndDialog ();
+								return;
+							}
+							activeDialogElement = dialogMap[dialogCase.leadsTo];
+							newDialogElement = true;
+							return;
+						}
+					}
+				}
 				newDialogElement = false;
 			}
 			else
@@ -177,7 +270,21 @@ public class Dialog : DialogIO {
 			dialogMap = new Dictionary<int, DialogElement>();
 			for (int i = 0; i < dialogData.dialogElement.Length; i++)
 			{
-				dialogMap.Add (dialogData.dialogElement[i].id, dialogData.dialogElement[i]);
+				if(dialogData.dialogElement[i].type != "variable")
+					dialogMap.Add (dialogData.dialogElement[i].id, dialogData.dialogElement[i]);
+			}
+		}
+	}
+
+	void CreateLocalVariableMap()
+	{
+		if(dialogData != null)
+		{
+			localVariables = new Dictionary<string, int>();
+			for (int i = 0; i < dialogData.dialogElement.Length; i++)
+			{
+				if(dialogData.dialogElement[i].type == "variable")
+					localVariables.Add (dialogData.dialogElement[i].name, dialogData.dialogElement[i].value);
 			}
 		}
 	}

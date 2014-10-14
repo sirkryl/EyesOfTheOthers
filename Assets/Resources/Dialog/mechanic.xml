@@ -1,6 +1,25 @@
-<dialog characterName="Mechanic" startsWith="1">
+<?xml version="1.0" encoding="UTF-8" ?>
+<dialog characterName="Mechanic" startsWith="1000">
+<element type="variable" name="spokenCount" value="0"/>
+<element type="variable" name="ranAway" value="0"/>
+<element id="1000" type="switch">
+<case item="Apple" type="greaterThan" value="0" leadsTo="52"/>
+<case variable="ranAway" type="greaterThan" value="0" reset="true" leadsTo="51"/> 
+<case variable="spokenCount" type="greaterThan" value="0" leadsTo="50"/> 
+<case variable="dead" vartype="global" type="greaterThan" value="0" leadsTo="1"/>
+<case type="default" leadsTo="1"/>
+</element>
 <element id="1" type="text" leadsTo="2">
 Hi mate. What's up? (ENTER to continue..for now)
+</element>
+<element id="50" type="text" leadsTo="2">
+You again! I hate this shitty job.. (ENTER to continue..for now)
+</element>
+<element id="51" type="text" leadsTo="2">
+Don't run away like that! (ENTER to continue..for now)
+</element>
+<element id="52" type="text" leadsTo="2">
+How was that apple? Did it taste good? (ENTER to continue..for now)
 </element>
 <element id="2" type="choice">
 What seems to be the problem here?
@@ -11,7 +30,7 @@ Nothing, officer.
 This is a ridiculous dialog!
 </answer>
 </element>
-<element id="3" type="text">
+<element id="3" type="text" leadsTo="7">
 Well then, move along.
 </element>
 <element id="4" type="choice">
@@ -22,14 +41,17 @@ Not good, not bad.
 <answer id="103" leadsTo="6">
 What do you want from me!? Get a life.
 </answer>
-<answer id="104">
+<answer id="104" leadsTo="8">
 Aaaaaaahhh.. (Leave)
 </answer>
 </element>
-<element id="5" type="text">
+<element id="5" type="text" leadsTo="7">
 Thanks for telling me! Now get the fuck off my lawn.
 </element>
-<element id="6" type="text">
+<element id="6" type="text" leadsTo="7">
 Oh..ok..I'll leave you to it then........
 </element>
+<element id="7" type="increaseValue" variable="spokenCount"/>
+<element id="8" type="increaseValue" variable="ranAway"/>
+<element id="9" type="increaseValue" variable="dead" vartype="global"/>
 </dialog>
