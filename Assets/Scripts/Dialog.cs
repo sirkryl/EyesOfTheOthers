@@ -115,7 +115,7 @@ public class Dialog : DialogIO {
 						CreateDialogMap();
 						CreateLocalVariableMap();
 					}
-					//Debug.Log ("timeOFday: "+StateManager.SharedInstance.GetTimeOfDay());
+					//Debug.Log ("timeOFday: "+StateManager.SharedInstance.GetGlobalVariable("timeOfDay"));
 					//Debug.Log ("spokenCount: "+localVariables["spokenCount"]);
 					//Debug.Log ("ranAway: "+localVariables["ranAway"]);
 					activeDialogElement = dialogMap[dialogData.startsWith];
@@ -173,8 +173,8 @@ public class Dialog : DialogIO {
 				{
 					//Debug.Log ("increaseValue");
 					if(activeDialogElement.vartype == "global")
-						VariableManager.SharedInstance.SetGlobalVariable (activeDialogElement.variable, 
-						                VariableManager.SharedInstance.GetGlobalVariable(activeDialogElement.variable)+1);
+						StateManager.SharedInstance.SetGlobalVariable (activeDialogElement.variable, 
+						                                               StateManager.SharedInstance.GetGlobalVariable(activeDialogElement.variable)+1);
 					else 
 						localVariables[activeDialogElement.variable]++;
 					/*if (localVariables[activeDialogElement.variable].type == "int")
@@ -202,7 +202,7 @@ public class Dialog : DialogIO {
 						if(dialogCase.variable != null)
 						{
 							if (dialogCase.vartype == "global")
-								value = VariableManager.SharedInstance.GetGlobalVariable(dialogCase.variable);
+								value = StateManager.SharedInstance.GetGlobalVariable(dialogCase.variable);
 							else
 								value = localVariables[dialogCase.variable];
 							if(dialogCase.type == "equal")
@@ -239,7 +239,7 @@ public class Dialog : DialogIO {
 									if(dialogCase.reset)
 									{
 										if (dialogCase.vartype == "global")
-											VariableManager.SharedInstance.SetGlobalVariable(dialogCase.variable,value+1);
+											StateManager.SharedInstance.SetGlobalVariable(dialogCase.variable,value+1);
 										else
 											localVariables[dialogCase.variable] = 0;
 									}

@@ -3,4 +3,5 @@
 <variable name="dead" value="0"/>
 <variable name="vampire" value="0"/>
 <variable name="tookApple" value="0"/>
+<variable name="timeOfDay" value="0"/>
 </variables>

@@ -17,7 +17,8 @@ public class MainComponentManager {
 				Object.DontDestroyOnLoad (go);
 			}
 			// trigger instantiation of other singletons
-			Component variableManager = VariableManager.SharedInstance;
+			//Component variableManager = VariableManager.SharedInstance;
+			Component stateManager = StateManager.SharedInstance;
 			// ...
 		}
 	}
