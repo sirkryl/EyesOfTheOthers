@@ -5,10 +5,6 @@ using System.Xml.Serialization;
 using System.IO;
 
 public class MainComponentManager {
-
-
-
-
 	private static MainComponentManager instance;
 	public static void CreateInstance () {
 		if (instance == null) {
@@ -19,7 +15,6 @@ public class MainComponentManager {
 				instance.main = go;
 				// important: make game object persistent:
 				Object.DontDestroyOnLoad (go);
-				Debug.Log ("created");
 			}
 			// trigger instantiation of other singletons
 			Component variableManager = VariableManager.SharedInstance;

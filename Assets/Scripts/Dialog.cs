@@ -23,15 +23,15 @@ public class Dialog : DialogIO {
 	public float dialogDistance = 2.0f;
 	static float closestDialogDistance = 999.0f;
 	static GameObject bestOption;
-	public Text npcName;
-	public Text npcText;
-	public EventSystem eventSystem;
-	public Text playerText;
-	public Text playerName;
-	public Text dialogOptions;
-	public GameObject dialogElementPrefab;
-	public GameObject dialogList;
-	public GameObject answerList;
+	//public Text npcName;
+	//public Text npcText;
+	//public EventSystem eventSystem;
+	//public Text playerText;
+	//public Text playerName;
+	//public Text dialogOptions;
+	private GameObject dialogElementPrefab;
+	private GameObject dialogList;
+	private GameObject answerList;
 	private int currentId;
 	private bool startedDialog = false;
 	//public Canvas dialogCanvas;
@@ -46,7 +46,7 @@ public class Dialog : DialogIO {
 		dialogList = GameObject.Find ("DialogList") as GameObject;
 		answerList = GameObject.Find ("AnswerPanel") as GameObject;
 		player.GetComponent<DialogEventHandler>().RegisterForEvents(this);
-		eventSystem = (GameObject.Find ("EventSystem") as GameObject).GetComponent<EventSystem>();
+		//eventSystem = (GameObject.Find ("EventSystem") as GameObject).GetComponent<EventSystem>();
 		//dialogElementPrefab = Resources.Load ("Prefabs/DialogElement") as GameObject;
 		/*npcName = GameObject.Find ("NPCName") as Text;
 		npcText = GameObject.Find ("NPCText") as Text;
@@ -105,8 +105,8 @@ public class Dialog : DialogIO {
 						CreateDialogMap();
 						CreateLocalVariableMap();
 					}
-					Debug.Log ("spokenCount: "+localVariables["spokenCount"]);
-					Debug.Log ("ranAway: "+localVariables["ranAway"]);
+					//Debug.Log ("spokenCount: "+localVariables["spokenCount"]);
+					//Debug.Log ("ranAway: "+localVariables["ranAway"]);
 					activeDialogElement = dialogMap[dialogData.startsWith];
 					inDialog = true;
 					newDialogElement = true;
@@ -128,7 +128,7 @@ public class Dialog : DialogIO {
 		{
 			if(newDialogElement)
 			{
-				Debug.Log ("type: "+activeDialogElement.type);
+				//Debug.Log ("type: "+activeDialogElement.type);
 				if(activeDialogElement.type == "text")
 				{
 					Image dialogImage = Instantiate (Resources.Load ("Prefabs/DialogElement", typeof(Image))) as Image;

@@ -129,7 +129,7 @@ public class DialogIO : MonoBehaviour {
 	public DialogData Load(string charName)
 	{
 		XmlSerializer xmlSerializer = new XmlSerializer(typeof(DialogData));
-		FileStream readFileStream = new FileStream("Assets/Resources/Dialog/mechanic.xml", FileMode.Open, FileAccess.Read, FileShare.Read);
+		FileStream readFileStream = new FileStream("Assets/Resources/Dialog/"+charName+".xml", FileMode.Open, FileAccess.Read, FileShare.Read);
 		DialogData data = (DialogData)xmlSerializer.Deserialize(readFileStream);
 		readFileStream.Close();
 		foreach (DialogElement element in data.dialogElement)
