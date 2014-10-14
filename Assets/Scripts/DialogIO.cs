@@ -13,13 +13,30 @@ public class DialogIO : MonoBehaviour {
 	public class DialogData {
 		[XmlAttribute]
 		public string characterName;
-		[XmlElement("text")]
-		public DialogText[] dialogText;
-		[XmlElement("choice")]
-		public DialogChoice[] dialogChoice;
+		[XmlAttribute]
+		public int startsWith;
+		[XmlElement("element")]
+		public DialogElement[] dialogElement;
+		//[XmlElement("text")]
+		//public DialogText[] dialogText;
+		//[XmlElement("choice")]
+		//public DialogChoice[] dialogChoice;
 	}
 
-	public class DialogText {
+	public class DialogElement {
+		[XmlAttribute]
+		public int id;
+		[XmlAttribute]
+		public int leadsTo;
+		[XmlText]
+		public string text;
+		[XmlAttribute]
+		public string type;
+		[XmlElement("answer")]
+		public DialogAnswer[] dialogAnswers;
+	}
+
+	/*public class DialogText {
 		[XmlAttribute]
 		public int id;
 		[XmlAttribute]
@@ -35,7 +52,7 @@ public class DialogIO : MonoBehaviour {
 		public string text;
 		[XmlElement("answer")]
 		public DialogAnswer[] dialogAnswers;
-	}
+	}*/
 
 	public class DialogAnswer {
 		[XmlAttribute]
@@ -75,9 +92,22 @@ public class DialogIO : MonoBehaviour {
 	public DialogData Load(string charName)
 	{
 		XmlSerializer xmlSerializer = new XmlSerializer(typeof(DialogData));
-		FileStream ReadFileStream = new FileStream("Assets/Resources/Dialog/mechanic.xml", FileMode.Open, FileAccess.Read, FileShare.Read);
-		DialogData data = (DialogData)xmlSerializer.Deserialize(ReadFileStream);
-		ReadFileStream.Close();
+		FileStream readFileStream = new FileStream("Assets/Resources/Dialog/mechanic.xml", FileMode.Open, FileAccess.Read, FileShare.Read);
+		DialogData data = (DialogData)xmlSerializer.Deserialize(readFileStream);
+		readFileStream.Close();
+		foreach (DialogElement element in data.dialogElement)
+		{
+			//int index = element.text.IndexOf(System.Environment.NewLine);
+			element.text = element.text.Replace("\r", "").Replace("\n", "");
+			if (element.dialogAnswers != null)
+			{
+				foreach (DialogAnswer answer in element.dialogAnswers)
+				{
+					//index = answer.text.IndexOf(System.Environment.NewLine);
+					answer.text = answer.text.Replace("\r", "").Replace("\n", "");
+				}
+			}
+		}
 		return data;
 		//Debug.Log ("Count: "+dialogMap.Count);
 		//dialogMap.Add (charName, data);

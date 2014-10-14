@@ -16,7 +16,7 @@ public class GenerateTerrain : MonoBehaviour {
 	void Start () {
 
 		block1Fab = Resources.Load ("Prefabs/block1", typeof(Transform)) as Transform;
-		//uncomment these two lines to use other system again
+		//uncomment the following two lines to use other system again
 		UseRowsCols ();
 		return;
 

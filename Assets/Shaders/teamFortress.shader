@@ -50,10 +50,10 @@
 				o.Alpha = tex2D(_MainTex, IN.uv_MainTex).a;
 				o.Normal = UnpackNormal(tex2D(_BumpMap, IN.uv_MainTex));
 				float3 specGloss = tex2D(_SpecularTex, IN.uv_MainTex).rgb;
-				o.Specular = specGloss.r;
-				o.Gloss = specGloss.g;
+				//o.Specular = specGloss.r;
+				//o.Gloss = specGloss.g;
 				
-				half3 rim = pow(max(0, dot(float3(0, 1, 0), WorldNormalVector (IN, o.Normal))), _RimPower) * _RimColor.rgb * _RimColor.a * specGloss.b;
+				half3 rim = pow(max(0, dot(float3(0, 1, 0), WorldNormalVector (IN, o.Normal))), _RimPower) * _RimColor.rgb * _RimColor.a; //* specGloss.b;
 				o.Emission = rim;
 			}
 		ENDCG

@@ -63,7 +63,7 @@ public class Inventory : MonoBehaviour {
 		itemListElement.GetComponent<Item>().type = item.type;
 		itemListElement.GetComponent<Item>().description = item.description;
 		itemListElement.GetComponent<Item>().icon = item.icon;
-		Debug.Log ("itemList height: "+itemList.rectTransform.sizeDelta.x+" oder "+itemList.rectTransform.sizeDelta.y);
+		//Debug.Log ("itemList height: "+itemList.rectTransform.sizeDelta.x+" oder "+itemList.rectTransform.sizeDelta.y);
 	}
 
 	public void RemoveItem()
