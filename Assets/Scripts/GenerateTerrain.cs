@@ -7,11 +7,19 @@ public class GenerateTerrain : MonoBehaviour {
 	private Transform[] tiles;
 	private Vector3[] positions;
 	private int random;
-	public Transform block1Fab;
+	public int rows = 3;
+	public int cols = 3;
+	private Transform block1Fab;
 
 	
 	// Use this for initialization
 	void Start () {
+
+		block1Fab = Resources.Load ("Prefabs/block1", typeof(Transform)) as Transform;
+		//uncomment these two lines to use other system again
+		UseRowsCols ();
+		return;
+
 		positions = new Vector3[8];
 		positions [0] = new Vector3 (0, 1, 0);
 		positions [1] = new Vector3 (0, 1, 300);
@@ -44,12 +52,13 @@ public class GenerateTerrain : MonoBehaviour {
 			case 3: tiles[i].Rotate(new Vector3(0,270,0)); break;
 			}*/
 		}
+
 		Vector3[] positions_random = shuffle(positions);
 		for (int i=0; i<8; i++) {
 			tiles[i].position = positions_random[i];
 		}
 	}
-	
+
 	private Vector3[] shuffle(Vector3[] array){
 		
 		int m = array.Length;
@@ -63,6 +72,19 @@ public class GenerateTerrain : MonoBehaviour {
 			array[i] = v;
 		}
 		return array;
-		
+	}
+
+	private void UseRowsCols()
+	{
+		tiles = new Transform[rows*cols];
+		int cnt = 0;
+		for (int row = 0; row < rows; row++)
+		{
+			for (int col = 0; col < cols; col++)
+			{
+				tiles[cnt] = Instantiate(block1Fab, new Vector3(row*300, 1, col*300), Quaternion.identity) as Transform;
+				cnt++;
+			}
+		}
 	}
 }
