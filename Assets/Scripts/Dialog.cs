@@ -32,8 +32,9 @@ public class Dialog : DialogIO {
 	private GameObject dialogElementPrefab;
 	private GameObject dialogList;
 	private GameObject answerList;
+	private GameObject sceneManager;
 	private int currentId;
-	private bool startedDialog = false;
+	//private bool startedDialog = false;
 	//public Canvas dialogCanvas;
 	private float distance;
 	// Use this for initialization
@@ -45,7 +46,8 @@ public class Dialog : DialogIO {
 		player = GameObject.FindWithTag ("Player") as GameObject;
 		dialogList = GameObject.Find ("DialogList") as GameObject;
 		answerList = GameObject.Find ("AnswerPanel") as GameObject;
-		player.GetComponent<DialogEventHandler>().RegisterForEvents(this);
+		sceneManager = GameObject.FindWithTag("SceneManager") as GameObject;
+		//player.GetComponent<DialogEventHandler>().RegisterForEvents(this);
 		//eventSystem = (GameObject.Find ("EventSystem") as GameObject).GetComponent<EventSystem>();
 		//dialogElementPrefab = Resources.Load ("Prefabs/DialogElement") as GameObject;
 		/*npcName = GameObject.Find ("NPCName") as Text;
@@ -93,7 +95,15 @@ public class Dialog : DialogIO {
 				}
 				inDialogRange = true;
 			}
-			else inDialogRange = false;
+			else 
+			{
+				inDialogRange = false;
+				if (bestOption == gameObject)
+				{
+					bestOption = null;
+					closestDialogDistance = 999.0f;
+				}
+			}
 			
 			if (Input.GetKeyDown (pressButton) && inDialogRange)
 			{
@@ -105,14 +115,15 @@ public class Dialog : DialogIO {
 						CreateDialogMap();
 						CreateLocalVariableMap();
 					}
+					//Debug.Log ("timeOFday: "+StateManager.SharedInstance.GetTimeOfDay());
 					//Debug.Log ("spokenCount: "+localVariables["spokenCount"]);
 					//Debug.Log ("ranAway: "+localVariables["ranAway"]);
 					activeDialogElement = dialogMap[dialogData.startsWith];
 					inDialog = true;
 					newDialogElement = true;
 					//inDialog = true;
-					startedDialog = true;
-					player.GetComponent<DisplayWindows>().ShowDialogWindow();
+					//startedDialog = true;
+					sceneManager.GetComponent<DisplayWindows>().ShowDialogWindow();
 
 					//player.GetComponent<MouseLook>().enabled = false;;
 					//mainCamera.GetComponent<MouseLook>().enabled = false;
@@ -293,7 +304,7 @@ public class Dialog : DialogIO {
 	{
 		inDialog = false;
 		CleanUpDialog();
-		player.GetComponent<DisplayWindows>().HideDialogWindow();
+		sceneManager.GetComponent<DisplayWindows>().HideDialogWindow();
 	}
 
 	void CleanUpDialog()

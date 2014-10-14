@@ -16,6 +16,7 @@ public class Inventory : MonoBehaviour {
 	public GameObject infoPanel;
 	public GameObject imagePanel;
 	private Dictionary<string, Item> itemMap;
+	private Dictionary<string, Image> itemUIMap;
 	public Text itemName; 
 	public Image itemImage;
 	public Text itemType;
@@ -25,6 +26,7 @@ public class Inventory : MonoBehaviour {
 	void Start () {
 		items = new ArrayList();
 		itemMap = new Dictionary<string, Item>();
+		itemUIMap = new Dictionary<string, Image>();
 	}
 	
 	// Update is called once per frame
@@ -52,20 +54,34 @@ public class Inventory : MonoBehaviour {
 	public void AddItem(Item item)
 	{
 		newItemName = item.name;
-		items.Add (item);
-		itemMap.Add (item.name, item);
+		if (itemMap.ContainsKey(item.name))
+		{
+			itemMap[item.name].stackSize += item.stackSize;
+		}
+		else		
+			itemMap.Add (item.name, item);
 		justPickedUp = true;
 
-		Image itemListElement = Instantiate (itemLabelFab, new Vector3(0,-10-((items.Count-1)*18),0), Quaternion.identity) as Image;
-		itemListElement.transform.SetParent (itemList.transform, false);
-		itemListElement.GetComponentInChildren<Text>().enabled = true;
-		itemListElement.GetComponentInChildren<Text>().text = item.name + " (1)";
+		if (itemUIMap.ContainsKey (item.name))
+		{
+			itemUIMap[item.name].GetComponentInChildren<Text>().text = item.name + " (" + itemMap[item.name].stackSize + ")";
+			itemUIMap[item.name].GetComponent<Item>().stackSize = itemMap[item.name].stackSize;
+		}
+		else
+		{
+			Image itemListElement = Instantiate (itemLabelFab, new Vector3(0,-10-((items.Count-1)*18),0), Quaternion.identity) as Image;
+			itemListElement.transform.SetParent (itemList.transform, false);
+			itemListElement.GetComponentInChildren<Text>().enabled = true;
+			itemListElement.GetComponentInChildren<Text>().text = item.name + " (" + item.stackSize + ")";
+			itemListElement.GetComponent<Button>().onClick.AddListener(() => { GUIShowItemInfo(itemListElement.GetComponent<Item>()); });
+			itemListElement.GetComponent<Item>().name = item.name;
+			itemListElement.GetComponent<Item>().type = item.type;
+			itemListElement.GetComponent<Item>().description = item.description;
+			itemListElement.GetComponent<Item>().icon = item.icon;
+			itemListElement.GetComponent<Item>().stackSize = item.stackSize;
+			itemUIMap.Add (item.name, itemListElement);
+		}
 
-		itemListElement.GetComponent<Button>().onClick.AddListener(() => { GUIShowItemInfo(itemListElement.GetComponent<Item>()); });
-		itemListElement.GetComponent<Item>().name = item.name;
-		itemListElement.GetComponent<Item>().type = item.type;
-		itemListElement.GetComponent<Item>().description = item.description;
-		itemListElement.GetComponent<Item>().icon = item.icon;
 		//Debug.Log ("itemList height: "+itemList.rectTransform.sizeDelta.x+" oder "+itemList.rectTransform.sizeDelta.y);
 	}
 

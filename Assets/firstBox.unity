@@ -2174,6 +2174,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   name: Cube
   type: Primitive
+  stackSize: 1
   description: Just a cube. Still valuable though. Try selling it to the mechanic.
   stackable: 0
   consumable: 1
@@ -8636,6 +8637,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   name: Ninjablade
   type: Weapon
+  stackSize: 1
   description: A ninjablade. Discuss.
   stackable: 0
   consumable: 0
@@ -11725,8 +11727,6 @@ GameObject:
   - 114: {fileID: 1137435525}
   - 114: {fileID: 1137435524}
   - 114: {fileID: 1137435528}
-  - 114: {fileID: 1137435529}
-  - 114: {fileID: 1137435531}
   m_Layer: 0
   m_Name: First Person Controller
   m_TagString: Player
@@ -11865,36 +11865,6 @@ MonoBehaviour:
   walkSpeed: 7
   crchSpeed: 3
   runSpeed: 20
---- !u!114 &1137435529
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1137435522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0eae7937c4ff4c742bef1551e1108906, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventoryCanvas: {fileID: 905186978}
-  debugCanvas: {fileID: 1984142920}
-  characterCanvas: {fileID: 290257919}
-  infoPanel: {fileID: 1539248476}
-  imagePanel: {fileID: 1593782910}
-  player: {fileID: 1137435522}
-  camera: {fileID: 2048419268}
-  dialogCanvas: {fileID: 249200928}
---- !u!114 &1137435531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1137435522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e62760b5671e34468993a9b4326fb75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1140369540
 GameObject:
   m_ObjectHideFlags: 0
@@ -12561,9 +12531,11 @@ GameObject:
   m_Component:
   - 4: {fileID: 1198150565}
   - 114: {fileID: 1198150564}
+  - 114: {fileID: 1198150566}
+  - 114: {fileID: 1198150567}
   m_Layer: 0
   m_Name: SceneManager
-  m_TagString: Untagged
+  m_TagString: SceneManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12593,6 +12565,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
+--- !u!114 &1198150566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1198150563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eae7937c4ff4c742bef1551e1108906, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryCanvas: {fileID: 905186978}
+  debugCanvas: {fileID: 1984142920}
+  characterCanvas: {fileID: 290257919}
+  infoPanel: {fileID: 1539248476}
+  imagePanel: {fileID: 1593782910}
+  player: {fileID: 1137435522}
+  camera: {fileID: 2048419268}
+  dialogCanvas: {fileID: 249200928}
+--- !u!114 &1198150567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1198150563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e62760b5671e34468993a9b4326fb75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1210621870
 GameObject:
   m_ObjectHideFlags: 0
@@ -15417,6 +15419,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   name: Apple
   type: Consumable
+  stackSize: 1
   description: An apple. Red. Poorly modelled.
   stackable: 0
   consumable: 1
@@ -20055,6 +20058,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   name: Knife
   type: Weapon
+  stackSize: 1
   description: A knife. Don't cut yourself.
   stackable: 0
   consumable: 0

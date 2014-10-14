@@ -52,7 +52,7 @@ public class DayNightCycle : MonoBehaviour {
 
 			helperValue = sunCycle*24;
 			timeOfDay = cycleValue*24;
-
+			StateManager.SharedInstance.SetTimeOfDay(timeOfDay);
 			int hours = (int)timeOfDay;
 			int minutes = (int)((timeOfDay*60)%60);
 

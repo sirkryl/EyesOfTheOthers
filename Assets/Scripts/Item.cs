@@ -7,6 +7,7 @@ public class Item : MonoBehaviour {
 	public Texture2D icon;
 	public string name;
 	public string type;
+	public int stackSize = 1;
 	public string description;	
 	public bool stackable = false;
 	//probably with an extra script for consumables

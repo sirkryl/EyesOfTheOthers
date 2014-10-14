@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 public class DialogIO : MonoBehaviour {
 
 	//public static Dictionary<string, DialogData> dialogMap;
@@ -137,18 +138,24 @@ public class DialogIO : MonoBehaviour {
 			//int index = element.text.IndexOf(System.Environment.NewLine);
 			if (element.text == null)
 				continue;
-			element.text = element.text.Replace("\r", "").Replace("\n", "");
+			element.text = GetCleanText (element.text);//.Replace("\r", "").Replace("\n", "");
 			if (element.dialogAnswers != null)
 			{
 				foreach (DialogAnswer answer in element.dialogAnswers)
 				{
 					//index = answer.text.IndexOf(System.Environment.NewLine);
-					answer.text = answer.text.Replace("\r", "").Replace("\n", "");
+					answer.text = GetCleanText(answer.text);//.Replace("\r", "").Replace("\n", "");
 				}
 			}
 		}
 		return data;
 		//Debug.Log ("Count: "+dialogMap.Count);
 		//dialogMap.Add (charName, data);
+	}
+
+	private Regex pattern= new Regex("\\s*([\\s\\S]*\\S)\\s*");
+	string GetCleanText ( string text  ){
+		Match m= pattern.Match(text);
+		return m.Groups[1].Value;
 	}
 }
