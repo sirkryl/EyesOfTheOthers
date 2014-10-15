@@ -5543,6 +5543,7 @@ GameObject:
   - 137: {fileID: 13700000}
   - 65: {fileID: 6500002}
   - 114: {fileID: 11400028}
+  - 54: {fileID: 5400012}
   m_Layer: 0
   m_Name: Bip001 Pelvis
   m_TagString: Untagged
@@ -17997,6 +17998,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!54 &5400012
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100662}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: .0500000007
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!64 &6400000
 MeshCollider:
   m_ObjectHideFlags: 1
@@ -18385,6 +18401,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   name: Cube
   type: Primitive
+  stackSize: 1
   description: Just a cube. Still valuable though. Try selling it to the mechanic.
   stackable: 0
   consumable: 1
@@ -18403,6 +18420,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   name: Knife
   type: Weapon
+  stackSize: 1
   description: A knife. Don't cut yourself.
   stackable: 0
   consumable: 0
@@ -18434,6 +18452,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   name: Ninjablade
   type: Weapon
+  stackSize: 1
   description: A ninjablade. Discuss.
   stackable: 0
   consumable: 0
@@ -18465,6 +18484,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   name: Apple
   type: Consumable
+  stackSize: 1
   description: An apple. Red. Poorly modelled.
   stackable: 0
   consumable: 1
@@ -18496,15 +18516,6 @@ MonoBehaviour:
   pressButton: 101
   name: mechanic
   dialogDistance: 2
-  npcName: {fileID: 0}
-  npcText: {fileID: 0}
-  eventSystem: {fileID: 0}
-  playerText: {fileID: 0}
-  playerName: {fileID: 0}
-  dialogOptions: {fileID: 0}
-  dialogElementPrefab: {fileID: 0}
-  dialogList: {fileID: 0}
-  answerList: {fileID: 0}
 --- !u!114 &11400030
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -18519,15 +18530,6 @@ MonoBehaviour:
   pressButton: 101
   name: apple
   dialogDistance: 2
-  npcName: {fileID: 0}
-  npcText: {fileID: 0}
-  eventSystem: {fileID: 0}
-  playerText: {fileID: 0}
-  playerName: {fileID: 0}
-  dialogOptions: {fileID: 0}
-  dialogElementPrefab: {fileID: 0}
-  dialogList: {fileID: 0}
-  answerList: {fileID: 0}
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 1

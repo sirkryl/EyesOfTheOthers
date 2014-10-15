@@ -98,12 +98,12 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: .600000024, b: 0, a: 1}
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 76beb419883f8cc458763fea594deba3, type: 3}
-    m_FontSize: 25
+    m_Font: {fileID: 12800000, guid: 9b31c5a82dbb68642892c01fa09453db, type: 3}
+    m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 5
-    m_MaxSize: 25
+    m_MaxSize: 30
     m_Alignment: 0
     m_RichText: 1
     m_HorizontalOverflow: 0

@@ -79,7 +79,13 @@ public class Dialog : DialogIO {
 
 		if (inDialogRange && !inDialog)
 		{
+			//sceneManager.GetComponent<DisplayWindows>().ShowInteractionOverlay("Press 'E' to talk.");
 			GUI.Box (new Rect ((float)(Screen.width*0.5-100),(float)(Screen.height*0.5-20),200,20), "Press E to talk.");
+		}
+		else if(inDialog || !inDialogRange)
+		{
+			//Debug.Log ("inDialog: "+inDialog+", range: "+inDialogRange);
+			//sceneManager.GetComponent<DisplayWindows>().HideInteractionOverlay();
 		}
 	}
 

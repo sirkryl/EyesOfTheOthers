@@ -6,10 +6,12 @@ public class DisplayWindows : MonoBehaviour {
 	public Canvas inventoryCanvas;
 	public Canvas debugCanvas;
 	public Canvas characterCanvas;
+	public Canvas overlayCanvas;
 	public GameObject infoPanel;
 	public GameObject imagePanel;
 	public GameObject player;
 	public GameObject camera;
+	public GameObject interactionOverlay;
 	public Canvas dialogCanvas;
 	public bool alternativeDialogCanvas = false;
 	private MouseLook playerMouseLook;
@@ -106,6 +108,20 @@ public class DisplayWindows : MonoBehaviour {
 		cameraMouseLook.enabled = true;
 		dialogCanvas.GetComponent<Canvas>().enabled = false;
 		dialogCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+	}
+
+	public void ShowInteractionOverlay(string text)
+	{
+
+		if(interactionOverlay.GetComponent<Image>().enabled == false)
+		{
+			interactionOverlay.GetComponent<Image>().enabled = true;
+		}
+	}
+	public void HideInteractionOverlay()
+	{
+		if(interactionOverlay.GetComponent<Image>().enabled == true)
+			interactionOverlay.GetComponent<Image>().enabled = false;
 	}
 
 }
