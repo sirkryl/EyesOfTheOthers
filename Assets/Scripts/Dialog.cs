@@ -9,8 +9,10 @@ public class Dialog : DialogIO {
 	private Dictionary<int, DialogElement> dialogMap;
 
 	private Dictionary<string, int> localVariables;
+	//private bool alternativeUI = false;
 	private List<GameObject> uiDialogElements;
 	private List<GameObject> uiChoiceElements;
+	private List<Text> answerOptions;
 	private DialogElement activeDialogElement;
 	private GameObject player;
 	public KeyCode pressButton = KeyCode.E;
@@ -33,6 +35,7 @@ public class Dialog : DialogIO {
 	private GameObject dialogList;
 	private GameObject answerList;
 	private GameObject sceneManager;
+	private GameObject dialogText;
 	private int currentId;
 	//private bool startedDialog = false;
 	//public Canvas dialogCanvas;
@@ -41,12 +44,14 @@ public class Dialog : DialogIO {
 	void Start () {
 		uiDialogElements = new List<GameObject>();
 		uiChoiceElements = new List<GameObject>();
+		answerOptions = new List<Text>();
 		localVariables = new Dictionary<string, int>();
 		mainCamera = Camera.main;
 		player = GameObject.FindWithTag ("Player") as GameObject;
 		dialogList = GameObject.Find ("DialogList") as GameObject;
 		answerList = GameObject.Find ("AnswerPanel") as GameObject;
 		sceneManager = GameObject.FindWithTag("SceneManager") as GameObject;
+		dialogText = GameObject.FindWithTag ("DialogText") as GameObject;
 		//player.GetComponent<DialogEventHandler>().RegisterForEvents(this);
 		//eventSystem = (GameObject.Find ("EventSystem") as GameObject).GetComponent<EventSystem>();
 		//dialogElementPrefab = Resources.Load ("Prefabs/DialogElement") as GameObject;
@@ -142,30 +147,78 @@ public class Dialog : DialogIO {
 				//Debug.Log ("type: "+activeDialogElement.type);
 				if(activeDialogElement.type == "text")
 				{
-					Image dialogImage = Instantiate (Resources.Load ("Prefabs/DialogElement", typeof(Image))) as Image;
-					dialogImage.transform.SetParent (dialogList.transform, false);
-					uiDialogElements.Add (dialogImage.gameObject);
-					Text[] texts = dialogImage.GetComponentsInChildren<Text>();
-					texts[0].text = dialogData.characterName + ":";
-					texts[1].text = activeDialogElement.text;
+					if(sceneManager.GetComponent<DisplayWindows>().alternativeDialogCanvas)
+					{
+						dialogText.GetComponent<Text>().enabled = true;
+						dialogText.GetComponent<Text>().text = activeDialogElement.text;
+					}
+					else
+					{
+						Image dialogImage = Instantiate (Resources.Load ("Prefabs/DialogElement", typeof(Image))) as Image;
+						dialogImage.transform.SetParent (dialogList.transform, false);
+						uiDialogElements.Add (dialogImage.gameObject);
+						Text[] texts = dialogImage.GetComponentsInChildren<Text>();
+						texts[0].text = dialogData.characterName + ":";
+						texts[1].text = activeDialogElement.text;
+					}
 				}
 				else if (activeDialogElement.type == "choice")
 				{
-					Image dialogImage = Instantiate (Resources.Load ("Prefabs/DialogElement", typeof(Image))) as Image;
-					dialogImage.transform.SetParent (dialogList.transform, false);
-					uiDialogElements.Add (dialogImage.gameObject);
-					Text[] texts = dialogImage.GetComponentsInChildren<Text>();
-					texts[0].text = dialogData.characterName + ":";
-					texts[1].text = activeDialogElement.text;
+					if(sceneManager.GetComponent<DisplayWindows>().alternativeDialogCanvas)
+					{
+						//dialogText.GetComponent<Text>().enabled = false;
+						dialogList.GetComponent<Image>().enabled = false;
+						GameObject.FindWithTag ("ChoiceText").GetComponent<Text>().enabled = true;
+						GameObject.FindWithTag ("ChoiceText").GetComponent<Text>().text = activeDialogElement.text;
+						//dialogText.GetComponent<Text>().text = activeDialogElement.text;
+					}
+						
+					else
+					{
+						Image dialogImage = Instantiate (Resources.Load ("Prefabs/DialogElement", typeof(Image))) as Image;
+						dialogImage.transform.SetParent (dialogList.transform, false);
+						uiDialogElements.Add (dialogImage.gameObject);
+						Text[] texts = dialogImage.GetComponentsInChildren<Text>();
+						texts[0].text = dialogData.characterName + ":";
+						texts[1].text = activeDialogElement.text;
+					}
+
+					if(sceneManager.GetComponent<DisplayWindows>().alternativeDialogCanvas)
+					{
+						GameObject.FindWithTag("AnswerList").GetComponent<Image>().enabled = true;
+						answerOptions.ForEach (child => child.gameObject.GetComponent<Text>().enabled = false);
+						while (answerOptions.Count < activeDialogElement.dialogAnswers.Length)
+						{
+
+							Text answerText = Instantiate (Resources.Load ("Prefabs/DialogOption_new", typeof(Text))) as Text;
+							answerText.transform.SetParent (GameObject.FindWithTag("AnswerList").transform, false);
+							answerOptions.Add (answerText);
+						}
+					}
+
 					int answerCnt = 0;
 					foreach (DialogAnswer answer in activeDialogElement.dialogAnswers)
 					{
-						Text answerText = Instantiate (Resources.Load ("Prefabs/DialogOption", typeof(Text))) as Text;
-						answerText.transform.SetParent (answerList.transform, false);
-						uiChoiceElements.Add (answerText.gameObject);
-						answerText.text = answerCnt+1 + ". "+answer.text;
-						answerText.GetComponent<AnswerNumber>().number = answerCnt;
-						answerText.GetComponent<Button>().onClick.AddListener(() => { SendAnswer(answerText.GetComponent<AnswerNumber>().number); });
+						//Debug.Log ("size "+answerOptions.Count);
+						//Debug.Log ("answerCnt "+answerCnt);
+						if(sceneManager.GetComponent<DisplayWindows>().alternativeDialogCanvas)
+						{
+							Text answerText = answerOptions[answerCnt];
+							answerText.gameObject.GetComponent<Text>().enabled = true;
+							answerText.text = answerCnt+1 + ". "+answer.text;
+							answerText.GetComponent<Button>().onClick.RemoveAllListeners();
+							answerText.GetComponent<AnswerNumber>().number = answerCnt;
+							answerText.GetComponent<Button>().onClick.AddListener(() => { SendAnswer(answerText.GetComponent<AnswerNumber>().number); });
+						}
+						else
+						{
+							Text answerText = Instantiate (Resources.Load ("Prefabs/DialogOption", typeof(Text))) as Text;
+							answerText.transform.SetParent (answerList.transform, false);
+							uiChoiceElements.Add (answerText.gameObject);
+							answerText.text = answerCnt+1 + ". "+answer.text;
+							answerText.GetComponent<AnswerNumber>().number = answerCnt;
+							answerText.GetComponent<Button>().onClick.AddListener(() => { SendAnswer(answerText.GetComponent<AnswerNumber>().number); });
+						}
 						answerCnt++;
 					}
 				}
@@ -313,26 +366,45 @@ public class Dialog : DialogIO {
 		uiDialogElements.Clear();
 		uiChoiceElements.ForEach (child => child.SetActive(false));
 		uiChoiceElements.Clear ();
+		if(sceneManager.GetComponent<DisplayWindows>().alternativeDialogCanvas)
+		{
+			dialogText.GetComponent<Text>().text = "";
+			answerOptions.ForEach (child => child.gameObject.GetComponent<Text>().enabled = false);
+			GameObject.FindWithTag("AnswerList").GetComponent<Image>().enabled = false;
+		}
+		//answerOptions.Clear ();
 		//uiDialogElements.Clear();
 	}
 
 	public void SendAnswer(int answer)
 	{
-		uiChoiceElements.ForEach (child => child.SetActive(false));
-		uiChoiceElements.Clear ();
+		if(!sceneManager.GetComponent<DisplayWindows>().alternativeDialogCanvas)
+		{
+			uiChoiceElements.ForEach (child => child.SetActive(false));
+			uiChoiceElements.Clear ();
+		}
 		if(activeDialogElement.dialogAnswers[answer].leadsTo == 0)
 		{
 			EndDialog ();
 		}
 		else
 		{
-			Image dialogImage = Instantiate (Resources.Load ("Prefabs/DialogElement", typeof(Image))) as Image;
-			dialogImage.transform.SetParent (dialogList.transform, false);
-			uiDialogElements.Add (dialogImage.gameObject);
-			Text[] texts = dialogImage.GetComponentsInChildren<Text>();
-			texts[0].text = "You:";
-			texts[1].text = activeDialogElement.dialogAnswers[answer].text;
-
+			if(!sceneManager.GetComponent<DisplayWindows>().alternativeDialogCanvas)
+			{
+				Image dialogImage = Instantiate (Resources.Load ("Prefabs/DialogElement", typeof(Image))) as Image;
+				dialogImage.transform.SetParent (dialogList.transform, false);
+				uiDialogElements.Add (dialogImage.gameObject);
+				Text[] texts = dialogImage.GetComponentsInChildren<Text>();
+				texts[0].text = "You:";
+				texts[1].text = activeDialogElement.dialogAnswers[answer].text;
+			}
+			else
+			{
+				GameObject.FindWithTag("AnswerList").GetComponent<Image>().enabled = false;
+				dialogList.GetComponent<Image>().enabled = true;
+				dialogText.GetComponent<Text>().enabled = true;
+			}
+			//dialogText.SetActive (true);
 			activeDialogElement = dialogMap[activeDialogElement.dialogAnswers[answer].leadsTo];
 			newDialogElement = true;
 		}

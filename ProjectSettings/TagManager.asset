@@ -5,6 +5,10 @@ TagManager:
   tags:
   - Inventory
   - SceneManager
+  - DialogText
+  - AnswerList
+  - AnswerElement
+  - ChoiceText
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX

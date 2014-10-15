@@ -11,6 +11,7 @@ public class DisplayWindows : MonoBehaviour {
 	public GameObject player;
 	public GameObject camera;
 	public Canvas dialogCanvas;
+	public bool alternativeDialogCanvas = false;
 	private MouseLook playerMouseLook;
 	private MouseLook cameraMouseLook;
 	
