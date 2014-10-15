@@ -371,6 +371,8 @@ public class Dialog : DialogIO {
 			dialogText.GetComponent<Text>().text = "";
 			answerOptions.ForEach (child => child.gameObject.GetComponent<Text>().enabled = false);
 			GameObject.FindWithTag("AnswerList").GetComponent<Image>().enabled = false;
+			answerOptions.ForEach (child => Destroy(child.gameObject));
+			answerOptions.Clear ();
 		}
 		//answerOptions.Clear ();
 		//uiDialogElements.Clear();

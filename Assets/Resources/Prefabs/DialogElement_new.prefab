@@ -51,11 +51,11 @@ MonoBehaviour:
   m_Color: {r: .882352948, g: .882352948, b: .882352948, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 76beb419883f8cc458763fea594deba3, type: 3}
-    m_FontSize: 30
+    m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 5
-    m_MaxSize: 30
+    m_MaxSize: 25
     m_Alignment: 4
     m_RichText: 1
     m_HorizontalOverflow: 0

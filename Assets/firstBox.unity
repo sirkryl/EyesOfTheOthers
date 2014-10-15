@@ -1125,6 +1125,18 @@ Prefab:
       propertyPath: m_Text
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 98d466092b9786a4c928e6a2e1c05d85, type: 2}
+      propertyPath: m_FontData.m_Alignment
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 98d466092b9786a4c928e6a2e1c05d85, type: 2}
+      propertyPath: m_FontData.m_MaxSize
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 98d466092b9786a4c928e6a2e1c05d85, type: 2}
+      propertyPath: m_Name
+      value: DialogText
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 98d466092b9786a4c928e6a2e1c05d85, type: 2}
   m_RootGameObject: {fileID: 650747752}
@@ -2386,7 +2398,7 @@ GameObject:
   - 114: {fileID: 259653917}
   - 114: {fileID: 259653916}
   m_Layer: 5
-  m_Name: DialogElement_new
+  m_Name: ChoiceText
   m_TagString: ChoiceText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2445,11 +2457,11 @@ MonoBehaviour:
   m_Color: {r: .882352948, g: .882352948, b: .882352948, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 76beb419883f8cc458763fea594deba3, type: 3}
-    m_FontSize: 30
+    m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 5
-    m_MaxSize: 30
+    m_MaxSize: 25
     m_Alignment: 4
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -6712,8 +6724,8 @@ MonoBehaviour:
   m_Padding:
     m_Left: 50
     m_Right: 50
-    m_Top: 20
-    m_Bottom: 20
+    m_Top: 10
+    m_Bottom: 10
   m_ChildAlignment: 1
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
@@ -7678,7 +7690,7 @@ GameObject:
   - 114: {fileID: 650747755}
   - 114: {fileID: 650747754}
   m_Layer: 5
-  m_Name: DialogElement_new
+  m_Name: DialogText
   m_TagString: DialogText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7737,12 +7749,12 @@ MonoBehaviour:
   m_Color: {r: .882352948, g: .882352948, b: .882352948, a: 1}
   m_FontData:
     m_Font: {fileID: 12800000, guid: 76beb419883f8cc458763fea594deba3, type: 3}
-    m_FontSize: 30
+    m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 5
-    m_MaxSize: 30
-    m_Alignment: 4
+    m_MaxSize: 25
+    m_Alignment: 1
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
@@ -16692,6 +16704,14 @@ Prefab:
       propertyPath: m_Text
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 98d466092b9786a4c928e6a2e1c05d85, type: 2}
+      propertyPath: m_FontData.m_MaxSize
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 98d466092b9786a4c928e6a2e1c05d85, type: 2}
+      propertyPath: m_Name
+      value: ChoiceText
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 98d466092b9786a4c928e6a2e1c05d85, type: 2}
   m_RootGameObject: {fileID: 259653914}
@@ -21555,7 +21575,7 @@ MonoBehaviour:
     m_Right: 50
     m_Top: 20
     m_Bottom: 20
-  m_ChildAlignment: 1
+  m_ChildAlignment: 4
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
