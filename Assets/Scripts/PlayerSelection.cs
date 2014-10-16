@@ -29,7 +29,7 @@ public class PlayerSelection : MonoBehaviour {
 				//Debug.Log (
 				if(activeObject != hit.transform.gameObject && activeObject != null)
 				{
-					sceneManager.GetComponent<WindowManager>().HideInteractionOverlay();
+					WindowManager.SharedInstance.HideInteractionOverlay();
 					activeObject.isActiveObject = false;
 					Dialog.isAnythingActive = false;
 				}
@@ -39,19 +39,21 @@ public class PlayerSelection : MonoBehaviour {
 					activeObject = hit.transform.gameObject.GetComponent<Dialog>();
 					hit.transform.gameObject.GetComponent<Dialog>().isActiveObject = true;
 					Dialog.isAnythingActive = true;
-					sceneManager.GetComponent<WindowManager>().ShowInteractionOverlay("Press 'E' to talk.");
+					WindowManager.SharedInstance.ShowInteractionOverlay("Press 'E' to talk.");
 				}
 				if(hit.transform.gameObject.GetComponent<Item>() != null)
 				{
 					if (hit.transform.gameObject.GetComponent<Item>().pickUp)
 					{
 						//Debug.Log ("hit "+hit.transform.gameObject.GetComponent<Dialog>().name);
-						sceneManager.GetComponent<WindowManager>().ShowInteractionOverlay("Press 'E' to take "+hit.transform.gameObject.GetComponent<Item>().name+".");
+						WindowManager.SharedInstance.ShowInteractionOverlay("Press 'E' to take "+hit.transform.gameObject.GetComponent<Item>().name+".");
 						if (Input.GetKeyDown (KeyCode.E))
 						{
+							if (hit.transform.gameObject.GetComponent<Item>().name == "Apple")
+								GlobalVariableManager.SharedInstance.SetGlobalVariable("tookApple",GlobalVariableManager.SharedInstance.GetGlobalVariable("tookApple")+1);
 							inventory.AddItem (hit.transform.gameObject.GetComponent<Item>());
 							hit.transform.gameObject.SetActive (false);
-							sceneManager.GetComponent<WindowManager>().HideInteractionOverlay();
+							WindowManager.SharedInstance.HideInteractionOverlay();
 						}
 					}
 				}
@@ -64,7 +66,7 @@ public class PlayerSelection : MonoBehaviour {
 			}
 			else
 			{
-				sceneManager.GetComponent<WindowManager>().HideInteractionOverlay();
+				WindowManager.SharedInstance.HideInteractionOverlay();
 				if(activeObject != null && activeObject.GetComponent<Dialog>() != null)
 				{
 					//sceneManager.GetComponent<DisplayWindows>().HideInteractionOverlay();

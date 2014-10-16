@@ -40,7 +40,7 @@ public class DayNightCycle : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		cycleValue = 0.4f;
-		StateManager.SharedInstance.SetGlobalVariable("timeOfDay", (int)Mathf.Round (cycleValue*24));
+		GlobalVariableManager.SharedInstance.SetGlobalVariable("timeOfDay", (int)Mathf.Round (cycleValue*24));
 	}
 
 
@@ -53,7 +53,7 @@ public class DayNightCycle : MonoBehaviour {
 
 			helperValue = sunCycle*24;
 			timeOfDay = cycleValue*24;
-			StateManager.SharedInstance.SetGlobalVariable("timeOfDay", (int)Mathf.Round (timeOfDay));
+			GlobalVariableManager.SharedInstance.SetGlobalVariable("timeOfDay", (int)Mathf.Round (timeOfDay));
 			int hours = (int)timeOfDay;
 			int minutes = (int)((timeOfDay*60)%60);
 

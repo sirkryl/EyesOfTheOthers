@@ -19,26 +19,13 @@ public class StateManager : MonoBehaviour
 			get {
 				if (instance == null) {
 				instance = MainComponentManager.AddMainComponent<StateManager> ();
-				LoadVariables();
+				//LoadVariables();
 				}
 				return instance;
 			}
 		}
 
-	[XmlRoot("variables")]
-	public class VariableData {
-		[XmlElement("variable")]
-		public Variable[] variables;
-	}
-	
-	public class Variable {
-		[XmlAttribute]
-		public string name;
-		[XmlAttribute]
-		public int value;
-	}
-	
-	private static Dictionary<string, int> globalVariables;
+
 
 	public void SetGameState(GameState gameState) {
 		this.gameState = gameState;
@@ -47,30 +34,9 @@ public class StateManager : MonoBehaviour
 		}
 	}
 
-	static void LoadVariables()
-	{
-		XmlSerializer xmlSerializer = new XmlSerializer(typeof(VariableData));
-		FileStream readFileStream = new FileStream("Assets/Resources/variables.xml", FileMode.Open, FileAccess.Read, FileShare.Read);
-		VariableData data = (VariableData)xmlSerializer.Deserialize(readFileStream);
-		readFileStream.Close();
-		globalVariables = new Dictionary<string, int>();
-		foreach (Variable var in data.variables)
-		{
-			globalVariables.Add (var.name,var.value);
-		}
-		
-	}
+
 	
-	public int GetGlobalVariable(string name)
-	{
-		//Debug.Log ("name: "+name);
-		return globalVariables[name];
-	}
-	
-	public void SetGlobalVariable(string name, int value)
-	{
-		globalVariables[name] = value;
-	}
+
 
 	/*public string GetGameState()
 	{

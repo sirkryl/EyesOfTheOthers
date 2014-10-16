@@ -27,7 +27,7 @@ public class Dialog : DialogIO {
 	public GameObject interactionOverlay;
 	private GameObject sceneManager;
 	private GameObject dialogText;
-	private WindowManager windowManager;
+	//private WindowManager windowManager;
 
 	private bool inDialog = false;
 	public bool isActiveObject = false;
@@ -45,7 +45,7 @@ public class Dialog : DialogIO {
 		answerList = GameObject.Find ("AnswerPanel") as GameObject;
 		sceneManager = GameObject.FindWithTag("SceneManager") as GameObject;
 		dialogText = GameObject.FindWithTag ("DialogText") as GameObject;
-		windowManager = sceneManager.GetComponent<WindowManager>();
+		//windowManager = sceneManager.GetComponent<WindowManager>();
 		interactionOverlay = GameObject.Find ("InteractionOverlay") as GameObject;
 		//player.GetComponent<DialogEventHandler>().RegisterForEvents(this);
 		//eventSystem = (GameObject.Find ("EventSystem") as GameObject).GetComponent<EventSystem>();
@@ -100,7 +100,7 @@ public class Dialog : DialogIO {
 				if(activeDialogElement.type == "text")
 				{
 
-					if(sceneManager.GetComponent<WindowManager>().alternativeDialogCanvas)
+					if(WindowManager.SharedInstance.alternativeDialogCanvas)
 					{
 						dialogText.GetComponent<Text>().enabled = true;
 						dialogText.GetComponent<Text>().text = activeDialogElement.text;
@@ -120,7 +120,7 @@ public class Dialog : DialogIO {
 				}
 				else if (activeDialogElement.type == "choice")
 				{
-					if(sceneManager.GetComponent<WindowManager>().alternativeDialogCanvas)
+					if(WindowManager.SharedInstance.alternativeDialogCanvas)
 					{
 						//dialogText.GetComponent<Text>().enabled = false;
 						dialogList.GetComponent<Image>().enabled = false;
@@ -141,7 +141,7 @@ public class Dialog : DialogIO {
 					}
 					#endregion
 
-					if(sceneManager.GetComponent<WindowManager>().alternativeDialogCanvas)
+					if(WindowManager.SharedInstance.alternativeDialogCanvas)
 					{
 						GameObject.FindWithTag("AnswerList").GetComponent<Image>().enabled = true;
 						answerOptions.ForEach (child => child.gameObject.GetComponent<Text>().enabled = false);
@@ -159,7 +159,7 @@ public class Dialog : DialogIO {
 					{
 						//Debug.Log ("size "+answerOptions.Count);
 						//Debug.Log ("answerCnt "+answerCnt);
-						if(sceneManager.GetComponent<WindowManager>().alternativeDialogCanvas)
+						if(WindowManager.SharedInstance.alternativeDialogCanvas)
 						{
 							Text answerText = answerOptions[answerCnt];
 							answerText.gameObject.GetComponent<Text>().enabled = true;
@@ -188,8 +188,8 @@ public class Dialog : DialogIO {
 				{
 					//Debug.Log ("increaseValue");
 					if(activeDialogElement.vartype == "global")
-						StateManager.SharedInstance.SetGlobalVariable (activeDialogElement.variable, 
-						                                               StateManager.SharedInstance.GetGlobalVariable(activeDialogElement.variable)+1);
+						GlobalVariableManager.SharedInstance.SetGlobalVariable (activeDialogElement.variable, 
+						                                                        GlobalVariableManager.SharedInstance.GetGlobalVariable(activeDialogElement.variable)+1);
 					else 
 						localVariables[activeDialogElement.variable]++;
 					/*if (localVariables[activeDialogElement.variable].type == "int")
@@ -217,7 +217,7 @@ public class Dialog : DialogIO {
 						if(dialogCase.variable != null)
 						{
 							if (dialogCase.vartype == "global")
-								value = StateManager.SharedInstance.GetGlobalVariable(dialogCase.variable);
+								value = GlobalVariableManager.SharedInstance.GetGlobalVariable(dialogCase.variable);
 							else
 								value = localVariables[dialogCase.variable];
 							if(dialogCase.type == "equal")
@@ -254,7 +254,7 @@ public class Dialog : DialogIO {
 									if(dialogCase.reset)
 									{
 										if (dialogCase.vartype == "global")
-											StateManager.SharedInstance.SetGlobalVariable(dialogCase.variable,value+1);
+											GlobalVariableManager.SharedInstance.SetGlobalVariable(dialogCase.variable,value+1);
 										else
 											localVariables[dialogCase.variable] = 0;
 									}
@@ -329,7 +329,7 @@ public class Dialog : DialogIO {
 		uiDialogElements.Clear();
 		uiChoiceElements.ForEach (child => child.SetActive(false));
 		uiChoiceElements.Clear ();
-		if(sceneManager.GetComponent<WindowManager>().alternativeDialogCanvas)
+		if(WindowManager.SharedInstance.alternativeDialogCanvas)
 		{
 			dialogText.GetComponent<Text>().text = "";
 			answerOptions.ForEach (child => child.gameObject.GetComponent<Text>().enabled = false);
@@ -343,7 +343,7 @@ public class Dialog : DialogIO {
 
 	public void SendAnswer(int answer)
 	{
-		if(!sceneManager.GetComponent<WindowManager>().alternativeDialogCanvas)
+		if(!WindowManager.SharedInstance.alternativeDialogCanvas)
 		{
 			uiChoiceElements.ForEach (child => child.SetActive(false));
 			uiChoiceElements.Clear ();
@@ -355,7 +355,7 @@ public class Dialog : DialogIO {
 		}
 		else
 		{
-			if(!sceneManager.GetComponent<WindowManager>().alternativeDialogCanvas)
+			if(!WindowManager.SharedInstance.alternativeDialogCanvas)
 			{
 				Image dialogImage = Instantiate (Resources.Load ("Prefabs/DialogElement", typeof(Image))) as Image;
 				dialogImage.transform.SetParent (dialogList.transform, false);
