@@ -11,7 +11,10 @@ public class MainComponentManager {
 			instance = new MainComponentManager ();
 			GameObject go = GameObject.Find ("Main");
 			if (go == null) {
-				go = new GameObject ("Main");
+				go = new GameObject ("GlobalManagers");
+				go.transform.parent = GameObject.FindWithTag ("ManagerGameObject").transform;
+				Object.DontDestroyOnLoad (GameObject.FindWithTag ("ManagerParent"));
+				Object.DontDestroyOnLoad (GameObject.FindWithTag ("SceneManager"));
 				instance.main = go;
 				// important: make game object persistent:
 				Object.DontDestroyOnLoad (go);

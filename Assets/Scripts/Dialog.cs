@@ -27,7 +27,7 @@ public class Dialog : DialogIO {
 	public GameObject interactionOverlay;
 	private GameObject sceneManager;
 	private GameObject dialogText;
-	//private WindowManager windowManager;
+	//private GUIManager windowManager;
 
 	private bool inDialog = false;
 	public bool isActiveObject = false;
@@ -45,7 +45,7 @@ public class Dialog : DialogIO {
 		answerList = GameObject.Find ("AnswerPanel") as GameObject;
 		sceneManager = GameObject.FindWithTag("SceneManager") as GameObject;
 		dialogText = GameObject.FindWithTag ("DialogText") as GameObject;
-		//windowManager = sceneManager.GetComponent<WindowManager>();
+		//windowManager = sceneManager.GetComponent<GUIManager>();
 		interactionOverlay = GameObject.Find ("InteractionOverlay") as GameObject;
 		//player.GetComponent<DialogEventHandler>().RegisterForEvents(this);
 		//eventSystem = (GameObject.Find ("EventSystem") as GameObject).GetComponent<EventSystem>();
@@ -81,14 +81,35 @@ public class Dialog : DialogIO {
 				if (dialogData == null)
 				{
 					dialogData = Load (name);
+					if (dialogData == null)
+					{
+						return;
+					}
 					CreateDialogMap();
 					CreateLocalVariableMap();
 				}
-
-				activeDialogElement = dialogMap[dialogData.startsWith];
-				inDialog = true;
-				StateManager.SharedInstance.SetGameState(GameState.Dialog);
-				newDialogElement = true;
+				if(dialogData.startsWith != null)
+				{
+					if(dialogMap.ContainsKey (dialogData.startsWith))
+					{
+						activeDialogElement = dialogMap[dialogData.startsWith];
+						inDialog = true;
+						StateManager.SharedInstance.SetGameState(GameState.Dialog);
+						newDialogElement = true;
+					}
+					else
+					{
+						Debug.Log ("[Dialog ERROR] the startsWith-value of the root element is not a valid id of another element.");
+						EndDialog ();
+						return;
+					}
+				}
+				else
+				{
+					Debug.Log ("[Dialog ERROR] Root element has no startsWith-value");
+					EndDialog ();
+					return;
+				}
 				//sceneManager.GetComponent<DisplayWindows>().ShowDialogWindow();
 
 			}
@@ -97,196 +118,305 @@ public class Dialog : DialogIO {
 		{
 			if(newDialogElement)
 			{
-				if(activeDialogElement.type == "text")
+				if(!HandleDialog())
 				{
-
-					if(WindowManager.SharedInstance.alternativeDialogCanvas)
-					{
-						dialogText.GetComponent<Text>().enabled = true;
-						dialogText.GetComponent<Text>().text = activeDialogElement.text;
-					}	
-
-					#region Legacy GUI
-					else
-					{
-						Image dialogImage = Instantiate (Resources.Load ("Prefabs/DialogElement", typeof(Image))) as Image;
-						dialogImage.transform.SetParent (dialogList.transform, false);
-						uiDialogElements.Add (dialogImage.gameObject);
-						Text[] texts = dialogImage.GetComponentsInChildren<Text>();
-						texts[0].text = dialogData.characterName + ":";
-						texts[1].text = activeDialogElement.text;
-					}
-					#endregion
+					Debug.Log ("[Dialog ERROR] Error in Dialog.cs HandleDialog(). Aborting dialog.");
+					EndDialog ();
+					return;
 				}
-				else if (activeDialogElement.type == "choice")
+			}
+			else
+			{
+				if ((Input.GetKeyUp (KeyCode.Return) || Input.GetMouseButtonUp(0)) && activeDialogElement.type == "text")
 				{
-					if(WindowManager.SharedInstance.alternativeDialogCanvas)
+					if(activeDialogElement.leadsTo == 0 || activeDialogElement.leadsTo == null)
 					{
-						//dialogText.GetComponent<Text>().enabled = false;
-						dialogList.GetComponent<Image>().enabled = false;
-						GameObject.FindWithTag ("ChoiceText").GetComponent<Text>().enabled = true;
-						GameObject.FindWithTag ("ChoiceText").GetComponent<Text>().text = activeDialogElement.text;
-						//dialogText.GetComponent<Text>().text = activeDialogElement.text;
+						EndDialog ();
+						return;
 					}
 
-					#region Legacy GUI	
+					if(dialogMap.ContainsKey (activeDialogElement.leadsTo))
+					{
+						activeDialogElement = dialogMap[activeDialogElement.leadsTo];
+						newDialogElement = true;
+					}
 					else
 					{
-						Image dialogImage = Instantiate (Resources.Load ("Prefabs/DialogElement", typeof(Image))) as Image;
-						dialogImage.transform.SetParent (dialogList.transform, false);
-						uiDialogElements.Add (dialogImage.gameObject);
-						Text[] texts = dialogImage.GetComponentsInChildren<Text>();
-						texts[0].text = dialogData.characterName + ":";
-						texts[1].text = activeDialogElement.text;
+						Debug.Log ("[Dialog ERROR] choice-Element with id = "+activeDialogElement.id+"'s leadTo-value is not a valid id of another element.");
+						return;
 					}
-					#endregion
+				}
+			}
+		}
+	}
 
-					if(WindowManager.SharedInstance.alternativeDialogCanvas)
+	bool HandleDialog()
+	{
+		if(activeDialogElement.type == "text")
+		{
+			
+			if(GUIManager.SharedInstance.alternativeDialogCanvas)
+			{
+				dialogText.GetComponent<Text>().enabled = true;
+				if(activeDialogElement.text != null)
+					dialogText.GetComponent<Text>().text = activeDialogElement.text;
+				else
+				{
+					Debug.Log ("[Dialog ERROR] Element (id = " + activeDialogElement.id + " has no text to display");
+					return false;
+				}
+			}	
+			
+			#region Legacy GUI
+			else
+			{
+				Image dialogImage = Instantiate (Resources.Load ("Prefabs/DialogElement", typeof(Image))) as Image;
+				dialogImage.transform.SetParent (dialogList.transform, false);
+				uiDialogElements.Add (dialogImage.gameObject);
+				Text[] texts = dialogImage.GetComponentsInChildren<Text>();
+				texts[0].text = dialogData.characterName + ":";
+				texts[1].text = activeDialogElement.text;
+			}
+			#endregion
+		}
+		else if (activeDialogElement.type == "choice")
+		{
+			if(GUIManager.SharedInstance.alternativeDialogCanvas)
+			{
+				if (activeDialogElement.dialogAnswers == null)
+				{
+					Debug.Log ("[Dialog ERROR] Element (id="+activeDialogElement.id+", type=choice) has no answer-Elements.");
+					return false;
+				}
+				//dialogText.GetComponent<Text>().enabled = false;
+				dialogList.GetComponent<Image>().enabled = false;
+				GameObject.FindWithTag ("ChoiceText").GetComponent<Text>().enabled = true;
+				if (activeDialogElement.text != null)
+					GameObject.FindWithTag ("ChoiceText").GetComponent<Text>().text = activeDialogElement.text;
+				//dialogText.GetComponent<Text>().text = activeDialogElement.text;
+			}
+			
+			#region Legacy GUI	
+			else
+			{
+				Image dialogImage = Instantiate (Resources.Load ("Prefabs/DialogElement", typeof(Image))) as Image;
+				dialogImage.transform.SetParent (dialogList.transform, false);
+				uiDialogElements.Add (dialogImage.gameObject);
+				Text[] texts = dialogImage.GetComponentsInChildren<Text>();
+				texts[0].text = dialogData.characterName + ":";
+				texts[1].text = activeDialogElement.text;
+			}
+			#endregion
+			
+			if(GUIManager.SharedInstance.alternativeDialogCanvas)
+			{
+				GameObject.FindWithTag("AnswerList").GetComponent<Image>().enabled = true;
+				answerOptions.ForEach (child => child.gameObject.GetComponent<Text>().enabled = false);
+				while (answerOptions.Count < activeDialogElement.dialogAnswers.Length)
+				{
+					Text answerText = Instantiate (Resources.Load ("Prefabs/DialogOption_new", typeof(Text))) as Text;
+					answerText.transform.SetParent (GameObject.FindWithTag("AnswerList").transform, false);
+					answerOptions.Add (answerText);
+				}
+			}
+			
+			int answerCnt = 0;
+			int answerTxtCnt = 0;
+			foreach (DialogAnswer answer in activeDialogElement.dialogAnswers)
+			{
+				//Debug.Log ("size "+answerOptions.Count);
+				//Debug.Log ("answerCnt "+answerCnt);
+				if(GUIManager.SharedInstance.alternativeDialogCanvas)
+				{
+					Text answerText = answerOptions[answerCnt];
+					answerText.gameObject.GetComponent<Text>().enabled = true;
+					if(answer.text == null)
 					{
-						GameObject.FindWithTag("AnswerList").GetComponent<Image>().enabled = true;
-						answerOptions.ForEach (child => child.gameObject.GetComponent<Text>().enabled = false);
-						while (answerOptions.Count < activeDialogElement.dialogAnswers.Length)
-						{
-
-							Text answerText = Instantiate (Resources.Load ("Prefabs/DialogOption_new", typeof(Text))) as Text;
-							answerText.transform.SetParent (GameObject.FindWithTag("AnswerList").transform, false);
-							answerOptions.Add (answerText);
-						}
-					}
-
-					int answerCnt = 0;
-					foreach (DialogAnswer answer in activeDialogElement.dialogAnswers)
-					{
-						//Debug.Log ("size "+answerOptions.Count);
-						//Debug.Log ("answerCnt "+answerCnt);
-						if(WindowManager.SharedInstance.alternativeDialogCanvas)
-						{
-							Text answerText = answerOptions[answerCnt];
-							answerText.gameObject.GetComponent<Text>().enabled = true;
-							answerText.text = answerCnt+1 + ". "+answer.text;
-							answerText.GetComponent<Button>().onClick.RemoveAllListeners();
-							answerText.GetComponent<AnswerNumber>().number = answerCnt;
-							answerText.GetComponent<Button>().onClick.AddListener(() => { SendAnswer(answerText.GetComponent<AnswerNumber>().number); });
-						}
-
-						#region Legacy GUI	
-						else
-						{
-							Text answerText = Instantiate (Resources.Load ("Prefabs/DialogOption", typeof(Text))) as Text;
-							answerText.transform.SetParent (answerList.transform, false);
-							uiChoiceElements.Add (answerText.gameObject);
-							answerText.text = answerCnt+1 + ". "+answer.text;
-							answerText.GetComponent<AnswerNumber>().number = answerCnt;
-							answerText.GetComponent<Button>().onClick.AddListener(() => { SendAnswer(answerText.GetComponent<AnswerNumber>().number); });
-						}
-						#endregion
-
 						answerCnt++;
+						continue;
 					}
+					answerText.text = answerCnt+1 + ". "+answer.text;
+					answerText.GetComponent<Button>().onClick.RemoveAllListeners();
+					answerText.GetComponent<AnswerNumber>().number = answerCnt;
+					answerText.GetComponent<Button>().onClick.AddListener(() => { SendAnswer(answerText.GetComponent<AnswerNumber>().number); });
 				}
-				else if (activeDialogElement.type == "increaseValue")
+				
+				#region Legacy GUI	
+				else
 				{
-					//Debug.Log ("increaseValue");
-					if(activeDialogElement.vartype == "global")
-						GlobalVariableManager.SharedInstance.SetGlobalVariable (activeDialogElement.variable, 
-						                                                        GlobalVariableManager.SharedInstance.GetGlobalVariable(activeDialogElement.variable)+1);
-					else 
-						localVariables[activeDialogElement.variable]++;
-					/*if (localVariables[activeDialogElement.variable].type == "int")
+					Text answerText = Instantiate (Resources.Load ("Prefabs/DialogOption", typeof(Text))) as Text;
+					answerText.transform.SetParent (answerList.transform, false);
+					uiChoiceElements.Add (answerText.gameObject);
+					answerText.text = answerCnt+1 + ". "+answer.text;
+					answerText.GetComponent<AnswerNumber>().number = answerCnt;
+					answerText.GetComponent<Button>().onClick.AddListener(() => { SendAnswer(answerText.GetComponent<AnswerNumber>().number); });
+				}
+				#endregion
+				answerTxtCnt++;
+				answerCnt++;
+			}
+			if(answerTxtCnt == 0)
+			{
+				Debug.Log ("[Dialog ERROR] Element (id="+activeDialogElement.id+") has no answer-elements with text values.");
+				return false;
+			}
+			else if(answerTxtCnt < answerCnt)
+			{
+				Debug.Log ("[Dialog WARNING] Some answers from element (id="+activeDialogElement.id+") could not be displayed because of missing text values.");
+			}
+		}
+		else if (activeDialogElement.type == "increaseValue")
+		{
+			//Debug.Log ("increaseValue");
+			if(activeDialogElement.vartype == "global")
+			{
+				if(!GlobalVariableManager.SharedInstance.SetGlobalVariable (activeDialogElement.variable, 
+				                                                        GlobalVariableManager.SharedInstance.GetGlobalVariable(activeDialogElement.variable)+1))
+				{
+					Debug.Log ("[Dialog ERROR] Could not find global variable "+activeDialogElement.variable+" for element (id="+activeDialogElement.id+").");
+					return false;
+				}
+			}
+			else if(localVariables.ContainsKey (activeDialogElement.variable))
+			{
+				localVariables[activeDialogElement.variable]++;
+			}
+			else
+			{
+				Debug.Log ("[Dialog ERROR] Could not find local variable "+activeDialogElement.variable+" for element (id="+activeDialogElement.id+").");
+				return false;
+			}
+			/*if (localVariables[activeDialogElement.variable].type == "int")
 					{
 						int value = int.Parse (localVariables[activeDialogElement.variable].value);
 						value++;
 						string strValue = value.ToString();
 						localVariables[activeDialogElement.variable].value = strValue;
 					}*/
-					if(activeDialogElement.leadsTo == 0)
-					{
-						EndDialog ();
-						return;
-					}
-					activeDialogElement = dialogMap[activeDialogElement.leadsTo];
-					newDialogElement = true;
-				}
-				else if (activeDialogElement.type == "switch")
-				{
-					foreach(DialogCase dialogCase in activeDialogElement.dialogCases)
-					{
+			if(activeDialogElement.leadsTo == 0 || activeDialogElement.leadsTo == null)
+			{
+				EndDialog ();
+				return true;
+			}
 
-						bool pass = false;
-						int value = 0;
-						if(dialogCase.variable != null)
-						{
-							if (dialogCase.vartype == "global")
-								value = GlobalVariableManager.SharedInstance.GetGlobalVariable(dialogCase.variable);
-							else
-								value = localVariables[dialogCase.variable];
-							if(dialogCase.type == "equal")
-							{
-								if(value == dialogCase.value)
-									pass = true;
-							}
-							else if(dialogCase.type == "greaterThan")
-							{
-								if(value > dialogCase.value)
-									pass = true;
-							}
-							else if(dialogCase.type == "lessThan")
-							{
-								if(value < dialogCase.value)
-									pass = true;
-							}
-						}
-						if(dialogCase.type == "default")
-							pass = true;
-
-						if(dialogCase.item != null)
-						{
-							if (player.GetComponentInChildren<Inventory>().GotItem (dialogCase.item))
-							{
-								pass = true;
-							}
-						}
-						//Debug.Log ("pass: "+pass);
-						if (pass)
-						{
-							if (dialogCase.variable != null)
-							{
-									if(dialogCase.reset)
-									{
-										if (dialogCase.vartype == "global")
-											GlobalVariableManager.SharedInstance.SetGlobalVariable(dialogCase.variable,value+1);
-										else
-											localVariables[dialogCase.variable] = 0;
-									}
-							}
-							if(dialogCase.leadsTo == 0)
-							{
-								EndDialog ();
-								return;
-							}
-							activeDialogElement = dialogMap[dialogCase.leadsTo];
-							newDialogElement = true;
-							return;
-						}
-					}
-				}
-				newDialogElement = false;
+			if (dialogMap.ContainsKey (activeDialogElement.leadsTo))
+			{
+				activeDialogElement = dialogMap[activeDialogElement.leadsTo];
+				newDialogElement = true;
 			}
 			else
 			{
-				if ((Input.GetKeyUp (KeyCode.Return) || Input.GetMouseButtonUp(0)) && activeDialogElement.type == "text")
-				{
-					if(activeDialogElement.leadsTo == 0)
-					{
-						EndDialog ();
-						return;
-					}
-
-					activeDialogElement = dialogMap[activeDialogElement.leadsTo];
-					newDialogElement = true;
-				}
+				Debug.Log ("[Dialog ERROR] Element with id = "+activeDialogElement.id+"'s leadTo-value is not a valid id of another element.");
+				return false;
 			}
 		}
+		else if (activeDialogElement.type == "switch")
+		{
+			if(activeDialogElement.dialogCases.Length < 1)
+			{
+				Debug.Log ("[Dialog ERROR] There are no case elements for element with id="+activeDialogElement.id+".");
+				return false;
+			}
+			bool pass = false;
+			foreach(DialogCase dialogCase in activeDialogElement.dialogCases)
+			{
+				if (dialogCase.value == null)
+				{
+					Debug.Log ("[Dialog WARNING] No value attribute for "+dialogCase.variable+", value=0 is assumed for choice of element with id="+activeDialogElement.id+".");
+					dialogCase.value = 0;
+				}
+				int value = 0;
+				if(dialogCase.variable != null)
+				{
+					if (dialogCase.vartype == "global")
+					{
+						value = GlobalVariableManager.SharedInstance.GetGlobalVariable(dialogCase.variable);
+						if (value == -1)
+						{
+							Debug.Log ("[Dialog WARNING] Couldn't find global variable "+dialogCase.variable+" for a case of element with id="+activeDialogElement.id+".");
+							continue;
+						}
+					}
+					else
+					{
+						if (localVariables.ContainsKey (dialogCase.variable))
+							value = localVariables[dialogCase.variable];
+						else
+						{
+							Debug.Log ("[Dialog WARNING] Couldn't find local variable "+dialogCase.variable+" for a case of element with id="+activeDialogElement.id+".");
+							continue;
+						}
+					}
+					if(dialogCase.type == "equal")
+					{
+						if(value == dialogCase.value)
+							pass = true;
+					}
+					else if(dialogCase.type == "greaterThan")
+					{
+						if(value > dialogCase.value)
+							pass = true;
+					}
+					else if(dialogCase.type == "lessThan")
+					{
+						if(value < dialogCase.value)
+							pass = true;
+					}
+				}
+				if(dialogCase.type == "default")
+					pass = true;
+				
+				if(dialogCase.item != null)
+				{
+					if (player.GetComponentInChildren<Inventory>().GotItem (dialogCase.item))
+					{
+						pass = true;
+					}
+				}
+				//Debug.Log ("pass: "+pass);
+				if (pass)
+				{
+					if (dialogCase.variable != null)
+					{
+						if(dialogCase.reset)
+						{
+							if (dialogCase.vartype == "global")
+								GlobalVariableManager.SharedInstance.SetGlobalVariable(dialogCase.variable,value+1);
+							else
+								localVariables[dialogCase.variable] = 0;
+						}
+					}
+					if(dialogCase.leadsTo == 0)
+					{
+						EndDialog ();
+						return true;
+					}
+					if(dialogMap.ContainsKey (dialogCase.leadsTo))
+					{
+						activeDialogElement = dialogMap[dialogCase.leadsTo];
+						newDialogElement = true;
+						return true;
+					}
+					else
+					{
+						Debug.Log ("[Dialog ERROR] choice-Element with id = "+activeDialogElement.id+"'s leadTo-value is not a valid id of another element.");
+						return false;
+					}
+				}
+			}
+			if(!pass)
+			{
+				Debug.Log ("[Dialog ERROR] No 'case' element was passed in element with id="+activeDialogElement.id+", consider using a 'default' case element");
+				return false;
+			}
+		}
+		else
+		{
+			Debug.Log ("[Dialog ERROR] At element with id = "+activeDialogElement.id+": '"+activeDialogElement.type+"' is not a valid type.");
+			return false;
+		}
+		newDialogElement = false;
+		return true;
 	}
 
 	void CreateDialogMap()
@@ -297,7 +427,12 @@ public class Dialog : DialogIO {
 			for (int i = 0; i < dialogData.dialogElement.Length; i++)
 			{
 				if(dialogData.dialogElement[i].type != "variable")
-					dialogMap.Add (dialogData.dialogElement[i].id, dialogData.dialogElement[i]);
+				{
+					if(dialogData.dialogElement[i].id != null)
+						dialogMap.Add (dialogData.dialogElement[i].id, dialogData.dialogElement[i]);
+					else
+						Debug.Log ("[Dialog ERROR] There is a non-variable root element without an ID.");
+				}
 			}
 		}
 	}
@@ -310,7 +445,14 @@ public class Dialog : DialogIO {
 			for (int i = 0; i < dialogData.dialogElement.Length; i++)
 			{
 				if(dialogData.dialogElement[i].type == "variable")
-					localVariables.Add (dialogData.dialogElement[i].name, dialogData.dialogElement[i].value);
+				{
+					if(dialogData.dialogElement[i].name != null)
+						localVariables.Add (dialogData.dialogElement[i].name, dialogData.dialogElement[i].value);
+					else
+					{
+						Debug.Log ("[Dialog WARNING] Can't create local variable without name-attribute.");
+					}
+				}
 			}
 		}
 	}
@@ -318,6 +460,7 @@ public class Dialog : DialogIO {
 	void EndDialog()
 	{
 		inDialog = false;
+		newDialogElement = false;
 		StateManager.SharedInstance.SetGameState(GameState.Free);
 		CleanUpDialog();
 		//sceneManager.GetComponent<DisplayWindows>().HideDialogWindow();
@@ -329,7 +472,7 @@ public class Dialog : DialogIO {
 		uiDialogElements.Clear();
 		uiChoiceElements.ForEach (child => child.SetActive(false));
 		uiChoiceElements.Clear ();
-		if(WindowManager.SharedInstance.alternativeDialogCanvas)
+		if(GUIManager.SharedInstance.alternativeDialogCanvas)
 		{
 			dialogText.GetComponent<Text>().text = "";
 			answerOptions.ForEach (child => child.gameObject.GetComponent<Text>().enabled = false);
@@ -343,7 +486,7 @@ public class Dialog : DialogIO {
 
 	public void SendAnswer(int answer)
 	{
-		if(!WindowManager.SharedInstance.alternativeDialogCanvas)
+		if(!GUIManager.SharedInstance.alternativeDialogCanvas)
 		{
 			uiChoiceElements.ForEach (child => child.SetActive(false));
 			uiChoiceElements.Clear ();
@@ -355,7 +498,7 @@ public class Dialog : DialogIO {
 		}
 		else
 		{
-			if(!WindowManager.SharedInstance.alternativeDialogCanvas)
+			if(!GUIManager.SharedInstance.alternativeDialogCanvas)
 			{
 				Image dialogImage = Instantiate (Resources.Load ("Prefabs/DialogElement", typeof(Image))) as Image;
 				dialogImage.transform.SetParent (dialogList.transform, false);
@@ -367,12 +510,22 @@ public class Dialog : DialogIO {
 			else
 			{
 				GameObject.FindWithTag("AnswerList").GetComponent<Image>().enabled = false;
+				answerOptions.ForEach (child => Destroy(child.gameObject));
+				answerOptions.Clear ();
 				dialogList.GetComponent<Image>().enabled = true;
 				dialogText.GetComponent<Text>().enabled = true;
 			}
 			//dialogText.SetActive (true);
-			activeDialogElement = dialogMap[activeDialogElement.dialogAnswers[answer].leadsTo];
-			newDialogElement = true;
+			if (dialogMap.ContainsKey (activeDialogElement.dialogAnswers[answer].leadsTo))
+			{
+				activeDialogElement = dialogMap[activeDialogElement.dialogAnswers[answer].leadsTo];
+				newDialogElement = true;
+			}
+			else
+			{
+				Debug.Log ("[Dialog ERROR] Element with id = "+activeDialogElement.id+"'s leadTo-value is not a valid id of another element.");
+				EndDialog();
+			}
 		}
 	}
 }

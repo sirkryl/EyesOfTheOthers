@@ -13,12 +13,11 @@ public class Inventory : MonoBehaviour {
 	private ArrayList items;
 	public Image itemList;
 	public Image itemLabelFab;
-	public GameObject infoPanel;
-	public GameObject imagePanel;
+	public GameObject maskItemInfo;
 	private Dictionary<string, Item> itemMap;
 	private Dictionary<string, Image> itemUIMap;
 	public Text itemName; 
-	public Image itemImage;
+	//public Image itemImage;
 	public Text itemType;
 	public Text itemEffect;
 	public Text itemDescription;
@@ -97,8 +96,8 @@ public class Inventory : MonoBehaviour {
 
 	public void GUIShowItemInfo(Item item)
 	{
-		infoPanel.GetComponent<Mask>().enabled = false;
-		imagePanel.GetComponent<Mask>().enabled = false;
+		maskItemInfo.GetComponent<Image>().enabled = true;
+		//imagePanel.GetComponent<Mask>().enabled = false;
 		itemName.text = item.name;
 		//itemImage.sprite = Sprite.
 		itemType.text = item.type;

@@ -18,7 +18,7 @@ public class PlayerManager : MonoBehaviour
 	private int thirst = 100;
 	private int sleep = 100;
 	private float timer = 0.5f;
-	//private WindowManager windowManager;
+	//private GUIManager windowManager;
 	private GameObject hungerText;
 	//private int 
 	private static PlayerManager instance = null;
@@ -34,7 +34,7 @@ public class PlayerManager : MonoBehaviour
 	void Start ()
 	{
 		hungerText = GameObject.Find ("HungerText");
-		//windowManager = GameObject.Find ("SceneManager").GetComponent<WindowManager>();
+		//windowManager = GameObject.Find ("SceneManager").GetComponent<GUIManager>();
 	}
 
 	// Update is called once per frame
@@ -83,7 +83,7 @@ public class PlayerManager : MonoBehaviour
 
 	void PlayerDead()
 	{
-		WindowManager.SharedInstance.ShowInteractionOverlay("You starved to death.");
+		GUIManager.SharedInstance.ShowInteractionOverlay("You starved to death.");
 		Debug.Log ("player dead");
 	}
 }

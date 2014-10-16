@@ -2,26 +2,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
-public class WindowManager : MonoBehaviour {
+public class GUIManager : MonoBehaviour {
 
 
-	//private static WindowManager instance = null;
-	public static WindowManager SharedInstance { get; private set; }
+	//private static GUIManager instance = null;
+	public static GUIManager SharedInstance { get; private set; }
 
 	public Canvas inventoryCanvas;
 	public Canvas debugCanvas;
 	public Canvas characterCanvas;
 	public Canvas overlayCanvas;
 	public List<Canvas> allCanvas;
-	public GameObject infoPanel;
-	public GameObject imagePanel;
+	public GameObject maskItemInfo;
 	public GameObject player;
-	public GameObject camera;
 	public GameObject interactionOverlay;
 	public Canvas dialogCanvas;
 	public bool alternativeDialogCanvas = false;
+	public bool loadAndSaveStuff = false;
 	private MouseLook playerMouseLook;
 	private MouseLook cameraMouseLook;
+	private Camera camera;
 
 	void Awake()
 	{
@@ -30,14 +30,16 @@ public class WindowManager : MonoBehaviour {
 
 		SharedInstance = this;
 		DontDestroyOnLoad(gameObject);
+
+		allCanvas = new List<Canvas>();
 	}
 
 	// Use this for initialization
 	void Start () {
-		allCanvas = new List<Canvas>();
+
+		camera = Camera.main;
 		StateManager.SharedInstance.OnStateChange += HandleOnStateChange;
-		infoPanel.GetComponent<Mask>().enabled = true;
-		imagePanel.GetComponent<Mask>().enabled = true;
+		maskItemInfo.GetComponent<Image>().enabled = false;
 		playerMouseLook = player.GetComponent<MouseLook>();
 		allCanvas.Add (inventoryCanvas);
 		allCanvas.Add (characterCanvas);
@@ -97,12 +99,10 @@ public class WindowManager : MonoBehaviour {
 		}
 		else if (Input.GetKeyUp("i"))
 		{
-			//PlayerManager.SharedInstance.Save ();
-			GlobalVariableManager.SharedInstance.SaveVariables ();
 			DeactivateAllOtherWindows(inventoryCanvas);
 
-			infoPanel.GetComponent<Mask>().enabled = true;
-			imagePanel.GetComponent<Mask>().enabled = true;
+			maskItemInfo.GetComponent<Image>().enabled = false;
+			//imagePanel.GetComponent<Mask>().enabled = true;
 
 			inventoryCanvas.GetComponent<Canvas>().enabled = !inventoryCanvas.GetComponent<Canvas>().enabled;
 			inventoryCanvas.GetComponent<GraphicRaycaster>().enabled = !inventoryCanvas.GetComponent<GraphicRaycaster>().enabled;
@@ -114,7 +114,7 @@ public class WindowManager : MonoBehaviour {
 		}
 		else if (Input.GetKeyUp("c"))
 		{
-			//Debug.Log ("tookApple: "+GlobalVariableManager.SharedInstance.GetGlobalVariable("tookApple"));
+			//Debug.Log ("apple: "+GlobalVariableManager.SharedInstance.GetGlobalVariable("tookApple"));
 			//StateManager.SharedInstance.SetGameState(GameState.Interface);
 			DeactivateAllOtherWindows(characterCanvas);
 			characterCanvas.GetComponent<Canvas>().enabled = !characterCanvas.GetComponent<Canvas>().enabled;
@@ -123,6 +123,11 @@ public class WindowManager : MonoBehaviour {
 				StateManager.SharedInstance.SetGameState(GameState.Interface);
 			else
 				StateManager.SharedInstance.SetGameState(GameState.Free);
+		}
+		else if (Input.GetKeyUp ("f5"))
+		{
+			Debug.Log ("save variables");
+			GlobalVariableManager.SharedInstance.SaveVariables ();
 		}
 	}
 

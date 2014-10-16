@@ -3,18 +3,25 @@ using System.Collections;
 
 public class GenerateTerrain : MonoBehaviour {
 
-	
 	private Transform[] tiles;
 	private Vector3[] positions;
 	private int random;
 	public int rows = 3;
 	public int cols = 3;
 	private Transform block1Fab;
+	private GameObject gameObjectParent;
 
-	
+	void Awake () {
+		if (GameObject.Find ("block1") != null)
+		{
+			Destroy(GameObject.Find ("block1"));
+		}
+	}
 	// Use this for initialization
 	void Start () {
 		StateManager.SharedInstance.SetGameState(GameState.Free);
+		gameObjectParent = GameObject.FindWithTag("Gameplay");
+		
 		block1Fab = Resources.Load ("Prefabs/block1", typeof(Transform)) as Transform;
 		//uncomment the following two lines to use other system again
 		UseRowsCols ();
@@ -83,6 +90,7 @@ public class GenerateTerrain : MonoBehaviour {
 			for (int col = 0; col < cols; col++)
 			{
 				tiles[cnt] = Instantiate(block1Fab, new Vector3(row*300, 1, col*300), Quaternion.identity) as Transform;
+				tiles[cnt].parent = gameObjectParent.transform;
 				cnt++;
 			}
 		}

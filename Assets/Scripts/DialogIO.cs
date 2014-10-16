@@ -129,9 +129,28 @@ public class DialogIO : MonoBehaviour {
 
 	public DialogData Load(string charName)
 	{
+		FileStream readFileStream;
+		DialogData data;
 		XmlSerializer xmlSerializer = new XmlSerializer(typeof(DialogData));
-		FileStream readFileStream = new FileStream("Assets/Resources/Dialog/"+charName+".xml", FileMode.Open, FileAccess.Read, FileShare.Read);
-		DialogData data = (DialogData)xmlSerializer.Deserialize(readFileStream);
+		try
+		{
+			readFileStream = new FileStream("Assets/Resources/Dialog/"+charName+".xml", FileMode.Open, FileAccess.Read, FileShare.Read);
+		}
+		catch
+		{
+			Debug.Log ("[Dialog ERROR] Could not find "+charName+".xml in Assets/Resources/Dialog");
+			return null;
+		}
+
+		try
+		{
+			data = (DialogData)xmlSerializer.Deserialize(readFileStream);
+		}
+		catch
+		{
+			Debug.Log ("[Dialog ERROR] Could not deserialize "+charName+".xml. There is very likely something wrong with the file structure.");
+			return null;
+		}
 		readFileStream.Close();
 		foreach (DialogElement element in data.dialogElement)
 		{

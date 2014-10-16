@@ -10,6 +10,8 @@ TagManager:
   - AnswerElement
   - ChoiceText
   - PickUp
+  - Gameplay
+  - ManagerParent
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX

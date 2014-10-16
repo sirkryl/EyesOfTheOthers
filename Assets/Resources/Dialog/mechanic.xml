@@ -6,7 +6,6 @@
 <case item="Apple" type="greaterThan" value="0" leadsTo="52"/>
 <case variable="ranAway" type="greaterThan" value="0" reset="true" leadsTo="51"/> 
 <case variable="spokenCount" type="greaterThan" value="0" leadsTo="50"/> 
-<case variable="dead" vartype="global" type="greaterThan" value="0" leadsTo="1"/>
 <case type="default" leadsTo="1"/>
 </element>
 <element id="1" type="text" leadsTo="2">

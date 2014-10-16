@@ -39,7 +39,8 @@
 				float spec = pow (nh, s.Gloss * 128) * s.Specular;
 				
 				fixed4 c;
-				c.rgb = ((s.Albedo * ramp * _LightColor0.rgb + _LightColor0.rgb * spec) * (atten * 2));
+				//c.rgb = ((s.Albedo * ramp * _LightColor0.rgb + _LightColor0.rgb * spec) * (atten * 2));
+				c.rgb = ((s.Albedo * ramp * _LightColor0.rgb + _LightColor0.rgb * 0) * (atten * 2));
 				c.a = s.Alpha;
 				return c;
 			}
