@@ -9,6 +9,7 @@ public class Item : MonoBehaviour {
 	public string type;
 	public int stackSize = 1;
 	public string description;	
+	public bool pickUp = true;
 	public bool stackable = false;
 	//probably with an extra script for consumables
 	public bool consumable = false;

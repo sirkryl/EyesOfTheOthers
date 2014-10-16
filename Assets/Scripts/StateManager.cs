@@ -4,10 +4,16 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.IO;
 
+public enum GameState { NullState, Free, Dialog, Interface }
+public delegate void OnStateChangeHandler();
 public class StateManager : MonoBehaviour
 {
-	private float timeOfDay;
 
+	public event OnStateChangeHandler OnStateChange;
+	public GameState gameState { get; private set; }
+
+	private float timeOfDay;
+	//private string gameState = "free";
 	private static StateManager instance = null;
 	public static StateManager SharedInstance {
 			get {
@@ -33,7 +39,14 @@ public class StateManager : MonoBehaviour
 	}
 	
 	private static Dictionary<string, int> globalVariables;
-	
+
+	public void SetGameState(GameState gameState) {
+		this.gameState = gameState;
+		if(OnStateChange!=null) {
+			OnStateChange();
+		}
+	}
+
 	static void LoadVariables()
 	{
 		XmlSerializer xmlSerializer = new XmlSerializer(typeof(VariableData));
@@ -58,6 +71,16 @@ public class StateManager : MonoBehaviour
 	{
 		globalVariables[name] = value;
 	}
+
+	/*public string GetGameState()
+	{
+		return gameState;
+	}
+
+	public void SetGameState(string state)
+	{
+		gameState = state;
+	}*/
 
 
 	/*public float GetTimeOfDay()

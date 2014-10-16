@@ -19,6 +19,7 @@ public class MainComponentManager {
 			// trigger instantiation of other singletons
 			//Component variableManager = VariableManager.SharedInstance;
 			Component stateManager = StateManager.SharedInstance;
+			Component playerManager = PlayerManager.SharedInstance;
 			// ...
 		}
 	}

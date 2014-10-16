@@ -14,9 +14,10 @@ public class PickUp : MonoBehaviour {
 	static GameObject bestOption;
 	static Inventory inventory;
 	static float closestPickUpDistance = 999.0f;
-
+	private GameObject sceneManager;
 	// Use this for initialization
 	void Start () {
+		sceneManager = GameObject.FindWithTag ("SceneManager");
 		mainCamera = Camera.main;
 		player = GameObject.FindWithTag ("Player");
 		item = (GetComponent<Item>());
@@ -28,18 +29,20 @@ public class PickUp : MonoBehaviour {
 
 		if (inPickUpRange)
 		{
-			GUI.Box (new Rect ((float)(Screen.width*0.5-100),(float)(Screen.height*0.5-20),200,20), "Press E to pick up item.");
+			//sceneManager.GetComponent<DisplayWindows>().ShowInteractionOverlay("Press 'E' to take "+item.name);
+			//GUI.Box (new Rect ((float)(Screen.width*0.5-100),(float)(Screen.height*0.5-20),200,20), "Press E to pick up item.");
 		}
 		else if (pickedUp)
 		{
 			//not working because object is getting destroyed at pickup
-			GUI.Box (new Rect ((float)(Screen.width*0.5-100),(float)(Screen.height*0.5-20),200,20), "Picked up " + item.name + "!");
+			//sceneManager.GetComponent<DisplayWindows>().HideInteractionOverlay();
+			//GUI.Box (new Rect ((float)(Screen.width*0.5-100),(float)(Screen.height*0.5-20),200,20), "Picked up " + item.name + "!");
 		}
 	}
 
 	// Update is called once per frame
 	void Update () {
-		if (player != null)
+		/*if (player != null)
 		{
 			distance = Vector3.Distance (player.transform.position, transform.position);
 			Vector3 viewPortCoords = mainCamera.WorldToViewportPoint(transform.position);
@@ -63,10 +66,12 @@ public class PickUp : MonoBehaviour {
 					inventory.AddItem (item);
 					pickedUp = true;
 					inPickUpRange = false;
+					//sceneManager.GetComponent<DisplayWindows>().HideInteractionOverlay();
 					gameObject.SetActive (false);
 					closestPickUpDistance = 999.0f;
 				}
 			}
-		}
+		}*/
 	}
+
 }

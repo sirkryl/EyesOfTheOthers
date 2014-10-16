@@ -37,7 +37,7 @@ public class Inventory : MonoBehaviour {
 		}
 	}
 
-	void OnGUI() {
+	/*void OnGUI() {
 		if (justPickedUp)
 		{
 			timer -= Time.deltaTime;
@@ -49,7 +49,7 @@ public class Inventory : MonoBehaviour {
 				timer = 3;
 			}
 		}
-	}
+	}*/
 
 	public void AddItem(Item item)
 	{

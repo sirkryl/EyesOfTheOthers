@@ -6,40 +6,33 @@ using UnityEngine.EventSystems;
 
 public class Dialog : DialogIO {
 
-	private Dictionary<int, DialogElement> dialogMap;
+	public static bool isAnythingActive = false;
 
+	private Dictionary<int, DialogElement> dialogMap;
 	private Dictionary<string, int> localVariables;
-	//private bool alternativeUI = false;
+
 	private List<GameObject> uiDialogElements;
 	private List<GameObject> uiChoiceElements;
 	private List<Text> answerOptions;
-	private DialogElement activeDialogElement;
-	private GameObject player;
-	public KeyCode pressButton = KeyCode.E;
-	private Camera mainCamera;
+
 	public string name;
-	public DialogData dialogData;
-	private bool inDialog = false;
-	private bool inDialogRange = false;
-	private bool newDialogElement = false;
-	public float dialogDistance = 2.0f;
-	static float closestDialogDistance = 999.0f;
-	static GameObject bestOption;
-	//public Text npcName;
-	//public Text npcText;
-	//public EventSystem eventSystem;
-	//public Text playerText;
-	//public Text playerName;
-	//public Text dialogOptions;
+	private DialogElement activeDialogElement;
+	private DialogData dialogData;
+
+	private GameObject player;
+	private Camera mainCamera;
 	private GameObject dialogElementPrefab;
 	private GameObject dialogList;
 	private GameObject answerList;
+	public GameObject interactionOverlay;
 	private GameObject sceneManager;
 	private GameObject dialogText;
-	private int currentId;
-	//private bool startedDialog = false;
-	//public Canvas dialogCanvas;
-	private float distance;
+	private WindowManager windowManager;
+
+	private bool inDialog = false;
+	public bool isActiveObject = false;
+	private bool newDialogElement = false;
+
 	// Use this for initialization
 	void Start () {
 		uiDialogElements = new List<GameObject>();
@@ -52,6 +45,8 @@ public class Dialog : DialogIO {
 		answerList = GameObject.Find ("AnswerPanel") as GameObject;
 		sceneManager = GameObject.FindWithTag("SceneManager") as GameObject;
 		dialogText = GameObject.FindWithTag ("DialogText") as GameObject;
+		windowManager = sceneManager.GetComponent<WindowManager>();
+		interactionOverlay = GameObject.Find ("InteractionOverlay") as GameObject;
 		//player.GetComponent<DialogEventHandler>().RegisterForEvents(this);
 		//eventSystem = (GameObject.Find ("EventSystem") as GameObject).GetComponent<EventSystem>();
 		//dialogElementPrefab = Resources.Load ("Prefabs/DialogElement") as GameObject;
@@ -62,102 +57,56 @@ public class Dialog : DialogIO {
 		dialogOptions = GameObject.Find ("DialogOptions") as Text;*/
 
 	}
-
+	/*
 	void OnGUI() {
 
-		/*if (inDialog && startedDialog)
+		if (isActiveObject && !inDialog)
 		{
-			Image dialogImage = Instantiate (Resources.Load ("Prefabs/DialogElement", typeof(Image))) as Image;
-			dialogImage.transform.SetParent (dialogList.transform, false);
-			Text[] texts = dialogImage.GetComponentsInChildren<Text>();
-			texts[0].text = dialogData.characterName + ":";
-			texts[1].text = dialogData.dialogElement[0].text;
-			startedDialog = false;
-			//playerName.text = "You:";
-
-		}*/
-
-		if (inDialogRange && !inDialog)
-		{
-			//sceneManager.GetComponent<DisplayWindows>().ShowInteractionOverlay("Press 'E' to talk.");
-			GUI.Box (new Rect ((float)(Screen.width*0.5-100),(float)(Screen.height*0.5-20),200,20), "Press E to talk.");
+			//GUI.Box (new Rect ((float)(Screen.width*0.5-100),(float)(Screen.height*0.5-20),200,20), "Press E to talk.");
 		}
-		else if(inDialog || !inDialogRange)
+		else if(!isAnythingActive)// || !inDialogRange)
 		{
-			//Debug.Log ("inDialog: "+inDialog+", range: "+inDialogRange);
-			//sceneManager.GetComponent<DisplayWindows>().HideInteractionOverlay();
+			//windowManager.HideInteractionOverlay();
 		}
-	}
+	}*/
 
 	// Update is called once per frame
 	void Update () {
+		//Debug.Log (name + " is inDialog: "+inDialog+", or in Dialog range: "+inDialogRange);
 		if (player != null && !inDialog)
 		{
-			distance = Vector3.Distance (player.transform.position, transform.position);
-			Vector3 viewPortCoords = mainCamera.WorldToViewportPoint(transform.position);
-			if (distance <= dialogDistance 
-			    && viewPortCoords.x >= 0 && viewPortCoords.x <= 1 
-			    && viewPortCoords.y >= 0 && viewPortCoords.y <= 1)
+			if (Input.GetKeyDown (KeyCode.E) && isActiveObject)// && inDialogRange)
 			{
-				if (distance <= closestDialogDistance)
+				//if (bestOption == gameObject)
+				if (dialogData == null)
 				{
-					closestDialogDistance = distance;
-					bestOption = gameObject;
+					dialogData = Load (name);
+					CreateDialogMap();
+					CreateLocalVariableMap();
 				}
-				inDialogRange = true;
-			}
-			else 
-			{
-				inDialogRange = false;
-				if (bestOption == gameObject)
-				{
-					bestOption = null;
-					closestDialogDistance = 999.0f;
-				}
-			}
-			
-			if (Input.GetKeyDown (pressButton) && inDialogRange)
-			{
-				if (bestOption == gameObject)
-				{
-					if (dialogData == null)
-					{
-						dialogData = Load (name);
-						CreateDialogMap();
-						CreateLocalVariableMap();
-					}
-					//Debug.Log ("timeOFday: "+StateManager.SharedInstance.GetGlobalVariable("timeOfDay"));
-					//Debug.Log ("spokenCount: "+localVariables["spokenCount"]);
-					//Debug.Log ("ranAway: "+localVariables["ranAway"]);
-					activeDialogElement = dialogMap[dialogData.startsWith];
-					inDialog = true;
-					newDialogElement = true;
-					//inDialog = true;
-					//startedDialog = true;
-					sceneManager.GetComponent<DisplayWindows>().ShowDialogWindow();
 
-					//player.GetComponent<MouseLook>().enabled = false;;
-					//mainCamera.GetComponent<MouseLook>().enabled = false;
-					//dialogCanvas.GetComponent<Canvas>().enabled = true;
-					//dialogCanvas.GetComponent<GraphicRaycaster>().enabled = true;
-					inDialogRange = false;
-					//gameObject.SetActive (false);
-					closestDialogDistance = 999.0f;
-				}
+				activeDialogElement = dialogMap[dialogData.startsWith];
+				inDialog = true;
+				StateManager.SharedInstance.SetGameState(GameState.Dialog);
+				newDialogElement = true;
+				//sceneManager.GetComponent<DisplayWindows>().ShowDialogWindow();
+
 			}
 		}
 		else if (inDialog)
 		{
 			if(newDialogElement)
 			{
-				//Debug.Log ("type: "+activeDialogElement.type);
 				if(activeDialogElement.type == "text")
 				{
-					if(sceneManager.GetComponent<DisplayWindows>().alternativeDialogCanvas)
+
+					if(sceneManager.GetComponent<WindowManager>().alternativeDialogCanvas)
 					{
 						dialogText.GetComponent<Text>().enabled = true;
 						dialogText.GetComponent<Text>().text = activeDialogElement.text;
-					}
+					}	
+
+					#region Legacy GUI
 					else
 					{
 						Image dialogImage = Instantiate (Resources.Load ("Prefabs/DialogElement", typeof(Image))) as Image;
@@ -167,10 +116,11 @@ public class Dialog : DialogIO {
 						texts[0].text = dialogData.characterName + ":";
 						texts[1].text = activeDialogElement.text;
 					}
+					#endregion
 				}
 				else if (activeDialogElement.type == "choice")
 				{
-					if(sceneManager.GetComponent<DisplayWindows>().alternativeDialogCanvas)
+					if(sceneManager.GetComponent<WindowManager>().alternativeDialogCanvas)
 					{
 						//dialogText.GetComponent<Text>().enabled = false;
 						dialogList.GetComponent<Image>().enabled = false;
@@ -178,7 +128,8 @@ public class Dialog : DialogIO {
 						GameObject.FindWithTag ("ChoiceText").GetComponent<Text>().text = activeDialogElement.text;
 						//dialogText.GetComponent<Text>().text = activeDialogElement.text;
 					}
-						
+
+					#region Legacy GUI	
 					else
 					{
 						Image dialogImage = Instantiate (Resources.Load ("Prefabs/DialogElement", typeof(Image))) as Image;
@@ -188,8 +139,9 @@ public class Dialog : DialogIO {
 						texts[0].text = dialogData.characterName + ":";
 						texts[1].text = activeDialogElement.text;
 					}
+					#endregion
 
-					if(sceneManager.GetComponent<DisplayWindows>().alternativeDialogCanvas)
+					if(sceneManager.GetComponent<WindowManager>().alternativeDialogCanvas)
 					{
 						GameObject.FindWithTag("AnswerList").GetComponent<Image>().enabled = true;
 						answerOptions.ForEach (child => child.gameObject.GetComponent<Text>().enabled = false);
@@ -207,7 +159,7 @@ public class Dialog : DialogIO {
 					{
 						//Debug.Log ("size "+answerOptions.Count);
 						//Debug.Log ("answerCnt "+answerCnt);
-						if(sceneManager.GetComponent<DisplayWindows>().alternativeDialogCanvas)
+						if(sceneManager.GetComponent<WindowManager>().alternativeDialogCanvas)
 						{
 							Text answerText = answerOptions[answerCnt];
 							answerText.gameObject.GetComponent<Text>().enabled = true;
@@ -216,6 +168,8 @@ public class Dialog : DialogIO {
 							answerText.GetComponent<AnswerNumber>().number = answerCnt;
 							answerText.GetComponent<Button>().onClick.AddListener(() => { SendAnswer(answerText.GetComponent<AnswerNumber>().number); });
 						}
+
+						#region Legacy GUI	
 						else
 						{
 							Text answerText = Instantiate (Resources.Load ("Prefabs/DialogOption", typeof(Text))) as Text;
@@ -225,6 +179,8 @@ public class Dialog : DialogIO {
 							answerText.GetComponent<AnswerNumber>().number = answerCnt;
 							answerText.GetComponent<Button>().onClick.AddListener(() => { SendAnswer(answerText.GetComponent<AnswerNumber>().number); });
 						}
+						#endregion
+
 						answerCnt++;
 					}
 				}
@@ -318,7 +274,7 @@ public class Dialog : DialogIO {
 			}
 			else
 			{
-				if (Input.GetKeyUp (KeyCode.Return) && activeDialogElement.type == "text")
+				if ((Input.GetKeyUp (KeyCode.Return) || Input.GetMouseButtonUp(0)) && activeDialogElement.type == "text")
 				{
 					if(activeDialogElement.leadsTo == 0)
 					{
@@ -362,8 +318,9 @@ public class Dialog : DialogIO {
 	void EndDialog()
 	{
 		inDialog = false;
+		StateManager.SharedInstance.SetGameState(GameState.Free);
 		CleanUpDialog();
-		sceneManager.GetComponent<DisplayWindows>().HideDialogWindow();
+		//sceneManager.GetComponent<DisplayWindows>().HideDialogWindow();
 	}
 
 	void CleanUpDialog()
@@ -372,7 +329,7 @@ public class Dialog : DialogIO {
 		uiDialogElements.Clear();
 		uiChoiceElements.ForEach (child => child.SetActive(false));
 		uiChoiceElements.Clear ();
-		if(sceneManager.GetComponent<DisplayWindows>().alternativeDialogCanvas)
+		if(sceneManager.GetComponent<WindowManager>().alternativeDialogCanvas)
 		{
 			dialogText.GetComponent<Text>().text = "";
 			answerOptions.ForEach (child => child.gameObject.GetComponent<Text>().enabled = false);
@@ -386,18 +343,19 @@ public class Dialog : DialogIO {
 
 	public void SendAnswer(int answer)
 	{
-		if(!sceneManager.GetComponent<DisplayWindows>().alternativeDialogCanvas)
+		if(!sceneManager.GetComponent<WindowManager>().alternativeDialogCanvas)
 		{
 			uiChoiceElements.ForEach (child => child.SetActive(false));
 			uiChoiceElements.Clear ();
 		}
-		if(activeDialogElement.dialogAnswers[answer].leadsTo == 0)
+		if(activeDialogElement.dialogAnswers[answer].leadsTo == null
+		   || activeDialogElement.dialogAnswers[answer].leadsTo == 0)
 		{
 			EndDialog ();
 		}
 		else
 		{
-			if(!sceneManager.GetComponent<DisplayWindows>().alternativeDialogCanvas)
+			if(!sceneManager.GetComponent<WindowManager>().alternativeDialogCanvas)
 			{
 				Image dialogImage = Instantiate (Resources.Load ("Prefabs/DialogElement", typeof(Image))) as Image;
 				dialogImage.transform.SetParent (dialogList.transform, false);
@@ -417,13 +375,4 @@ public class Dialog : DialogIO {
 			newDialogElement = true;
 		}
 	}
-
-
-	/*public void HideDialogCanvas()
-	{
-		dialogCanvas.GetComponent<Canvas>().enabled = false;
-		dialogCanvas.GetComponent<GraphicRaycaster>().enabled = false;
-		player.GetComponent<MouseLook>().enabled = true;;
-		mainCamera.GetComponent<MouseLook>().enabled = true;
-	}*/
 }

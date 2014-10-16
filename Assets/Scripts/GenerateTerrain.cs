@@ -14,7 +14,7 @@ public class GenerateTerrain : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-
+		StateManager.SharedInstance.SetGameState(GameState.Free);
 		block1Fab = Resources.Load ("Prefabs/block1", typeof(Transform)) as Transform;
 		//uncomment the following two lines to use other system again
 		UseRowsCols ();
