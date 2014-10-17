@@ -7,9 +7,7 @@ public class Inventory : MonoBehaviour {
 
 	//will likely change to something like an ItemData[]
 	public Transform[] contents;
-	private bool justPickedUp = false;
-	private string newItemName;
-	private float timer = 3;
+
 	private ArrayList items;
 	public Image itemList;
 	public Image itemLabelFab;
@@ -30,10 +28,6 @@ public class Inventory : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (justPickedUp)
-		{
-
-		}
 	}
 
 	/*void OnGUI() {
@@ -52,14 +46,12 @@ public class Inventory : MonoBehaviour {
 
 	public void AddItem(Item item)
 	{
-		newItemName = item.name;
 		if (itemMap.ContainsKey(item.name))
 		{
 			itemMap[item.name].stackSize += item.stackSize;
 		}
 		else		
 			itemMap.Add (item.name, item);
-		justPickedUp = true;
 
 		if (itemUIMap.ContainsKey (item.name))
 		{
@@ -103,5 +95,8 @@ public class Inventory : MonoBehaviour {
 		itemType.text = item.type;
 		itemEffect.text = "No effect.";
 		itemDescription.text = item.description;
+
+
+		GameObject.FindWithTag ("ItemImage").GetComponent<Image>().sprite = item.icon;
 	}
 }

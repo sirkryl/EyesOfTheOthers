@@ -6,7 +6,7 @@ using System.Text;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-public class DialogIO : MonoBehaviour {
+public class DialogIO {
 
 	//public static Dictionary<string, DialogData> dialogMap;
 

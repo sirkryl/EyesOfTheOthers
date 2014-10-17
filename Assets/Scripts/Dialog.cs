@@ -4,147 +4,123 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
-public class Dialog : DialogIO {
+public class Dialog : Selectable {
 
 	public static bool isAnythingActive = false;
-
-	private Dictionary<int, DialogElement> dialogMap;
+	private Dictionary<int, DialogIO.DialogElement> dialogMap;
 	private Dictionary<string, int> localVariables;
 
+	//only for legacy UI
 	private List<GameObject> uiDialogElements;
 	private List<GameObject> uiChoiceElements;
+
+
 	private List<Text> answerOptions;
 
-	public string name;
-	private DialogElement activeDialogElement;
-	private DialogData dialogData;
+	private DialogIO dialogIO;
 
-	private GameObject player;
-	private Camera mainCamera;
+	private DialogIO.DialogElement activeDialogElement;
+	private DialogIO.DialogData dialogData;
+	
 	private GameObject dialogElementPrefab;
 	private GameObject dialogList;
 	private GameObject answerList;
-	public GameObject interactionOverlay;
-	private GameObject sceneManager;
 	private GameObject dialogText;
-	//private GUIManager windowManager;
+
+	private Inventory inventory;
 
 	private bool inDialog = false;
 	public bool isActiveObject = false;
 	private bool newDialogElement = false;
 
-	// Use this for initialization
-	void Start () {
+
+	void Awake () {
+		//legacy UI
 		uiDialogElements = new List<GameObject>();
 		uiChoiceElements = new List<GameObject>();
+
+
 		answerOptions = new List<Text>();
 		localVariables = new Dictionary<string, int>();
-		mainCamera = Camera.main;
-		player = GameObject.FindWithTag ("Player") as GameObject;
+		
+		highlight = "Press 'E' to talk.";
+		dialogIO = new DialogIO();
+	}
+	// Use this for initialization
+	void Start () {
+		inventory = GameObject.FindWithTag ("Inventory").GetComponent<Inventory>();
 		dialogList = GameObject.Find ("DialogList") as GameObject;
 		answerList = GameObject.Find ("AnswerPanel") as GameObject;
-		sceneManager = GameObject.FindWithTag("SceneManager") as GameObject;
 		dialogText = GameObject.FindWithTag ("DialogText") as GameObject;
-		//windowManager = sceneManager.GetComponent<GUIManager>();
-		interactionOverlay = GameObject.Find ("InteractionOverlay") as GameObject;
-		//player.GetComponent<DialogEventHandler>().RegisterForEvents(this);
-		//eventSystem = (GameObject.Find ("EventSystem") as GameObject).GetComponent<EventSystem>();
-		//dialogElementPrefab = Resources.Load ("Prefabs/DialogElement") as GameObject;
-		/*npcName = GameObject.Find ("NPCName") as Text;
-		npcText = GameObject.Find ("NPCText") as Text;
-		playerText = GameObject.Find ("PlayerText") as Text;
-		playerName = GameObject.Find ("PlayerName") as Text;
-		dialogOptions = GameObject.Find ("DialogOptions") as Text;*/
+
 
 	}
-	/*
-	void OnGUI() {
 
-		if (isActiveObject && !inDialog)
+	public override void HandleSelection() {
+		if (dialogData == null)
 		{
-			//GUI.Box (new Rect ((float)(Screen.width*0.5-100),(float)(Screen.height*0.5-20),200,20), "Press E to talk.");
-		}
-		else if(!isAnythingActive)// || !inDialogRange)
-		{
-			//windowManager.HideInteractionOverlay();
-		}
-	}*/
-
-	// Update is called once per frame
-	void Update () {
-		//Debug.Log (name + " is inDialog: "+inDialog+", or in Dialog range: "+inDialogRange);
-		if (player != null && !inDialog)
-		{
-			if (Input.GetKeyDown (KeyCode.E) && isActiveObject)// && inDialogRange)
+			dialogData = dialogIO.Load (name);
+			if (dialogData == null)
 			{
-				//if (bestOption == gameObject)
-				if (dialogData == null)
-				{
-					dialogData = Load (name);
-					if (dialogData == null)
-					{
-						return;
-					}
-					CreateDialogMap();
-					CreateLocalVariableMap();
-				}
-				if(dialogData.startsWith != null)
-				{
-					if(dialogMap.ContainsKey (dialogData.startsWith))
-					{
-						activeDialogElement = dialogMap[dialogData.startsWith];
-						inDialog = true;
-						StateManager.SharedInstance.SetGameState(GameState.Dialog);
-						newDialogElement = true;
-					}
-					else
-					{
-						Debug.Log ("[Dialog ERROR] the startsWith-value of the root element is not a valid id of another element.");
-						EndDialog ();
-						return;
-					}
-				}
-				else
-				{
-					Debug.Log ("[Dialog ERROR] Root element has no startsWith-value");
-					EndDialog ();
-					return;
-				}
-				//sceneManager.GetComponent<DisplayWindows>().ShowDialogWindow();
-
+				return;
 			}
+			CreateDialogMap();
+			CreateLocalVariableMap();
 		}
-		else if (inDialog)
+		if(dialogData.startsWith != null)
 		{
-			if(newDialogElement)
+			if(dialogMap.ContainsKey (dialogData.startsWith))
 			{
-				if(!HandleDialog())
-				{
-					Debug.Log ("[Dialog ERROR] Error in Dialog.cs HandleDialog(). Aborting dialog.");
-					EndDialog ();
-					return;
-				}
+				activeDialogElement = dialogMap[dialogData.startsWith];
+				inDialog = true;
+				StateManager.SharedInstance.SetGameState(GameState.Dialog);
+				newDialogElement = true;
 			}
 			else
 			{
-				if ((Input.GetKeyUp (KeyCode.Return) || Input.GetMouseButtonUp(0)) && activeDialogElement.type == "text")
-				{
-					if(activeDialogElement.leadsTo == 0 || activeDialogElement.leadsTo == null)
-					{
-						EndDialog ();
-						return;
-					}
+				Debug.Log ("[Dialog ERROR] the startsWith-value of the root element is not a valid id of another element.");
+				EndDialog ();
+				return;
+			}
+		}
+		else
+		{
+			Debug.Log ("[Dialog ERROR] Root element has no startsWith-value");
+			EndDialog ();
+			return;
+		}
+	}
 
-					if(dialogMap.ContainsKey (activeDialogElement.leadsTo))
-					{
-						activeDialogElement = dialogMap[activeDialogElement.leadsTo];
-						newDialogElement = true;
-					}
-					else
-					{
-						Debug.Log ("[Dialog ERROR] choice-Element with id = "+activeDialogElement.id+"'s leadTo-value is not a valid id of another element.");
-						return;
-					}
+	// Update is called once per frame
+	void Update () {
+		if(newDialogElement)
+		{
+			if(!HandleDialog())
+			{
+				Debug.Log ("[Dialog ERROR] Error in Dialog.cs HandleDialog(). Aborting dialog.");
+				EndDialog ();
+				return;
+			}
+		}
+		else if(activeDialogElement != null)
+		{
+			if ((Input.GetKeyUp (KeyCode.Return) || Input.GetMouseButtonUp(0)) && activeDialogElement.type == "text")
+			{
+				if(activeDialogElement.leadsTo == 0 || activeDialogElement.leadsTo == null)
+				{
+					EndDialog ();
+					return;
+				}
+				
+				if(dialogMap.ContainsKey (activeDialogElement.leadsTo))
+				{
+					activeDialogElement = dialogMap[activeDialogElement.leadsTo];
+					newDialogElement = true;
+				}
+				else
+				{
+					Debug.Log ("[Dialog ERROR] choice-Element with id = "+activeDialogElement.id+"'s leadTo-value is not a valid id of another element.");
+					return;
 				}
 			}
 		}
@@ -222,7 +198,7 @@ public class Dialog : DialogIO {
 			
 			int answerCnt = 0;
 			int answerTxtCnt = 0;
-			foreach (DialogAnswer answer in activeDialogElement.dialogAnswers)
+			foreach (DialogIO.DialogAnswer answer in activeDialogElement.dialogAnswers)
 			{
 				//Debug.Log ("size "+answerOptions.Count);
 				//Debug.Log ("answerCnt "+answerCnt);
@@ -318,7 +294,7 @@ public class Dialog : DialogIO {
 				return false;
 			}
 			bool pass = false;
-			foreach(DialogCase dialogCase in activeDialogElement.dialogCases)
+			foreach(DialogIO.DialogCase dialogCase in activeDialogElement.dialogCases)
 			{
 				if (dialogCase.value == null)
 				{
@@ -368,7 +344,7 @@ public class Dialog : DialogIO {
 				
 				if(dialogCase.item != null)
 				{
-					if (player.GetComponentInChildren<Inventory>().GotItem (dialogCase.item))
+					if (inventory.GotItem (dialogCase.item))
 					{
 						pass = true;
 					}
@@ -423,7 +399,7 @@ public class Dialog : DialogIO {
 	{
 		if(dialogData != null)
 		{
-			dialogMap = new Dictionary<int, DialogElement>();
+			dialogMap = new Dictionary<int, DialogIO.DialogElement>();
 			for (int i = 0; i < dialogData.dialogElement.Length; i++)
 			{
 				if(dialogData.dialogElement[i].type != "variable")
@@ -461,18 +437,23 @@ public class Dialog : DialogIO {
 	{
 		inDialog = false;
 		newDialogElement = false;
+		activeDialogElement = null;
 		StateManager.SharedInstance.SetGameState(GameState.Free);
 		CleanUpDialog();
-		//sceneManager.GetComponent<DisplayWindows>().HideDialogWindow();
 	}
 
 	void CleanUpDialog()
 	{
-		uiDialogElements.ForEach (child => child.SetActive(false));
-		uiDialogElements.Clear();
-		uiChoiceElements.ForEach (child => child.SetActive(false));
-		uiChoiceElements.Clear ();
-		if(GUIManager.SharedInstance.alternativeDialogCanvas)
+		#region Legacy GUI	
+		if (GUIManager.SharedInstance.alternativeDialogCanvas)
+		{
+			uiDialogElements.ForEach (child => child.SetActive(false));
+			uiDialogElements.Clear();
+			uiChoiceElements.ForEach (child => child.SetActive(false));
+			uiChoiceElements.Clear ();
+		}
+		#endregion
+		else
 		{
 			dialogText.GetComponent<Text>().text = "";
 			answerOptions.ForEach (child => child.gameObject.GetComponent<Text>().enabled = false);
@@ -480,8 +461,6 @@ public class Dialog : DialogIO {
 			answerOptions.ForEach (child => Destroy(child.gameObject));
 			answerOptions.Clear ();
 		}
-		//answerOptions.Clear ();
-		//uiDialogElements.Clear();
 	}
 
 	public void SendAnswer(int answer)

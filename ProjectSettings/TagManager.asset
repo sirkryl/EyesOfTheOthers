@@ -12,6 +12,8 @@ TagManager:
   - PickUp
   - Gameplay
   - ManagerParent
+  - ItemImage
+  - ManagerGameObject
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
