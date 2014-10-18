@@ -146,7 +146,7 @@ public class Dialog : Selectable {
 			#region Legacy GUI
 			else
 			{
-				Image dialogImage = Instantiate (Resources.Load ("Prefabs/DialogElement", typeof(Image))) as Image;
+				Image dialogImage = Instantiate (Resources.Load ("Prefabs/GUI/DialogElement", typeof(Image))) as Image;
 				dialogImage.transform.SetParent (dialogList.transform, false);
 				uiDialogElements.Add (dialogImage.gameObject);
 				Text[] texts = dialogImage.GetComponentsInChildren<Text>();
@@ -175,7 +175,7 @@ public class Dialog : Selectable {
 			#region Legacy GUI	
 			else
 			{
-				Image dialogImage = Instantiate (Resources.Load ("Prefabs/DialogElement", typeof(Image))) as Image;
+				Image dialogImage = Instantiate (Resources.Load ("Prefabs/GUI/DialogElement", typeof(Image))) as Image;
 				dialogImage.transform.SetParent (dialogList.transform, false);
 				uiDialogElements.Add (dialogImage.gameObject);
 				Text[] texts = dialogImage.GetComponentsInChildren<Text>();
@@ -190,7 +190,7 @@ public class Dialog : Selectable {
 				answerOptions.ForEach (child => child.gameObject.GetComponent<Text>().enabled = false);
 				while (answerOptions.Count < activeDialogElement.dialogAnswers.Length)
 				{
-					Text answerText = Instantiate (Resources.Load ("Prefabs/DialogOption_new", typeof(Text))) as Text;
+					Text answerText = Instantiate (Resources.Load ("Prefabs/GUI/DialogOption_new", typeof(Text))) as Text;
 					answerText.transform.SetParent (GameObject.FindWithTag("AnswerList").transform, false);
 					answerOptions.Add (answerText);
 				}
@@ -220,7 +220,7 @@ public class Dialog : Selectable {
 				#region Legacy GUI	
 				else
 				{
-					Text answerText = Instantiate (Resources.Load ("Prefabs/DialogOption", typeof(Text))) as Text;
+					Text answerText = Instantiate (Resources.Load ("Prefabs/GUI/DialogOption", typeof(Text))) as Text;
 					answerText.transform.SetParent (answerList.transform, false);
 					uiChoiceElements.Add (answerText.gameObject);
 					answerText.text = answerCnt+1 + ". "+answer.text;
@@ -479,7 +479,7 @@ public class Dialog : Selectable {
 		{
 			if(!GUIManager.SharedInstance.alternativeDialogCanvas)
 			{
-				Image dialogImage = Instantiate (Resources.Load ("Prefabs/DialogElement", typeof(Image))) as Image;
+				Image dialogImage = Instantiate (Resources.Load ("Prefabs/GUI/DialogElement", typeof(Image))) as Image;
 				dialogImage.transform.SetParent (dialogList.transform, false);
 				uiDialogElements.Add (dialogImage.gameObject);
 				Text[] texts = dialogImage.GetComponentsInChildren<Text>();

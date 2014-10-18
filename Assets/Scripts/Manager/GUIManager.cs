@@ -19,8 +19,7 @@ public class GUIManager : MonoBehaviour {
 	public Canvas dialogCanvas;
 	public bool alternativeDialogCanvas = false;
 	public bool loadAndSaveStuff = false;
-	private MouseLook playerMouseLook;
-	private MouseLook cameraMouseLook;
+	private UnitySampleAssets.Characters.FirstPerson.FirstPersonController playerMouseLook;
 	private Camera camera;
 
 	void Awake()
@@ -40,11 +39,11 @@ public class GUIManager : MonoBehaviour {
 		camera = Camera.main;
 		StateManager.SharedInstance.OnStateChange += HandleOnStateChange;
 		maskItemInfo.GetComponent<Image>().enabled = false;
-		playerMouseLook = player.GetComponent<MouseLook>();
+		playerMouseLook = player.GetComponent<UnitySampleAssets.Characters.FirstPerson.FirstPersonController>();
 		allCanvas.Add (inventoryCanvas);
 		allCanvas.Add (characterCanvas);
 		allCanvas.Add (overlayCanvas);
-		cameraMouseLook = camera.GetComponent<MouseLook>();
+		//cameraMouseLook = camera.GetComponent<MouseLook>();
 		MainComponentManager.CreateInstance ();
 		PlayerManager.SharedInstance.Load ();
 		//GlobalState.gameState.StartState();
@@ -56,9 +55,8 @@ public class GUIManager : MonoBehaviour {
 		{
 			dialogCanvas.GetComponent<Canvas>().enabled = true;
 			dialogCanvas.GetComponent<GraphicRaycaster>().enabled = true;
+
 			playerMouseLook.enabled = false;
-			cameraMouseLook.enabled = false;
-			player.GetComponent<CharacterMotor>().enabled = false;
 			if(overlayCanvas.GetComponent<Canvas>().enabled)
 			{
 				overlayCanvas.GetComponent<Canvas>().enabled = false;
@@ -73,8 +71,6 @@ public class GUIManager : MonoBehaviour {
 				dialogCanvas.GetComponent<GraphicRaycaster>().enabled = false;
 			}
 			playerMouseLook.enabled = true;
-			cameraMouseLook.enabled = true;
-			player.GetComponent<CharacterMotor>().enabled = true;
 			if(!overlayCanvas.GetComponent<Canvas>().enabled)
 			{
 				overlayCanvas.GetComponent<Canvas>().enabled = true;
@@ -84,9 +80,6 @@ public class GUIManager : MonoBehaviour {
 		else if (StateManager.SharedInstance.gameState == GameState.Interface)
 		{
 			playerMouseLook.enabled = false;
-			cameraMouseLook.enabled = false;
-			//player.GetComponent<CharacterMotor>().enabled = false;
-
 		}
 	}
 	

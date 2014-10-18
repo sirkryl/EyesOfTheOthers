@@ -20,9 +20,13 @@ public class DayNightCycle : MonoBehaviour {
 	public Color morningFog;
 	public Color noonFog;
 
+	public Flare sunFlare;
+	public Flare sunAtNoonFlare;
+	public GameObject sunFlareObject;
 	public Color sunAtNightColor;
 	public Color sunAtDayColor;
 
+	public Transform rotationCenter;
 	public Light sun;
 	public Light moon;
 	public Text timeGui;
@@ -61,7 +65,7 @@ public class DayNightCycle : MonoBehaviour {
 
 			timeGui.text = timeString;
 
-			sun.transform.localEulerAngles = new Vector3((cycleValue*360)-90, 0, 0);
+			rotationCenter.transform.localEulerAngles = new Vector3((cycleValue*360)-90, 0, 0);
 			cycleValue = cycleValue + Time.deltaTime/speed;
 			timeSlider.value = cycleValue;
 			sun.color = Color.Lerp (sunAtNightColor, sunAtDayColor, cycleValue*2.0f);
@@ -79,6 +83,8 @@ public class DayNightCycle : MonoBehaviour {
 			{
 				moonOut = true;
 				//Debug.Log ("Night");
+				if(sunFlareObject.GetComponent<LensFlare>().flare != sunFlare)
+				sunFlareObject.GetComponent<LensFlare>().flare = sunFlare;
 				RenderSettings.skybox = darkSkyBoxMaterial;
 				RenderSettings.skybox.SetFloat("_Blend", 0);
 				darkSkyBoxMaterial.SetColor ("_Tint", nightColor);
@@ -89,6 +95,8 @@ public class DayNightCycle : MonoBehaviour {
 			{
 				moonOut = true;
 				//Debug.Log ("Dusk");
+				if(sunFlareObject.GetComponent<LensFlare>().flare != sunFlare)
+					sunFlareObject.GetComponent<LensFlare>().flare = sunFlare;
 				RenderSettings.skybox = darkSkyBoxMaterial;
 				RenderSettings.skybox.SetFloat("_Blend", 0);
 				RenderSettings.skybox.SetFloat ("_Blend", (helperValue/2)-2);
@@ -100,6 +108,8 @@ public class DayNightCycle : MonoBehaviour {
 			{
 				moonOut = true;
 				//Debug.Log ("Morning");
+				if(sunFlareObject.GetComponent<LensFlare>().flare != sunFlare)
+					sunFlareObject.GetComponent<LensFlare>().flare = sunFlare;
 				RenderSettings.skybox = brightSkyBoxMaterial;
 				RenderSettings.skybox.SetFloat("_Blend", 0);
 				RenderSettings.skybox.SetFloat ("_Blend", (helperValue/2)-3);
@@ -110,9 +120,12 @@ public class DayNightCycle : MonoBehaviour {
 			else if (helperValue > 8 && helperValue < 10)//timeOfDay >= 8 && timeOfDay < 16)
 			{
 				moonOut = false;
+				if(sunFlareObject.GetComponent<LensFlare>().flare != sunAtNoonFlare)
+					sunFlareObject.GetComponent<LensFlare>().flare = sunAtNoonFlare;
 				//Debug.Log ("Noon");
 				RenderSettings.ambientLight = noonAmbientLight;
 				RenderSettings.skybox = brightSkyBoxMaterial;
+				//sun.GetComponent<Flare>().
 				RenderSettings.skybox.SetFloat("_Blend", 1);
 				brightSkyBoxMaterial.SetColor ("_Tint", Color.Lerp (morningColor, noonColor, (helperValue/2)-4));
 				RenderSettings.ambientLight = Color.Lerp (morningAmbientLight, noonAmbientLight, (helperValue/2)-4);;

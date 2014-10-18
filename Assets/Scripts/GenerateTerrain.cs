@@ -22,7 +22,7 @@ public class GenerateTerrain : MonoBehaviour {
 		StateManager.SharedInstance.SetGameState(GameState.Free);
 		gameObjectParent = GameObject.FindWithTag("Gameplay");
 		
-		block1Fab = Resources.Load ("Prefabs/block1", typeof(Transform)) as Transform;
+		block1Fab = Resources.Load ("Prefabs/World/block1", typeof(Transform)) as Transform;
 		//uncomment the following two lines to use other system again
 		UseRowsCols ();
 		return;
@@ -85,11 +85,17 @@ public class GenerateTerrain : MonoBehaviour {
 	{
 		tiles = new Transform[rows*cols];
 		int cnt = 0;
-		for (int row = 0; row < rows; row++)
+		int rowBegin = -rows/2;
+		int colBegin = -cols/2;
+		for (int row = rowBegin; row <= rows/2; row++)
 		{
-			for (int col = 0; col < cols; col++)
+			for (int col = colBegin; col <= cols/2; col++)
 			{
-				tiles[cnt] = Instantiate(block1Fab, new Vector3(row*300, 1, col*300), Quaternion.identity) as Transform;
+				Debug.Log ("row: "+row+", col: "+col);
+				//-300, 1, -300
+				// 0, 1, 0
+				//300, 1, 300
+				tiles[cnt] = Instantiate(block1Fab, new Vector3(row*300, 0, col*300), Quaternion.identity) as Transform;
 				tiles[cnt].parent = gameObjectParent.transform;
 				cnt++;
 			}
