@@ -95,7 +95,7 @@ public class GenerateTerrain : MonoBehaviour {
 		{
 			for (int col = colBegin; col <= cols/2; col++)
 			{
-				if(debug)
+				if(debug && col == 0 && row == 0)
 					tiles[cnt] = Instantiate(((GameObject)(blockPrefabs[0])).transform, new Vector3(row*300, 0, col*300), Quaternion.identity) as Transform;
 				else
 					tiles[cnt] = Instantiate(((GameObject)(blockPrefabs[Random.Range (0,blockPrefabs.Length)])).transform, new Vector3(row*300, 0, col*300), Quaternion.identity) as Transform;
