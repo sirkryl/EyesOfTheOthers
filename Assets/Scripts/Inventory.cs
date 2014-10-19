@@ -50,13 +50,13 @@ public class Inventory : MonoBehaviour {
 		{
 			itemMap[item.name].stackSize += item.stackSize;
 		}
-		else		
+		else	
 			itemMap.Add (item.name, item);
 
 		if (itemUIMap.ContainsKey (item.name))
 		{
 			itemUIMap[item.name].GetComponentInChildren<Text>().text = item.name + " (" + itemMap[item.name].stackSize + ")";
-			itemUIMap[item.name].GetComponent<Item>().stackSize = itemMap[item.name].stackSize;
+			//itemUIMap[item.name].GetComponent<Item>().stackSize = itemMap[item.name].stackSize;
 		}
 		else
 		{
@@ -64,21 +64,50 @@ public class Inventory : MonoBehaviour {
 			itemListElement.transform.SetParent (itemList.transform, false);
 			itemListElement.GetComponentInChildren<Text>().enabled = true;
 			itemListElement.GetComponentInChildren<Text>().text = item.name + " (" + item.stackSize + ")";
-			itemListElement.GetComponent<Button>().onClick.AddListener(() => { GUIShowItemInfo(itemListElement.GetComponent<Item>()); });
-			itemListElement.GetComponent<Item>().name = item.name;
-			itemListElement.GetComponent<Item>().type = item.type;
-			itemListElement.GetComponent<Item>().description = item.description;
-			itemListElement.GetComponent<Item>().icon = item.icon;
-			itemListElement.GetComponent<Item>().stackSize = item.stackSize;
+			//itemListElement.GetComponent<Button>().onClick.AddListener(() => { GUIShowItemInfo(itemListElement.GetComponent<Item>()); });
+			itemListElement.GetComponent<Button>().onClick.AddListener(() => { GUIShowItemInfo(itemMap[item.name]); });
+
+			//itemListElement.GetComponent<Item>().name = item.name;
 			itemUIMap.Add (item.name, itemListElement);
 		}
 
 		//Debug.Log ("itemList height: "+itemList.rectTransform.sizeDelta.x+" oder "+itemList.rectTransform.sizeDelta.y);
 	}
 
-	public void RemoveItem()
+	public void SelectItem(Item item)
 	{
-		//remove item
+		Debug.Log ("item: "+item+", handItem: "+PlayerManager.SharedInstance.handItem+", itemMap: "+itemMap.Count);
+		if(item != null && PlayerManager.SharedInstance.handItem == null)
+		{
+			GameObject itemInHand = Instantiate(Resources.Load ("Prefabs/Items/"+item.name, typeof(GameObject))) as GameObject;
+			//itemInHand.AddComponent<item.GetType ()>();
+			itemInHand.GetComponent<ThrowableItem>().name = item.name;
+			itemInHand.GetComponent<ThrowableItem>().type = item.type;
+			itemInHand.GetComponent<ThrowableItem>().description = item.description;
+			itemInHand.GetComponent<ThrowableItem>().icon = item.icon;
+			itemInHand.GetComponent<ThrowableItem>().stackSize = 1;
+			PlayerManager.SharedInstance.handItem = itemInHand.GetComponent<ThrowableItem>();
+			PlayerManager.SharedInstance.handItem.HandlePickUp();
+			RemoveItem(item);
+			//GUIManager.SharedInstance.DeactiveAllWindows();
+		}
+	}
+
+	public void RemoveItem(Item item)
+	{
+		if (itemMap[item.name].stackSize > 1)
+		{
+			itemMap[item.name].stackSize -= 1;
+			itemUIMap[item.name].GetComponentInChildren<Text>().text = item.name + " (" + itemMap[item.name].stackSize + ")";
+			//itemUIMap[item.name].GetComponent<Item>().stackSize = itemMap[item.name].stackSize;
+		}
+		else
+		{
+			itemMap.Remove (item.name);
+			Image itemListElement = itemUIMap[item.name];
+			itemUIMap.Remove (item.name);
+			Destroy(itemListElement.gameObject);
+		}
 	}
 
 	public bool GotItem(string name)
@@ -90,11 +119,15 @@ public class Inventory : MonoBehaviour {
 	{
 		maskItemInfo.GetComponent<Image>().enabled = true;
 		//imagePanel.GetComponent<Mask>().enabled = false;
-		itemName.text = item.name;
+		itemName.text = itemMap[item.name].name;
 		//itemImage.sprite = Sprite.
-		itemType.text = item.type;
+		itemType.text = itemMap[item.name].type;
 		itemEffect.text = "No effect.";
-		itemDescription.text = item.description;
+		itemDescription.text = itemMap[item.name].description;
+		GameObject.Find ("HandButton").GetComponent<Button>().onClick.RemoveAllListeners();
+
+		if(itemMap[item.name].GetType() == typeof(ThrowableItem))
+			GameObject.Find ("HandButton").GetComponent<Button>().onClick.AddListener(() => { SelectItem(itemMap[item.name]); });
 
 
 		GameObject.FindWithTag ("ItemImage").GetComponent<Image>().sprite = item.icon;

@@ -136,6 +136,16 @@ public class GUIManager : MonoBehaviour {
 		}
 	}
 
+	public void DeactiveAllWindows()
+	{
+		foreach (Canvas child in allCanvas)
+		{
+			child.GetComponent<Canvas>().enabled = false;
+			child.GetComponent<GraphicRaycaster>().enabled = false;
+		}
+		StateManager.SharedInstance.SetGameState(GameState.Free);
+	}
+
 	/*public void ShowDialogWindow()
 	{
 		playerMouseLook.enabled = false;

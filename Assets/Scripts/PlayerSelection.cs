@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class PlayerSelection : MonoBehaviour {
-	
+
+	//private ThrowableItem handItem;
 
 	// Update is called once per frame
 	void Update () {
@@ -22,12 +23,40 @@ public class PlayerSelection : MonoBehaviour {
 						selectedObject.HandleSelection();
 						GUIManager.SharedInstance.HideInteractionOverlay();
 					}
+					if(selectedObject.GetType() == typeof(ThrowableItem))
+					{
+						if (Input.GetKeyDown (KeyCode.F))
+						{
+							((ThrowableItem)selectedObject).HandlePickUp();
+							PlayerManager.SharedInstance.handItem = (ThrowableItem)selectedObject;
+						}
+					}
 					GUIManager.SharedInstance.ShowInteractionOverlay(selectedObject.highlight);
 				}
 			}
 			else
 			{
 				GUIManager.SharedInstance.HideInteractionOverlay();
+
+				if(PlayerManager.SharedInstance.handItem != null)
+				{
+					if (Input.GetMouseButtonUp(0))
+					{
+						PlayerManager.SharedInstance.handItem.HandleThrow();
+						PlayerManager.SharedInstance.handItem = null;
+					}
+					else if (Input.GetMouseButtonUp(1) || Input.GetKeyDown(KeyCode.F))
+					{
+						PlayerManager.SharedInstance.handItem.HandleDrop ();
+						PlayerManager.SharedInstance.handItem = null;
+					}
+					else if (Input.GetKeyDown(KeyCode.E))
+					{
+						gameObject.GetComponentInChildren<Inventory>().AddItem(PlayerManager.SharedInstance.handItem);
+						PlayerManager.SharedInstance.handItem.gameObject.SetActive(false);
+						PlayerManager.SharedInstance.handItem = null;
+					}
+				}
 			}
 		}
 

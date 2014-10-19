@@ -19,6 +19,7 @@ public class PlayerManager : MonoBehaviour
 	private int sleep = 100;
 	private float timer = 0.5f;
 	//private GUIManager windowManager;
+	public ThrowableItem handItem;
 	private GameObject hungerText;
 	//private int 
 	private static PlayerManager instance = null;
@@ -84,7 +85,6 @@ public class PlayerManager : MonoBehaviour
 	void PlayerDead()
 	{
 		GUIManager.SharedInstance.ShowInteractionOverlay("You starved to death.");
-		Debug.Log ("player dead");
 	}
 }
 

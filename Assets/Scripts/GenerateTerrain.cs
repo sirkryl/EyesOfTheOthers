@@ -4,8 +4,10 @@ using System.Collections;
 public class GenerateTerrain : MonoBehaviour {
 
 	private Transform[] tiles;
+	private object[] blockPrefabs;
 	private Vector3[] positions;
 	private int random;
+	public bool debug = true;
 	public int rows = 3;
 	public int cols = 3;
 	private Transform block1Fab;
@@ -21,8 +23,10 @@ public class GenerateTerrain : MonoBehaviour {
 	void Start () {
 		StateManager.SharedInstance.SetGameState(GameState.Free);
 		gameObjectParent = GameObject.FindWithTag("Gameplay");
-		
-		block1Fab = Resources.Load ("Prefabs/World/block1", typeof(Transform)) as Transform;
+
+		blockPrefabs = Resources.LoadAll ("Prefabs/Blocks", typeof(GameObject));
+
+		//block1Fab = Resources.Load ("Prefabs/World/block1", typeof(Transform)) as Transform;
 		//uncomment the following two lines to use other system again
 		UseRowsCols ();
 		return;
@@ -39,7 +43,7 @@ public class GenerateTerrain : MonoBehaviour {
 		tiles = new Transform[8];
 		for (int i=0; i<8; i++){
 			//tiles[i] = (GameObject) GameObject.Instantiate(Resources.Load("block1"));
-			tiles[i] = Instantiate(block1Fab) as Transform;
+			//tiles[i] = Instantiate(blockPrefabs[Random.Range (0,blockPrefabs.Length)]) as Transform;
 			/*switch (i) {
 			case 0: cube.renderer.material.color = Color.red; break;
 			case 1: cube.renderer.material.color = Color.blue; break;
@@ -91,11 +95,10 @@ public class GenerateTerrain : MonoBehaviour {
 		{
 			for (int col = colBegin; col <= cols/2; col++)
 			{
-				Debug.Log ("row: "+row+", col: "+col);
-				//-300, 1, -300
-				// 0, 1, 0
-				//300, 1, 300
-				tiles[cnt] = Instantiate(block1Fab, new Vector3(row*300, 0, col*300), Quaternion.identity) as Transform;
+				if(debug)
+					tiles[cnt] = Instantiate(((GameObject)(blockPrefabs[0])).transform, new Vector3(row*300, 0, col*300), Quaternion.identity) as Transform;
+				else
+					tiles[cnt] = Instantiate(((GameObject)(blockPrefabs[Random.Range (0,blockPrefabs.Length)])).transform, new Vector3(row*300, 0, col*300), Quaternion.identity) as Transform;
 				tiles[cnt].parent = gameObjectParent.transform;
 				cnt++;
 			}
