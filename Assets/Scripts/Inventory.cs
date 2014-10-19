@@ -11,6 +11,8 @@ public class Inventory : MonoBehaviour {
 	private ArrayList items;
 	public Image itemList;
 	public Image itemLabelFab;
+	private GameObject inventoryEmptyFab;
+	private GameObject inventoryEmptyLabel;
 	public GameObject maskItemInfo;
 	private Dictionary<string, Item> itemMap;
 	private Dictionary<string, Image> itemUIMap;
@@ -24,8 +26,11 @@ public class Inventory : MonoBehaviour {
 		items = new ArrayList();
 		itemMap = new Dictionary<string, Item>();
 		itemUIMap = new Dictionary<string, Image>();
+		inventoryEmptyFab = Resources.Load ("Prefabs/GUI/itemListEmpty",typeof(GameObject)) as GameObject;
+		inventoryEmptyLabel = Instantiate(inventoryEmptyFab) as GameObject;
+		inventoryEmptyLabel.transform.SetParent (itemList.transform, false);
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 	}
@@ -51,7 +56,10 @@ public class Inventory : MonoBehaviour {
 			itemMap[item.id_string].stackSize += item.stackSize;
 		}
 		else	
+		{
 			itemMap.Add (item.id_string, item);
+			Destroy(inventoryEmptyLabel);
+		}
 
 		if (itemUIMap.ContainsKey (item.id_string))
 		{
@@ -116,7 +124,15 @@ public class Inventory : MonoBehaviour {
 			Image itemListElement = itemUIMap[item.id_string];
 			itemUIMap.Remove (item.id_string);
 			Destroy(itemListElement.gameObject);
+			if(itemMap.Count == 0)
+			{
+				inventoryEmptyFab = Resources.Load ("Prefabs/GUI/itemListEmpty",typeof(GameObject)) as GameObject;
+				inventoryEmptyLabel = Instantiate(inventoryEmptyFab) as GameObject;
+				inventoryEmptyLabel.transform.SetParent (itemList.transform, false);
+			}
+			maskItemInfo.GetComponent<Image>().enabled = false;
 		}
+
 	}
 
 	public bool GotItem(string name)
