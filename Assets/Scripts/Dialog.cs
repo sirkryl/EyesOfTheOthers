@@ -30,7 +30,6 @@ public class Dialog : Selectable {
 	private Inventory inventory;
 
 	private bool inDialog = false;
-	public bool isActiveObject = false;
 	private bool newDialogElement = false;
 
 
@@ -59,7 +58,7 @@ public class Dialog : Selectable {
 	public override void HandleSelection() {
 		if (dialogData == null)
 		{
-			dialogData = dialogIO.Load (name);
+			dialogData = dialogIO.Load (id_string);
 			if (dialogData == null)
 			{
 				return;

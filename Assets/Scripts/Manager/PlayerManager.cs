@@ -5,18 +5,19 @@ using System.Collections;
 using System.Runtime.Serialization.Formatters.Binary;
 
 [System.Serializable]
-class PlayerData
+public class PlayerData
 {
 	public int hunger;
-	public float experience;
+	public int thirst;
+	public int fatigue;
+	public int health;
+	//public float experience;
 }
 
 public class PlayerManager : MonoBehaviour
 {
-	private int health = 100;
-	private int hunger = 100;
-	private int thirst = 100;
-	private int sleep = 100;
+	public PlayerData playerData;
+
 	private float timer = 0.5f;
 	//private GUIManager windowManager;
 	public ThrowableItem handItem;
@@ -34,6 +35,11 @@ public class PlayerManager : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		playerData = new PlayerData();
+		playerData.health = 100;
+		playerData.hunger = 100;
+		playerData.thirst = 100;
+		playerData.fatigue = 100;
 		hungerText = GameObject.Find ("HungerText");
 		//windowManager = GameObject.Find ("SceneManager").GetComponent<GUIManager>();
 	}
@@ -41,18 +47,19 @@ public class PlayerManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		playerData.hunger = Mathf.Min (playerData.hunger, 100);
 		timer -= Time.deltaTime;
-		if (timer <= 0 && hunger > 0)
+		if (timer <= 0 && playerData.hunger > 0)
 		{
-			hunger--;
-			if (hunger <= 60 && hunger > 30)
+			playerData.hunger--;
+			if (playerData.hunger <= 60 && playerData.hunger > 30)
 				hungerText.GetComponent<Text>().color = Color.yellow;
-			if (hunger <= 30)
+			if (playerData.hunger <= 30)
 				hungerText.GetComponent<Text>().color = Color.red;
-			hungerText.GetComponent<Text>().text = "Hunger: "+hunger+"%";
+			hungerText.GetComponent<Text>().text = "Hunger: "+playerData.hunger+"%";
 			timer = 2.0f;
 		}
-		else if (hunger <= 0)
+		else if (playerData.hunger <= 0)
 		{
 			PlayerDead();
 		}
@@ -63,10 +70,7 @@ public class PlayerManager : MonoBehaviour
 		BinaryFormatter bf = new BinaryFormatter();
 		FileStream file = File.Create(Application.persistentDataPath + "/playerInfo.dat");
 
-		PlayerData data = new PlayerData();
-		data.hunger = hunger;
-
-		bf.Serialize (file, data);
+		bf.Serialize (file, playerData);
 		file.Close ();
 	}
 
@@ -76,7 +80,7 @@ public class PlayerManager : MonoBehaviour
 		{
 			BinaryFormatter bf = new BinaryFormatter();
 			FileStream file = File.Open (Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
-			PlayerData data = bf.Deserialize(file) as PlayerData;
+			playerData = bf.Deserialize(file) as PlayerData;
 			file.Close ();
 			//hunger = data.hunger;
 		}

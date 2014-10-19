@@ -127,18 +127,18 @@ public class DialogIO {
 		}*/
 	}
 
-	public DialogData Load(string charName)
+	public DialogData Load(string fileName)
 	{
 		FileStream readFileStream;
 		DialogData data;
 		XmlSerializer xmlSerializer = new XmlSerializer(typeof(DialogData));
 		try
 		{
-			readFileStream = new FileStream("Assets/Resources/Dialog/"+charName+".xml", FileMode.Open, FileAccess.Read, FileShare.Read);
+			readFileStream = new FileStream("Assets/Resources/Dialog/"+fileName+".xml", FileMode.Open, FileAccess.Read, FileShare.Read);
 		}
 		catch
 		{
-			Debug.Log ("[Dialog ERROR] Could not find "+charName+".xml in Assets/Resources/Dialog");
+			Debug.Log ("[Dialog ERROR] Could not find "+fileName+".xml in Assets/Resources/Dialog");
 			return null;
 		}
 
@@ -148,7 +148,7 @@ public class DialogIO {
 		}
 		catch
 		{
-			Debug.Log ("[Dialog ERROR] Could not deserialize "+charName+".xml. There is very likely something wrong with the file structure.");
+			Debug.Log ("[Dialog ERROR] Could not deserialize "+fileName+".xml. There is very likely something wrong with the file structure.");
 			return null;
 		}
 		readFileStream.Close();

@@ -23,12 +23,21 @@ public class PlayerSelection : MonoBehaviour {
 						selectedObject.HandleSelection();
 						GUIManager.SharedInstance.HideInteractionOverlay();
 					}
-					if(selectedObject.GetType() == typeof(ThrowableItem))
+					if(selectedObject is ThrowableItem)
 					{
 						if (Input.GetKeyDown (KeyCode.F))
 						{
 							((ThrowableItem)selectedObject).HandlePickUp();
 							PlayerManager.SharedInstance.handItem = (ThrowableItem)selectedObject;
+						}
+					}
+					//Consumable consumable = hit.transform.gameObject.GetComponent<Consumable>();
+					if(selectedObject is Consumable)
+					{
+						if (Input.GetKeyDown (KeyCode.Z))
+						{
+							((Consumable)selectedObject).HandleConsume();
+							//PlayerManager.SharedInstance.handItem = (ThrowableItem)selectedObject;
 						}
 					}
 					GUIManager.SharedInstance.ShowInteractionOverlay(selectedObject.highlight);

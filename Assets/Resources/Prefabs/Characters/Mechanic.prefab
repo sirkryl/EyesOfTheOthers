@@ -853,7 +853,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 78.5839996, y: 51.4490013, z: 253.889999}
+  m_LocalPosition: {x: 73.6149979, y: 51.3339996, z: 247.529999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400066}
@@ -1638,8 +1638,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f8cd356695eb074e8126ca84bc47590, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id_string: npc_mechanic
   name: mechanic
-  isActiveObject: 0
 --- !u!137 &13700000
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
