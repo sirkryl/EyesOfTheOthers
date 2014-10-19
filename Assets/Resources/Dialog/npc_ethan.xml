@@ -8,14 +8,22 @@
 <case type="default" leadsTo="1"/>
 </element>
 <element id="1001" type="switch">
-<case item="item_coke" type="greaterThan" value="0" leadsTo="11"/>
+<case item="item_apple" type="inHand" leadsTo="15"/>
+<case item="item_coke" type="inHand" remove="true" leadsTo="11"/>
+<case item="item_coke" type="greaterThan" value="0" leadsTo="14"/>
 <case type="default" leadsTo="10"/>
 </element>
 <element id="10" type="text">
 Where the hell is my coke?
 </element>
 <element id="11" type="text" leadsTo="12">
-Thanks for the coke, mate! Now fuck off.
+Ah, you have it in your hand already, nice job! Now it's mine though. I think I'm going to resell it.
+</element>
+<element id="14" type="text" leadsTo="12">
+So I have to search your inventory for it myself? Alright then..thanks, i guess. Now fuck off.
+</element>
+<element id="15" type="text">
+That's an apple, you idiot.
 </element>
 <element id="12" type="increaseValue" variable="cokeGiven"/>
 <element id="13" type="text">

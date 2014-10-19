@@ -348,7 +348,22 @@ public class Dialog : Selectable {
 				
 				if(dialogCase.item != null)
 				{
-					if (inventory.GotItem (dialogCase.item))
+					if(dialogCase.type == "inHand")
+					{
+						if (PlayerManager.SharedInstance.handItem != null)
+						{
+							if (PlayerManager.SharedInstance.handItem.id_string == dialogCase.item)
+							{
+								pass = true;
+								if (dialogCase.remove)
+								{
+									PlayerManager.SharedInstance.handItem.gameObject.SetActive(false);
+									PlayerManager.SharedInstance.handItem = null;
+								}
+							}
+						}
+					}
+					else if (inventory.GotItem (dialogCase.item))
 					{
 						pass = true;
 					}

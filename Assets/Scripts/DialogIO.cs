@@ -63,6 +63,8 @@ public class DialogIO {
 		[XmlAttribute]
 		public bool reset;
 		[XmlAttribute]
+		public bool remove = false;
+		[XmlAttribute]
 		public string vartype = "local";
 	}
 	/*public class DialogText {
