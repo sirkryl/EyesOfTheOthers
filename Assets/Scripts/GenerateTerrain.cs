@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GenerateTerrain : MonoBehaviour {
 
-	private Transform[] tiles;
+	private Terrain[][] tiles;
 	private object[] blockPrefabs;
 	private Vector3[] positions;
 	private int random;
@@ -31,7 +31,7 @@ public class GenerateTerrain : MonoBehaviour {
 		UseRowsCols ();
 		return;
 
-		positions = new Vector3[8];
+		/*positions = new Vector3[8];
 		positions [0] = new Vector3 (0, 1, 0);
 		positions [1] = new Vector3 (0, 1, 300);
 		positions [2] = new Vector3 (0, 1, 600);
@@ -40,7 +40,7 @@ public class GenerateTerrain : MonoBehaviour {
 		positions [5] = new Vector3 (600, 1, 300);
 		positions [6] = new Vector3 (600, 1, 0);
 		positions [7] = new Vector3 (300, 1, 0);
-		tiles = new Transform[8];
+		tiles = new Terrain[8];
 		for (int i=0; i<8; i++){
 			//tiles[i] = (GameObject) GameObject.Instantiate(Resources.Load("block1"));
 			//tiles[i] = Instantiate(blockPrefabs[Random.Range (0,blockPrefabs.Length)]) as Transform;
@@ -62,12 +62,12 @@ public class GenerateTerrain : MonoBehaviour {
 			case 2: tiles[i].Rotate(new Vector3(0,180,0)); break;
 			case 3: tiles[i].Rotate(new Vector3(0,270,0)); break;
 			}*/
-		}
+		//}
 
-		Vector3[] positions_random = shuffle(positions);
+		/*Vector3[] positions_random = shuffle(positions);
 		for (int i=0; i<8; i++) {
 			tiles[i].position = positions_random[i];
-		}
+		}*/
 	}
 
 	private Vector3[] shuffle(Vector3[] array){
@@ -87,20 +87,50 @@ public class GenerateTerrain : MonoBehaviour {
 
 	private void UseRowsCols()
 	{
-		tiles = new Transform[rows*cols];
+		tiles = new Terrain[rows][];
 		int cnt = 0;
 		int rowBegin = -rows/2;
 		int colBegin = -cols/2;
+		int rowCount = 0;
+
 		for (int row = rowBegin; row <= rows/2; row++)
 		{
+			tiles[rowCount] = new Terrain[cols];
+			int colCount = 0;
 			for (int col = colBegin; col <= cols/2; col++)
 			{
 				if(debug && col == 0 && row == 0)
-					tiles[cnt] = Instantiate(((GameObject)(blockPrefabs[0])).transform, new Vector3(row*300, 0, col*300), Quaternion.identity) as Transform;
+					tiles[rowCount][colCount] = 
+						((GameObject)Instantiate((GameObject)(blockPrefabs[0]), new Vector3(row*300, 0, col*300), Quaternion.identity)).GetComponent<Terrain>();
 				else
-					tiles[cnt] = Instantiate(((GameObject)(blockPrefabs[Random.Range (0,blockPrefabs.Length)])).transform, new Vector3(row*300, 0, col*300), Quaternion.identity) as Transform;
-				tiles[cnt].parent = gameObjectParent.transform;
+					tiles[rowCount][colCount] = 
+						((GameObject)Instantiate((GameObject)(blockPrefabs[Random.Range (0,blockPrefabs.Length)]), new Vector3(row*300, 0, col*300), Quaternion.identity)).GetComponent<Terrain>();
+				tiles[rowCount][colCount].transform.parent = gameObjectParent.transform;
 				cnt++;
+				colCount++;
+			}
+			rowCount++;
+		}
+
+		for (int row = 0; row < rows; row++)
+		{
+			for (int col = 0; col < cols; col++)
+			{
+				Terrain leftNeighbor = null;
+				Terrain rightNeighbor = null;
+				Terrain topNeighbor = null;
+				Terrain bottomNeighbor = null;
+				if(col != cols-1)
+					rightNeighbor = tiles[row][col+1];
+					//tiles[row][col].SetNeighbors (null, null, tiles[row][col+1],tiles[row+1][col+1]);
+				if(col != 0)
+					leftNeighbor = tiles[row][col-1];
+				if(row != rows-1)
+					bottomNeighbor = tiles[row+1][col];
+				if(row != 0)
+					topNeighbor = tiles[row-1][col];
+
+				tiles[row][col].SetNeighbors (leftNeighbor, topNeighbor, rightNeighbor, bottomNeighbor);
 			}
 		}
 	}

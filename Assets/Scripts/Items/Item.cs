@@ -21,10 +21,10 @@ public class Item : Selectable {
 		highlight = "Press 'E' to take "+name+".";
 		inventory = GameObject.FindWithTag ("Inventory").GetComponent<Inventory>();
 
-		icon = Resources.Load<Sprite>("Textures/"+name);
+		icon = Resources.Load<Sprite>("Textures/"+id_string);
 		if (icon == null)
 		{
-			icon = Resources.Load<Sprite>("Textures/Apple");
+			icon = Resources.Load<Sprite>("Textures/item_apple");
 		}
 	}
 	

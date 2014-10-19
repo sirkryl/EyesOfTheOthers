@@ -141,6 +141,6 @@ public class Inventory : MonoBehaviour {
 		if(itemMap[item.id_string] is Consumable)
 			GameObject.Find ("ConsumeButton").GetComponent<Button>().onClick.AddListener(() => { ConsumeItem(itemMap[item.id_string]); });
 
-		GameObject.FindWithTag ("ItemImage").GetComponent<Image>().sprite = item.icon;
+		GameObject.FindWithTag ("ItemImage").GetComponent<Image>().sprite = itemMap[item.id_string].icon;
 	}
 }

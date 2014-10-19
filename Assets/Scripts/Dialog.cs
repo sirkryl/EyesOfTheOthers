@@ -457,9 +457,10 @@ public class Dialog : Selectable {
 		inDialog = false;
 		newDialogElement = false;
 		activeDialogElement = null;
-		StateManager.SharedInstance.SetGameState(GameState.Free);
 		CleanUpDialog();
+		//GameObject.FindWithTag("AnswerList").GetComponent<Image>().enabled = false;
 		dialogText.GetComponent<Text>().text = "";
+		StateManager.SharedInstance.SetGameState(GameState.Free);
 	}
 
 	void CleanUpDialog()
@@ -493,7 +494,12 @@ public class Dialog : Selectable {
 		if(activeDialogElement.dialogAnswers[answer].leadsTo == null
 		   || activeDialogElement.dialogAnswers[answer].leadsTo == 0)
 		{
-			EndDialog ();
+			GameObject.FindWithTag("AnswerList").GetComponent<Image>().enabled = false;
+			answerOptions.ForEach (child => Destroy(child.gameObject));
+			answerOptions.Clear ();
+			dialogList.GetComponent<Image>().enabled = true;
+			dialogText.GetComponent<Text>().enabled = true;
+			EndDialog();
 		}
 		else
 		{
