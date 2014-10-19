@@ -243,6 +243,11 @@ public class Dialog : Selectable {
 		else if (activeDialogElement.type == "increaseValue")
 		{
 			//Debug.Log ("increaseValue");
+			if(activeDialogElement.variable == null)
+			{
+				Debug.Log ("[Dialog ERROR] No variable attribute for element (id="+activeDialogElement.id+").");
+				return false;
+			}
 			if(activeDialogElement.vartype == "global")
 			{
 				if(!GlobalVariableManager.SharedInstance.SetGlobalVariable (activeDialogElement.variable, 
@@ -439,6 +444,7 @@ public class Dialog : Selectable {
 		activeDialogElement = null;
 		StateManager.SharedInstance.SetGameState(GameState.Free);
 		CleanUpDialog();
+		dialogText.GetComponent<Text>().text = "";
 	}
 
 	void CleanUpDialog()

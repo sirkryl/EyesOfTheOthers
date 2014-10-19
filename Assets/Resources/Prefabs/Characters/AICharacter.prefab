@@ -2562,7 +2562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f8cd356695eb074e8126ca84bc47590, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id_string: npc_mechanic
+  id_string: npc_ethan
   name: Mechanic
 --- !u!136 &13600000
 CapsuleCollider:
