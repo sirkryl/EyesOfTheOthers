@@ -29,6 +29,10 @@ public class Inventory : MonoBehaviour {
 		inventoryEmptyFab = Resources.Load ("Prefabs/GUI/itemListEmpty",typeof(GameObject)) as GameObject;
 		inventoryEmptyLabel = Instantiate(inventoryEmptyFab) as GameObject;
 		inventoryEmptyLabel.transform.SetParent (itemList.transform, false);
+		GameObject.Find ("HandButton").GetComponent<Button>().interactable = false;
+		GameObject.Find ("UseButton").GetComponent<Button>().interactable = false;
+		GameObject.Find ("HandButton").GetComponentInChildren<Text>().enabled = false;
+		GameObject.Find ("UseButton").GetComponentInChildren<Text>().enabled = false;
 	}
 
 	// Update is called once per frame
@@ -130,9 +134,22 @@ public class Inventory : MonoBehaviour {
 				inventoryEmptyLabel = Instantiate(inventoryEmptyFab) as GameObject;
 				inventoryEmptyLabel.transform.SetParent (itemList.transform, false);
 			}
+			GameObject.Find ("HandButton").GetComponent<Button>().interactable = false;
+			GameObject.Find ("UseButton").GetComponent<Button>().interactable = false;
+			GameObject.Find ("HandButton").GetComponentInChildren<Text>().enabled = false;
+			GameObject.Find ("UseButton").GetComponentInChildren<Text>().enabled = false;
+			//GameObject.Find ("HandButton").GetComponent<Mask>().enabled = true;
+			//GameObject.Find ("HandButton").GetComponent<Image>().enabled = false;
+			//GameObject.Find ("UseButton").GetComponent<Mask>().enabled = true;
+			//GameObject.Find ("UseButton").GetComponent<Image>().enabled = false;
 			maskItemInfo.GetComponent<Image>().enabled = false;
 		}
 
+	}
+
+	public void EquipItem(Item item)
+	{
+		((Equipable)item).HandleEquip ();
 	}
 
 	public bool GotItem(string name)
@@ -150,13 +167,33 @@ public class Inventory : MonoBehaviour {
 		itemEffect.text = itemMap[item.id_string].GetItemEffect ();
 		itemDescription.text = itemMap[item.id_string].description;
 		GameObject.Find ("HandButton").GetComponent<Button>().onClick.RemoveAllListeners();
-		GameObject.Find ("ConsumeButton").GetComponent<Button>().onClick.RemoveAllListeners();
-
+		GameObject.Find ("UseButton").GetComponent<Button>().onClick.RemoveAllListeners();
+		GameObject.Find ("UseButton").GetComponent<Button>().interactable = true;
+		GameObject.Find ("UseButton").GetComponentInChildren<Text>().enabled = true;
 		if(itemMap[item.id_string] is ThrowableItem)
+		{
+			GameObject.Find ("HandButton").GetComponent<Button>().interactable = true;
+			GameObject.Find ("HandButton").GetComponentInChildren<Text>().enabled = true;
+			//GameObject.Find ("HandButton").GetComponent<Image>().enabled = true;
 			GameObject.Find ("HandButton").GetComponent<Button>().onClick.AddListener(() => { SelectItem(itemMap[item.id_string]); });
-		if(itemMap[item.id_string] is Consumable)
-			GameObject.Find ("ConsumeButton").GetComponent<Button>().onClick.AddListener(() => { ConsumeItem(itemMap[item.id_string]); });
+		}
+		else
+		{
+			GameObject.Find ("HandButton").GetComponent<Button>().interactable = false;
+			GameObject.Find ("HandButton").GetComponentInChildren<Text>().enabled = false;
+			//GameObject.Find ("HandButton").GetComponent<Image>().enabled = false;
+		}
 
+		if(itemMap[item.id_string] is Consumable)
+		{
+			GameObject.Find ("UseButton").GetComponentInChildren<Text>().text = "Consume";
+			GameObject.Find ("UseButton").GetComponent<Button>().onClick.AddListener(() => { ConsumeItem(itemMap[item.id_string]); });
+		}
+		else if(itemMap[item.id_string] is Equipable)
+		{
+			GameObject.Find ("UseButton").GetComponentInChildren<Text>().text = "Equip";
+			GameObject.Find ("UseButton").GetComponent<Button>().onClick.AddListener(() => { EquipItem(itemMap[item.id_string]); });
+		}
 		GameObject.FindWithTag ("ItemImage").GetComponent<Image>().sprite = itemMap[item.id_string].icon;
 	}
 }

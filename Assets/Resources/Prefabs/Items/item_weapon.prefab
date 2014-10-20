@@ -10103,16 +10103,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 941f13838e230464688684bc873f3315, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f02852d51b76a244866ecb0777d103f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   id_string: item_weapon
   name: Weapon of the Otti
-  icon: {fileID: 21300000, guid: 3a44d52f680f61f489cc2904f83ced2f, type: 3}
+  icon: {fileID: 21300000, guid: 687555fbc8f80fd4e8e9648b1965f257, type: 3}
   stackSize: 1
   description: What a model.
   stackable: 0
   maxStackSize: 10
+  weight: 0
+  damage: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

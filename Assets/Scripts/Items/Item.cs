@@ -13,6 +13,7 @@ public class Item : Selectable {
 	public bool stackable = false;
 	//probably with an extra script for consumables
 	public int maxStackSize = 10;
+	public int weight = 0;
 
 	private Inventory inventory;
 

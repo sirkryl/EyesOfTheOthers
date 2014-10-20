@@ -423,16 +423,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 100010}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 941f13838e230464688684bc873f3315, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f02852d51b76a244866ecb0777d103f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   id_string: item_knife
   name: Knife
-  icon: {fileID: 21300000, guid: 1709fd5f4b7d8fb41bd6a884fb4dee3e, type: 3}
+  icon: {fileID: 21300000, guid: 6bcbcfe7469ab534fb2c9b8a689c018d, type: 3}
   stackSize: 1
   description: A knife. Don't cut yourself.
   stackable: 0
   maxStackSize: 10
+  weight: 0
+  damage: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
