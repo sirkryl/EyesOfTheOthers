@@ -429,7 +429,8 @@ public class AIPath : MonoBehaviour {
 				WalkToDialog wtd = GetComponent<WalkToDialog>();
 				if(wtd != null)
 				{
-					wtd.OnTargetReached();
+					if(Vector3.Distance (GetFeetPosition(),GameObject.FindWithTag ("Player").transform.position) <= 1.5f)
+						wtd.OnTargetReached();
 				}
 			}
 			
