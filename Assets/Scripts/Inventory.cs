@@ -8,6 +8,7 @@ public class Inventory : MonoBehaviour {
 	//will likely change to something like an ItemData[]
 	public Transform[] contents;
 
+
 	private ArrayList items;
 	public Image itemList;
 	public Image itemLabelFab;

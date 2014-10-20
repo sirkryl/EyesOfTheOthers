@@ -12,11 +12,14 @@ public class GenerateTerrain : MonoBehaviour {
 	public int cols = 3;
 	private Transform block1Fab;
 	private GameObject gameObjectParent;
-
+	public bool noGenerationPlease = false;
 	void Awake () {
-		if (GameObject.Find ("block1") != null)
+		if(!noGenerationPlease)
 		{
-			Destroy(GameObject.Find ("block1"));
+			if (GameObject.Find ("block1") != null)
+			{
+				Destroy(GameObject.Find ("block1"));
+			}
 		}
 	}
 	// Use this for initialization
@@ -28,7 +31,12 @@ public class GenerateTerrain : MonoBehaviour {
 
 		//block1Fab = Resources.Load ("Prefabs/World/block1", typeof(Transform)) as Transform;
 		//uncomment the following two lines to use other system again
-		UseRowsCols ();
+
+		if(!noGenerationPlease)
+		{
+			UseRowsCols ();
+			AstarPath.active.Scan();
+		}
 		return;
 
 		/*positions = new Vector3[8];

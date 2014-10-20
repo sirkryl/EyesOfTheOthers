@@ -58,6 +58,9 @@ public class Dialog : Selectable {
 	public override void HandleSelection() {
 		if (dialogData == null)
 		{
+			WalkToDialog wtd = GetComponent<WalkToDialog>();
+			if(wtd != null)
+				Destroy(wtd);
 			dialogData = dialogIO.Load (id_string);
 			if (dialogData == null)
 			{
