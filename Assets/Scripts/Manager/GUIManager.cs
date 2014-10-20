@@ -53,6 +53,7 @@ public class GUIManager : MonoBehaviour {
 	{
 		if (StateManager.SharedInstance.gameState == GameState.Dialog)
 		{
+			DeactiveAllWindows();
 			dialogCanvas.GetComponent<Canvas>().enabled = true;
 			dialogCanvas.GetComponent<GraphicRaycaster>().enabled = true;
 
