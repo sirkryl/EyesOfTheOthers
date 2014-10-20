@@ -8,9 +8,38 @@ public class GUIManager : MonoBehaviour {
 	//private static GUIManager instance = null;
 	public static GUIManager SharedInstance { get; private set; }
 
+	#region canvas
 	public Canvas inventoryCanvas;
 	public Canvas debugCanvas;
 	public Canvas characterCanvas;
+	public Canvas overlayCanvas;
+	public Canvas logCanvas;
+	private List<Canvas> allCanvas;
+	#endregion
+	
+
+	#region inventory ui elements
+	private Inventory playerInventory;
+
+	private Text itemName; 
+	private Image itemImage;
+	private Text itemType;
+	private Text itemEffect;
+	private Text itemDescription;
+	private Text itemWeight;
+
+	private Image itemList;
+	private Image itemLabelFab;
+	private GameObject inventoryEmptyFab;
+	private GameObject inventoryEmptyLabel;
+
+	private GameObject handButton;
+	private GameObject useButton;
+	private GameObject maskItemInfo;
+
+	private Dictionary<string, Image> itemUIMap;
+	#endregion
+	
 
 	#region character ui elements
 	private Text hungerText;
@@ -32,15 +61,13 @@ public class GUIManager : MonoBehaviour {
 	private Text timeValue;
 	#endregion
 
-	public Canvas overlayCanvas;
-	public List<Canvas> allCanvas;
-	public GameObject maskItemInfo;
-	public GameObject player;
+	private Text debugTimeText;
+	
 	public GameObject interactionOverlay;
 	public Canvas dialogCanvas;
 	public bool alternativeDialogCanvas = false;
 	public bool loadAndSaveStuff = false;
-	private UnitySampleAssets.Characters.FirstPerson.FirstPersonController playerMouseLook;
+	private UnitySampleAssets.Characters.FirstPerson.FirstPersonController playerController;
 	private Camera camera;
 
 	void Awake()
@@ -57,18 +84,34 @@ public class GUIManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		MainComponentManager.CreateInstance ();
+		StateManager.SharedInstance.SetGameState(GameState.Free);
 		camera = Camera.main;
+		playerInventory = GameObject.FindWithTag ("Player").GetComponentInChildren<Inventory>();
+		playerInventory.OnItemAdded += HandleOnItemAdded;
+		playerInventory.OnItemRemoved += HandleOnItemRemoved;
+
 		StateManager.SharedInstance.OnStateChange += HandleOnStateChange;
 		PlayerManager.SharedInstance.OnPlayerAttributeChange += HandleOnPlayerAttributeChange;
-		maskItemInfo.GetComponent<Image>().enabled = false;
-		playerMouseLook = player.GetComponent<UnitySampleAssets.Characters.FirstPerson.FirstPersonController>();
+
+		if (inventoryCanvas == null)
+			inventoryCanvas = GameObject.Find ("InventoryCanvas").GetComponent<Canvas>();
+		if (overlayCanvas == null)
+			overlayCanvas = GameObject.Find ("OverlayCanvas").GetComponent<Canvas>();
+		if (characterCanvas == null)
+			characterCanvas = GameObject.Find ("CharacterCanvas").GetComponent<Canvas>();
+		if (dialogCanvas == null)
+			dialogCanvas = GameObject.Find ("DialogCanvas").GetComponent<Canvas>();
+		if (logCanvas == null)
+			logCanvas = GameObject.Find ("LogCanvas").GetComponent<Canvas>();
+
+		playerController = GameObject.FindWithTag ("Player").GetComponent<UnitySampleAssets.Characters.FirstPerson.FirstPersonController>();
 		allCanvas.Add (inventoryCanvas);
 		allCanvas.Add (characterCanvas);
 		allCanvas.Add (overlayCanvas);
+		allCanvas.Add (logCanvas);
 		//cameraMouseLook = camera.GetComponent<MouseLook>();
-		MainComponentManager.CreateInstance ();
-		PlayerManager.SharedInstance.Load ();
-		StateManager.SharedInstance.SetGameState(GameState.Free);
+		debugTimeText = GameObject.Find ("DebugTimeText").GetComponent<Text>();
 
 		#region character ui
 		hungerText = GameObject.Find ("HungerText").GetComponent<Text>();
@@ -89,43 +132,49 @@ public class GUIManager : MonoBehaviour {
 		psycheFill = GameObject.Find ("PsycheFill").GetComponent<Image>();
 		timeValue = GameObject.Find ("TimeValue").GetComponent<Text>();
 		#endregion
-		//GlobalState.gameState.StartState();
+
+		#region inventory ui
+		itemList = GameObject.Find ("ItemList").GetComponent<Image>();
+		itemUIMap = new Dictionary<string, Image>();
+		inventoryEmptyFab = Resources.Load ("Prefabs/GUI/itemListEmpty",typeof(GameObject)) as GameObject;
+		itemLabelFab = Resources.Load ("Prefabs/GUI/itemListElement", typeof(Image)) as Image;
+		inventoryEmptyLabel = Instantiate(inventoryEmptyFab) as GameObject;
+		inventoryEmptyLabel.transform.SetParent (itemList.transform, false);
+		maskItemInfo = GameObject.Find ("MaskPanel");
+
+		maskItemInfo.GetComponent<Image>().enabled = false;
+		itemName = GameObject.Find ("ItemName").GetComponent<Text>();
+		itemImage = GameObject.Find ("ItemImage").GetComponent<Image>();
+		itemType = GameObject.Find ("ItemType").GetComponent<Text>();
+		itemEffect = GameObject.Find ("ItemEffect").GetComponent<Text>();
+		itemDescription = GameObject.Find ("ItemDescription").GetComponent<Text>();
+		itemWeight = GameObject.Find ("ItemWeight").GetComponent<Text>();
+
+		handButton = GameObject.Find ("HandButton");
+		useButton = GameObject.Find ("UseButton");
+		#endregion
 	}
+
 	// Update is called once per frame
 	void Update () {
-		timeValue.text = ((int)DayNightCycleManager.SharedInstance.timeOfDay).ToString("00") + ":" + ((int)((DayNightCycleManager.SharedInstance.timeOfDay*60)%60)).ToString ("00");
-		if (Input.GetKeyUp("f10"))
-		{
-			debugCanvas.enabled = !debugCanvas.enabled;
 
-		}
+		//update time in GUI
+		string timeString = ((int)DayNightCycleManager.SharedInstance.timeOfDay).ToString("00") + ":" + ((int)((DayNightCycleManager.SharedInstance.timeOfDay*60)%60)).ToString ("00");
+		timeValue.text = timeString;
+		if(debugTimeText != null)
+			debugTimeText.text = timeString;
+
+		if (Input.GetKeyUp("f10"))
+			debugCanvas.enabled = !debugCanvas.enabled;
 		else if (Input.GetKeyUp("i"))
 		{
-			DeactivateAllOtherWindows(inventoryCanvas);
-
+			ToggleCanvas(inventoryCanvas);
 			maskItemInfo.GetComponent<Image>().enabled = false;
-			//imagePanel.GetComponent<Mask>().enabled = true;
-
-			inventoryCanvas.GetComponent<Canvas>().enabled = !inventoryCanvas.GetComponent<Canvas>().enabled;
-			inventoryCanvas.GetComponent<GraphicRaycaster>().enabled = !inventoryCanvas.GetComponent<GraphicRaycaster>().enabled;
-
-			if(inventoryCanvas.enabled)
-				StateManager.SharedInstance.SetGameState(GameState.Interface);
-			else
-				StateManager.SharedInstance.SetGameState(GameState.Free);
 		}
 		else if (Input.GetKeyUp("c"))
-		{
-			//Debug.Log ("apple: "+GlobalVariableManager.SharedInstance.GetGlobalVariable("tookApple"));
-			//StateManager.SharedInstance.SetGameState(GameState.Interface);
-			DeactivateAllOtherWindows(characterCanvas);
-			characterCanvas.GetComponent<Canvas>().enabled = !characterCanvas.GetComponent<Canvas>().enabled;
-			characterCanvas.GetComponent<GraphicRaycaster>().enabled = !characterCanvas.GetComponent<GraphicRaycaster>().enabled;
-			if(characterCanvas.enabled)
-				StateManager.SharedInstance.SetGameState(GameState.Interface);
-			else
-				StateManager.SharedInstance.SetGameState(GameState.Free);
-		}
+			ToggleCanvas(characterCanvas);
+		else if (Input.GetKeyUp ("l"))
+			ToggleCanvas(logCanvas);
 		else if (Input.GetKeyUp ("f5"))
 		{
 			Debug.Log ("save variables");
@@ -133,7 +182,20 @@ public class GUIManager : MonoBehaviour {
 		}
 	}
 
-	void DeactivateAllOtherWindows(Canvas canvas)
+	void ToggleCanvas(Canvas canvas)
+	{
+		DeactivateAllOtherCanvas(canvas);
+		
+		canvas.GetComponent<Canvas>().enabled = !canvas.GetComponent<Canvas>().enabled;
+		canvas.GetComponent<GraphicRaycaster>().enabled = !canvas.GetComponent<GraphicRaycaster>().enabled;
+		
+		if(canvas.enabled)
+			StateManager.SharedInstance.SetGameState(GameState.Interface);
+		else
+			StateManager.SharedInstance.SetGameState(GameState.Free);
+	}
+
+	void DeactivateAllOtherCanvas(Canvas canvas)
 	{
 		foreach (Canvas child in allCanvas)
 		{
@@ -145,7 +207,7 @@ public class GUIManager : MonoBehaviour {
 		}
 	}
 
-	public void DeactiveAllWindows()
+	public void DeactiveAllCanvas()
 	{
 		foreach (Canvas child in allCanvas)
 		{
@@ -157,9 +219,9 @@ public class GUIManager : MonoBehaviour {
 
 	public void ShowInteractionOverlay(string text)
 	{
-		//overlayCanvas.GetComponent<Canvas>().enabled = false;
-		//overlayCanvas.GetComponent<GraphicRaycaster>().enabled = false;
-		if(interactionOverlay.GetComponent<Image>().enabled == false)
+
+		if(interactionOverlay.GetComponent<Image>().enabled == false 
+		   || text != interactionOverlay.GetComponentInChildren<Text>().text)
 		{
 			interactionOverlay.GetComponent<Image>().enabled = true;
 			interactionOverlay.GetComponentInChildren<Text>().text = text;
@@ -172,6 +234,8 @@ public class GUIManager : MonoBehaviour {
 		if(interactionOverlay.GetComponent<Image>().enabled == true)
 			interactionOverlay.GetComponent<Image>().enabled = false;
 	}
+
+	#region character GUI
 
 	void HandleOnPlayerAttributeChange ()
 	{
@@ -253,16 +317,20 @@ public class GUIManager : MonoBehaviour {
 		}
 		coldnessValue.text = PlayerManager.SharedInstance.playerData.coldness+" %";
 	}
-	
+
+	#endregion
+
+	#region inventory GUI
+
 	void HandleOnStateChange ()
 	{
 		if (StateManager.SharedInstance.gameState == GameState.Dialog)
 		{
-			DeactiveAllWindows();
+			DeactiveAllCanvas();
 			dialogCanvas.GetComponent<Canvas>().enabled = true;
 			dialogCanvas.GetComponent<GraphicRaycaster>().enabled = true;
 			
-			playerMouseLook.enabled = false;
+			playerController.enabled = false;
 			if(overlayCanvas.GetComponent<Canvas>().enabled)
 			{
 				overlayCanvas.GetComponent<Canvas>().enabled = false;
@@ -276,7 +344,7 @@ public class GUIManager : MonoBehaviour {
 				dialogCanvas.GetComponent<Canvas>().enabled = false;
 				dialogCanvas.GetComponent<GraphicRaycaster>().enabled = false;
 			}
-			playerMouseLook.enabled = true;
+			playerController.enabled = true;
 			if(!overlayCanvas.GetComponent<Canvas>().enabled)
 			{
 				overlayCanvas.GetComponent<Canvas>().enabled = true;
@@ -285,8 +353,103 @@ public class GUIManager : MonoBehaviour {
 		}
 		else if (StateManager.SharedInstance.gameState == GameState.Interface)
 		{
-			playerMouseLook.enabled = false;
+			playerController.enabled = false;
 		}
 	}
 
+	void HandleOnItemAdded (Item item)
+	{
+		if (itemUIMap.ContainsKey (item.id_string))
+		{
+			itemUIMap[item.id_string].GetComponentInChildren<Text>().text = item.name + " (" + item.stackSize + ")";
+			//itemUIMap[item.id_string].GetComponent<Item>().stackSize = itemMap[item.id_string].stackSize;
+		}
+		else
+		{
+			if (itemUIMap.Count == 0)
+				Destroy(inventoryEmptyLabel);
+			//Image itemListElement = Instantiate (itemLabelFab, new Vector3(0,-10-((items.Count-1)*18),0), Quaternion.identity) as Image;
+			Image itemListElement = Instantiate (itemLabelFab, new Vector3(0,0,0), Quaternion.identity) as Image;
+			itemListElement.transform.SetParent (itemList.transform, false);
+			itemListElement.GetComponentInChildren<Text>().enabled = true;
+			itemListElement.GetComponentInChildren<Text>().text = item.name + " (" + item.stackSize + ")";
+			//itemListElement.GetComponent<Button>().onClick.AddListener(() => { GUIShowItemInfo(itemListElement.GetComponent<Item>()); });
+			itemListElement.GetComponent<Button>().onClick.AddListener(() => { ShowItemInfo(playerInventory.GetItem (item.id_string)); });
+			
+			//itemListElement.GetComponent<Item>().name = item.id_string;
+			itemUIMap.Add (item.id_string, itemListElement);
+		}
+	}
+	
+	void HandleOnItemRemoved (Item item)
+	{
+		int stackSize = playerInventory.GetStackSize (item);
+		if (stackSize > 0 && itemUIMap.ContainsKey (item.id_string))
+		{
+			itemUIMap[item.id_string].GetComponentInChildren<Text>().text = item.name + " (" + stackSize+ ")";
+		}
+		else
+		{
+			Image itemListElement = itemUIMap[item.id_string];
+			itemUIMap.Remove (item.id_string);
+			Destroy(itemListElement.gameObject);
+			if(itemUIMap.Count == 0)
+			{
+				inventoryEmptyFab = Resources.Load ("Prefabs/GUI/itemListEmpty",typeof(GameObject)) as GameObject;
+				inventoryEmptyLabel = Instantiate(inventoryEmptyFab) as GameObject;
+				inventoryEmptyLabel.transform.SetParent (itemList.transform, false);
+			}
+			handButton.GetComponent<Button>().interactable = false;
+			useButton.GetComponent<Button>().interactable = false;
+			handButton.GetComponentInChildren<Text>().enabled = false;
+			useButton.GetComponentInChildren<Text>().enabled = false;
+			//GameObject.Find ("HandButton").GetComponent<Mask>().enabled = true;
+			//GameObject.Find ("HandButton").GetComponent<Image>().enabled = false;
+			//GameObject.Find ("UseButton").GetComponent<Mask>().enabled = true;
+			//GameObject.Find ("UseButton").GetComponent<Image>().enabled = false;
+			maskItemInfo.GetComponent<Image>().enabled = false;
+		}
+	}
+	
+	void ShowItemInfo(Item item)
+	{
+		maskItemInfo.GetComponent<Image>().enabled = true;
+		//imagePanel.GetComponent<Mask>().enabled = false;
+		itemName.text = item.name;
+		//itemImage.sprite = Sprite.
+		itemType.text = item.GetItemType();
+		itemEffect.text = item.GetItemEffect ();
+		itemDescription.text = item.description;
+		handButton.GetComponent<Button>().onClick.RemoveAllListeners();
+		useButton.GetComponent<Button>().onClick.RemoveAllListeners();
+		useButton.GetComponent<Button>().interactable = true;
+		useButton.GetComponentInChildren<Text>().enabled = true;
+		if(item is ThrowableItem)
+		{
+			handButton.GetComponent<Button>().interactable = true;
+			handButton.GetComponentInChildren<Text>().enabled = true;
+			//GameObject.Find ("HandButton").GetComponent<Image>().enabled = true;
+			handButton.GetComponent<Button>().onClick.AddListener(() => { playerInventory.SelectItem(item); });
+		}
+		else
+		{
+			handButton.GetComponent<Button>().interactable = false;
+			handButton.GetComponentInChildren<Text>().enabled = false;
+			//GameObject.Find ("HandButton").GetComponent<Image>().enabled = false;
+		}
+		
+		if(item is Consumable)
+		{
+			useButton.GetComponentInChildren<Text>().text = "Consume";
+			useButton.GetComponent<Button>().onClick.AddListener(() => { playerInventory.ConsumeItem(item); });
+		}
+		else if(item is Equipable)
+		{
+			useButton.GetComponentInChildren<Text>().text = "Equip";
+			useButton.GetComponent<Button>().onClick.AddListener(() => { playerInventory.EquipItem(item); });
+		}
+		itemImage.sprite = item.icon;
+	}
+
+	#endregion
 }

@@ -4,6 +4,7 @@ using System.Collections;
 public class WalkToDialog : MonoBehaviour {
 
 	private AIPath pathFinder;
+	public bool enabled = false;
 	// Use this for initialization
 	void Start () {
 		pathFinder = GetComponent<AIPath>();
@@ -22,9 +23,13 @@ public class WalkToDialog : MonoBehaviour {
 
 	public void OnTargetReached ()
 	{
-		GetComponent<Dialog>().HandleSelection();
-		pathFinder.canMove = false;
-		pathFinder.canSearch = false;
-		Destroy(this);
+		if(enabled)
+		{
+			GetComponent<Dialog>().HandleSelection();
+		}
+			pathFinder.canMove = false;
+			pathFinder.canSearch = false;
+			Destroy(this);
+
 	}
 }
