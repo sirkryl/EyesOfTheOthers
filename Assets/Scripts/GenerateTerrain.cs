@@ -24,7 +24,7 @@ public class GenerateTerrain : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
-		StateManager.SharedInstance.SetGameState(GameState.Free);
+
 		gameObjectParent = GameObject.FindWithTag("Gameplay");
 
 		blockPrefabs = Resources.LoadAll ("Prefabs/Blocks", typeof(GameObject));

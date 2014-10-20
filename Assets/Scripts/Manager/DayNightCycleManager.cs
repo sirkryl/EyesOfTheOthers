@@ -1,7 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-public class DayNightCycle : MonoBehaviour {
+public enum DayPhase { Night, Day }
+public class DayNightCycleManager : MonoBehaviour {
+
+	public static DayNightCycleManager SharedInstance { get; private set; }
+	public event OnStateChangeHandler OnDayTimeChange;
+
+	public DayPhase dayPhase { get; private set; }
 
 	public Material darkSkyBoxMaterial;
 	public Material brightSkyBoxMaterial;
@@ -41,8 +47,17 @@ public class DayNightCycle : MonoBehaviour {
 	private bool moonOut = false;
 	private float helperValue;
 
+	void Awake () {
+		if(SharedInstance != null && SharedInstance != this)
+			Destroy(gameObject);
+		
+		SharedInstance = this;
+		DontDestroyOnLoad(gameObject);
+	}
+
 	// Use this for initialization
 	void Start () {
+
 		cycleValue = 0.4f;
 		GlobalVariableManager.SharedInstance.SetGlobalVariable("timeOfDay", (int)Mathf.Round (cycleValue*24));
 	}
@@ -83,6 +98,8 @@ public class DayNightCycle : MonoBehaviour {
 			{
 				moonOut = true;
 				//Debug.Log ("Night");
+				if (dayPhase == DayPhase.Day)
+					SetDayPhase(DayPhase.Night);
 				if(sunFlareObject.GetComponent<LensFlare>().flare != sunFlare)
 				sunFlareObject.GetComponent<LensFlare>().flare = sunFlare;
 				RenderSettings.skybox = darkSkyBoxMaterial;
@@ -119,6 +136,8 @@ public class DayNightCycle : MonoBehaviour {
 			}
 			else if (helperValue > 8 && helperValue < 10)//timeOfDay >= 8 && timeOfDay < 16)
 			{
+				if (dayPhase == DayPhase.Night)
+					SetDayPhase(DayPhase.Day);
 				moonOut = false;
 				if(sunFlareObject.GetComponent<LensFlare>().flare != sunAtNoonFlare)
 					sunFlareObject.GetComponent<LensFlare>().flare = sunAtNoonFlare;
@@ -131,6 +150,13 @@ public class DayNightCycle : MonoBehaviour {
 				RenderSettings.ambientLight = Color.Lerp (morningAmbientLight, noonAmbientLight, (helperValue/2)-4);;
 				RenderSettings.fogColor = Color.Lerp (morningFog, noonFog, (helperValue/2)-4);
 			}
+		}
+	}
+
+	public void SetDayPhase(DayPhase dayPhase) {
+		this.dayPhase = dayPhase;
+		if(OnDayTimeChange!=null) {
+			OnDayTimeChange();
 		}
 	}
 

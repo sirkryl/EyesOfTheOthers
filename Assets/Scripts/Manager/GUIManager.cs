@@ -11,6 +11,27 @@ public class GUIManager : MonoBehaviour {
 	public Canvas inventoryCanvas;
 	public Canvas debugCanvas;
 	public Canvas characterCanvas;
+
+	#region character ui elements
+	private Text hungerText;
+	private Text hungerValue;
+	private Text thirstText;
+	private Text thirstValue;
+	private Text fatigueText;
+	private Text fatigueValue;
+	private Text coldnessText;
+	private Text coldnessValue;
+	private Text temperatureText;
+	private Text temperatureValue;
+	private Text stressText;
+	private Text stressValue;
+	private Text psycheText;
+	private Text psycheValue;
+	private Slider psycheBar;
+	private Image psycheFill;
+	private Text timeValue;
+	#endregion
+
 	public Canvas overlayCanvas;
 	public List<Canvas> allCanvas;
 	public GameObject maskItemInfo;
@@ -38,6 +59,7 @@ public class GUIManager : MonoBehaviour {
 
 		camera = Camera.main;
 		StateManager.SharedInstance.OnStateChange += HandleOnStateChange;
+		PlayerManager.SharedInstance.OnPlayerAttributeChange += HandleOnPlayerAttributeChange;
 		maskItemInfo.GetComponent<Image>().enabled = false;
 		playerMouseLook = player.GetComponent<UnitySampleAssets.Characters.FirstPerson.FirstPersonController>();
 		allCanvas.Add (inventoryCanvas);
@@ -46,46 +68,32 @@ public class GUIManager : MonoBehaviour {
 		//cameraMouseLook = camera.GetComponent<MouseLook>();
 		MainComponentManager.CreateInstance ();
 		PlayerManager.SharedInstance.Load ();
+		StateManager.SharedInstance.SetGameState(GameState.Free);
+
+		#region character ui
+		hungerText = GameObject.Find ("HungerText").GetComponent<Text>();
+		hungerValue = GameObject.Find ("HungerValue").GetComponent<Text>();
+		thirstText = GameObject.Find ("ThirstText").GetComponent<Text>();
+		thirstValue = GameObject.Find ("ThirstValue").GetComponent<Text>();
+		fatigueText = GameObject.Find ("FatigueText").GetComponent<Text>();
+		fatigueValue = GameObject.Find ("FatigueValue").GetComponent<Text>();
+		coldnessText = GameObject.Find ("ColdnessText").GetComponent<Text>();
+		coldnessValue = GameObject.Find ("ColdnessValue").GetComponent<Text>();
+		temperatureText = GameObject.Find ("TemperatureText").GetComponent<Text>();
+		temperatureValue = GameObject.Find ("TemperatureValue").GetComponent<Text>();
+		stressText = GameObject.Find ("StressText").GetComponent<Text>();
+		stressValue = GameObject.Find ("StressValue").GetComponent<Text>();
+		psycheText = GameObject.Find ("PsycheText").GetComponent<Text>();
+		psycheValue = GameObject.Find ("PsycheValue").GetComponent<Text>();
+		psycheBar = GameObject.Find ("PsycheBar").GetComponent<Slider>();
+		psycheFill = GameObject.Find ("PsycheFill").GetComponent<Image>();
+		timeValue = GameObject.Find ("TimeValue").GetComponent<Text>();
+		#endregion
 		//GlobalState.gameState.StartState();
 	}
-
-	void HandleOnStateChange ()
-	{
-		if (StateManager.SharedInstance.gameState == GameState.Dialog)
-		{
-			DeactiveAllWindows();
-			dialogCanvas.GetComponent<Canvas>().enabled = true;
-			dialogCanvas.GetComponent<GraphicRaycaster>().enabled = true;
-
-			playerMouseLook.enabled = false;
-			if(overlayCanvas.GetComponent<Canvas>().enabled)
-			{
-				overlayCanvas.GetComponent<Canvas>().enabled = false;
-				overlayCanvas.GetComponent<GraphicRaycaster>().enabled = false;
-			}
-		}
-		else if (StateManager.SharedInstance.gameState == GameState.Free)
-		{
-			if (dialogCanvas.GetComponent<Canvas>().enabled)
-			{
-				dialogCanvas.GetComponent<Canvas>().enabled = false;
-				dialogCanvas.GetComponent<GraphicRaycaster>().enabled = false;
-			}
-			playerMouseLook.enabled = true;
-			if(!overlayCanvas.GetComponent<Canvas>().enabled)
-			{
-				overlayCanvas.GetComponent<Canvas>().enabled = true;
-				overlayCanvas.GetComponent<GraphicRaycaster>().enabled = true;
-			}
-		}
-		else if (StateManager.SharedInstance.gameState == GameState.Interface)
-		{
-			playerMouseLook.enabled = false;
-		}
-	}
-	
 	// Update is called once per frame
 	void Update () {
+		timeValue.text = ((int)DayNightCycleManager.SharedInstance.timeOfDay).ToString("00") + ":" + ((int)((DayNightCycleManager.SharedInstance.timeOfDay*60)%60)).ToString ("00");
 		if (Input.GetKeyUp("f10"))
 		{
 			debugCanvas.enabled = !debugCanvas.enabled;
@@ -147,22 +155,6 @@ public class GUIManager : MonoBehaviour {
 		StateManager.SharedInstance.SetGameState(GameState.Free);
 	}
 
-	/*public void ShowDialogWindow()
-	{
-		playerMouseLook.enabled = false;
-		cameraMouseLook.enabled = false;
-		dialogCanvas.GetComponent<Canvas>().enabled = true;
-		dialogCanvas.GetComponent<GraphicRaycaster>().enabled = true;
-	}
-
-	public void HideDialogWindow()
-	{
-		playerMouseLook.enabled = true;
-		cameraMouseLook.enabled = true;
-		dialogCanvas.GetComponent<Canvas>().enabled = false;
-		dialogCanvas.GetComponent<GraphicRaycaster>().enabled = false;
-	}*/
-
 	public void ShowInteractionOverlay(string text)
 	{
 		//overlayCanvas.GetComponent<Canvas>().enabled = false;
@@ -179,6 +171,122 @@ public class GUIManager : MonoBehaviour {
 		//overlayCanvas.GetComponent<GraphicRaycaster>().enabled = true;
 		if(interactionOverlay.GetComponent<Image>().enabled == true)
 			interactionOverlay.GetComponent<Image>().enabled = false;
+	}
+
+	void HandleOnPlayerAttributeChange ()
+	{
+		if (PlayerManager.SharedInstance.playerData.hunger <= 60 && PlayerManager.SharedInstance.playerData.hunger > 30)
+		{
+			hungerText.color = Color.yellow;
+			hungerValue.color = Color.yellow;
+		}
+		if (PlayerManager.SharedInstance.playerData.hunger <= 30)
+		{
+			hungerText.color = Color.red;
+			hungerValue.color = Color.red;
+		}
+		hungerValue.text = PlayerManager.SharedInstance.playerData.hunger+" %";
+		
+		if (PlayerManager.SharedInstance.playerData.fatigue <= 60 && PlayerManager.SharedInstance.playerData.fatigue > 30)
+		{
+			fatigueText.color = Color.yellow;
+			fatigueValue.color = Color.yellow;
+		}
+		if (PlayerManager.SharedInstance.playerData.fatigue <= 30)
+		{
+			fatigueText.color = Color.red;
+			fatigueValue.color = Color.red;
+		}
+		fatigueValue.text = PlayerManager.SharedInstance.playerData.fatigue+" %";
+		
+		if (PlayerManager.SharedInstance.playerData.thirst <= 60 && PlayerManager.SharedInstance.playerData.thirst > 30)
+		{
+			thirstText.color = Color.yellow;
+			thirstValue.color = Color.yellow;
+		}
+		if (PlayerManager.SharedInstance.playerData.thirst <= 30)
+		{
+			thirstText.color = Color.red;
+			thirstValue.color = Color.red;
+		}
+		thirstValue.text = PlayerManager.SharedInstance.playerData.thirst+" %";
+		
+		temperatureValue.text = PlayerManager.SharedInstance.temperature+"\u00b0c";
+		
+		if (PlayerManager.SharedInstance.temperature < 20)
+		{
+			PlayerManager.SharedInstance.playerData.coldness-=10;
+			if (PlayerManager.SharedInstance.playerData.coldness <= 60 && PlayerManager.SharedInstance.playerData.coldness > 30)
+			{
+				coldnessText.color = Color.yellow;
+				coldnessValue.color = Color.yellow;
+			}
+			if (PlayerManager.SharedInstance.playerData.coldness <= 30)
+			{
+				coldnessText.color = Color.red;
+				coldnessValue.color = Color.red;
+			}
+			coldnessValue.text = PlayerManager.SharedInstance.playerData.coldness+" %";
+		}
+		
+		if (PlayerManager.SharedInstance.playerData.psyche <= 60 && PlayerManager.SharedInstance.playerData.psyche > 30)
+		{
+			psycheValue.text = "Average";
+			psycheFill.color = Color.yellow;
+		}
+		if (PlayerManager.SharedInstance.playerData.psyche <= 30)
+		{
+			psycheValue.text = "Insane";
+			psycheFill.color = Color.red;
+		}
+		psycheBar.value = (float)((float)PlayerManager.SharedInstance.playerData.psyche/100.0f);
+		
+		if (PlayerManager.SharedInstance.playerData.coldness <= 60 && PlayerManager.SharedInstance.playerData.coldness > 30)
+		{
+			coldnessText.color = Color.yellow;
+			coldnessValue.color = Color.yellow;
+		}
+		if (PlayerManager.SharedInstance.playerData.coldness <= 30)
+		{
+			coldnessText.color = Color.red;
+			coldnessValue.color = Color.red;
+		}
+		coldnessValue.text = PlayerManager.SharedInstance.playerData.coldness+" %";
+	}
+	
+	void HandleOnStateChange ()
+	{
+		if (StateManager.SharedInstance.gameState == GameState.Dialog)
+		{
+			DeactiveAllWindows();
+			dialogCanvas.GetComponent<Canvas>().enabled = true;
+			dialogCanvas.GetComponent<GraphicRaycaster>().enabled = true;
+			
+			playerMouseLook.enabled = false;
+			if(overlayCanvas.GetComponent<Canvas>().enabled)
+			{
+				overlayCanvas.GetComponent<Canvas>().enabled = false;
+				overlayCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+			}
+		}
+		else if (StateManager.SharedInstance.gameState == GameState.Free)
+		{
+			if (dialogCanvas.GetComponent<Canvas>().enabled)
+			{
+				dialogCanvas.GetComponent<Canvas>().enabled = false;
+				dialogCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+			}
+			playerMouseLook.enabled = true;
+			if(!overlayCanvas.GetComponent<Canvas>().enabled)
+			{
+				overlayCanvas.GetComponent<Canvas>().enabled = true;
+				overlayCanvas.GetComponent<GraphicRaycaster>().enabled = true;
+			}
+		}
+		else if (StateManager.SharedInstance.gameState == GameState.Interface)
+		{
+			playerMouseLook.enabled = false;
+		}
 	}
 
 }
