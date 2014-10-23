@@ -5,8 +5,9 @@ public class GenerateTerrain : MonoBehaviour
 {
 	private Terrain[][] tiles;
 	private object[] blockPrefabs;
-
-	public bool debug = true;
+	public bool noGenerationPlease = false;
+	public bool pathFinderScan = true;
+	public bool block1inMiddle = true;
 
 	public int rows = 3;
 	public int cols = 3;
@@ -20,7 +21,7 @@ public class GenerateTerrain : MonoBehaviour
 
 
 	private GameObject gameObjectParent;
-	public bool noGenerationPlease = false;
+
 
 	void Awake ()
 	{
@@ -43,13 +44,16 @@ public class GenerateTerrain : MonoBehaviour
 		if (!noGenerationPlease) 
 		{
 			GenerateTerrainBlocks ();
-			AstarPath.active.Scan ();
+			if(pathFinderScan)
+				AstarPath.active.Scan ();
 		}
 		return;
 	}
 
 	private void GenerateTerrainBlocks ()
 	{
+		if(rows % 2 != 1) rows++;
+		if(cols % 2 != 1) cols++;
 		tiles = new Terrain[rows][];
 		int rowBegin = -rows / 2;
 		int colBegin = -cols / 2;
@@ -61,7 +65,7 @@ public class GenerateTerrain : MonoBehaviour
 			int colCount = 0;
 			for (int col = colBegin; col <= cols/2; col++) 
 			{
-				if (debug && col == 0 && row == 0) 
+				if (block1inMiddle && col == 0 && row == 0) 
 				{
 					tiles [rowCount] [colCount] = 
 						((GameObject)Instantiate ((GameObject)(blockPrefabs [0]), new Vector3 (row * 300, 0, col * 300), Quaternion.identity)).GetComponent<Terrain> ();
@@ -103,16 +107,15 @@ public class GenerateTerrain : MonoBehaviour
 		{
 			for (int col = 0; col < cols; col++) 
 			{
+				//declarations
 				int ownHeightMapWidth = tiles [row] [col].terrainData.heightmapWidth;
 				int ownHeightMapHeight = tiles [row] [col].terrainData.heightmapHeight;
-				float[,] ownHeightMap;// = tiles [row] [col].terrainData.GetHeights (0, 0, ownHeightMapWidth, ownHeightMapHeight);
+				float[,] ownHeightMap;
 
 				int ownAlphaMapWidth = tiles [row] [col].terrainData.alphamapWidth;
 				int ownAlphaMapHeight = tiles [row] [col].terrainData.alphamapHeight;
-				float[,,] ownAlphaMap;// = tiles [row] [col].terrainData.GetAlphamaps (0, 0, ownAlphaMapWidth, ownAlphaMapHeight);
+				float[,,] ownAlphaMap;
 
-				SplatPrototype[] ownTextures;// = tiles [row] [col].terrainData.splatPrototypes;
-				//int[,] rightDetailMap;
 				float[,,] rightAlphaMap;
 				float[,] rightHeightMap;
 				float[,] bottomHeightMap; 
@@ -121,7 +124,18 @@ public class GenerateTerrain : MonoBehaviour
 				//LEFT TO RIGHT
 				if (col != cols - 1) 
 				{
-					ownTextures = tiles [row] [col].terrainData.splatPrototypes;
+					#region texture merging
+					//get missing textures for left terrain smoothing
+					List<int> changeTextures = new List<int> ();
+					List<int> doubleTextures = new List<int> ();
+					Dictionary<int,int> combinedTextureMap = new Dictionary<int,int> ();
+					float[,,] combinedAlphaMaps = new float[1,1,1];
+					if (smoothLeft)
+					{
+						AddMissingTextures(tiles[row][col],tiles[row][col+1],out changeTextures, out doubleTextures, out combinedTextureMap, out combinedAlphaMaps);
+					}
+					//end get missing textures
+
 					ownHeightMap = tiles [row] [col].terrainData.GetHeights (0, 0, ownHeightMapWidth, ownHeightMapHeight);
 					ownAlphaMap = tiles [row] [col].terrainData.GetAlphamaps (0, 0, ownAlphaMapWidth, ownAlphaMapHeight);
 
@@ -133,145 +147,27 @@ public class GenerateTerrain : MonoBehaviour
 					int rightAlphaMapHeight = tiles [row] [col + 1].terrainData.alphamapHeight;
 					rightAlphaMap = tiles [row] [col + 1].terrainData.GetAlphamaps (0, 0, rightAlphaMapWidth, rightAlphaMapHeight);
 
-					SplatPrototype[] rightTextures = tiles [row] [col + 1].terrainData.splatPrototypes;
-
-					List<int> changeTextures = new List<int> ();
-					List<int> doubleTextures = new List<int> ();
-					List<SplatPrototype> newTextures = new List<SplatPrototype> ();
-					Dictionary<int,int> combinedTextureMap = new Dictionary<int,int> ();
-					Dictionary<int,float[,,]> rightTextureMap = new Dictionary<int,float[,,]> ();
-					float[,,] combinedAlphaMaps = new float[1,1,1];
-					SplatPrototype[] combinedTextures = new SplatPrototype[1];
-					//Dictionary<int,float> ownTextureMap = new Dictionary<int,float> ();
-					int texturesToBeAdded = 0;
-					int index;
-					if (smoothLeft)
-					{
-						for (int i = 0; i < rightTextures.Length; i++) 
-						{
-							bool alreadyHasIt = false;
-							for (int j = 0; j < ownTextures.Length; j++) 
-							{
-								if (ownTextures [j].texture == rightTextures [i].texture) 
-								{
-									alreadyHasIt = true;
-									combinedTextureMap.Add (j, i);
-									doubleTextures.Add (j);
-								}
-							}
-
-							if (!alreadyHasIt) 
-							{
-								combinedTextureMap.Add (ownTextures.Length + texturesToBeAdded, i);
-								newTextures.Add (rightTextures [i]);
-								texturesToBeAdded++;
-							}
-						}
-						combinedTextures = new SplatPrototype[ownTextures.Length + newTextures.Count];
-						combinedAlphaMaps = new float[ownAlphaMapWidth, ownAlphaMapHeight, ownTextures.Length + newTextures.Count];
-
-						for (int i = 0; i < ownTextures.Length; i++) 
-						{
-							combinedTextures [i] = ownTextures [i];
-							for (int x = 0; x < ownAlphaMapWidth; x++) 
-								for (int y = 0; y < ownAlphaMapHeight; y++) 
-									combinedAlphaMaps [x, y, i] = ownAlphaMap [x, y, i];
-						}
-
-						index = ownTextures.Length;
-						foreach (SplatPrototype texture in newTextures) 
-						{
-							changeTextures.Add (index);
-							combinedTextures [index] = texture;
-							index++;
-						}
-
-						tiles [row] [col].terrainData.splatPrototypes = combinedTextures;
-						//tiles [row] [col+1].terrainData.splatPrototypes = combinedTextures;
-						tiles [row] [col].terrainData.SetAlphamaps (0, 0, combinedAlphaMaps);
-						tiles [row] [col].terrainData.RefreshPrototypes ();
-					}
+					//get missing textures for right terrain smoothing
 					List<int> rightChangeTextures = new List<int> ();
 					List<int> rightDoubleTextures = new List<int> ();
-					List<SplatPrototype> rightNewTextures = new List<SplatPrototype> ();
 					Dictionary<int,int> rightCombinedTextureMap = new Dictionary<int,int> ();
-					Dictionary<int,float[,,]> ownTextureMap = new Dictionary<int,float[,,]> ();
-					SplatPrototype[] rightCombinedTextures = new SplatPrototype[1];
 					float[,,] rightCombinedAlphaMaps = new float[1,1,1];
-					if(smoothRight)
+					if (smoothRight)
 					{
-						//begin right texture
-
-						texturesToBeAdded = 0;
-						
-						for (int i = 0; i < ownTextures.Length; i++) 
-						{
-							bool alreadyHasIt = false;
-							for (int j = 0; j < rightTextures.Length; j++) 
-							{
-								if (rightTextures [j].texture == ownTextures [i].texture) 
-								{
-									alreadyHasIt = true;
-									rightCombinedTextureMap.Add (j, i);
-									rightDoubleTextures.Add (j);
-								}
-							}
-							
-							if (!alreadyHasIt) 
-							{
-								rightCombinedTextureMap.Add (rightTextures.Length + texturesToBeAdded, i);
-								rightNewTextures.Add (ownTextures [i]);
-								texturesToBeAdded++;
-							}
-						}
-
-						rightCombinedTextures = new SplatPrototype[rightTextures.Length + rightNewTextures.Count];
-						rightCombinedAlphaMaps = new float[rightAlphaMapWidth, rightAlphaMapHeight, rightTextures.Length + rightNewTextures.Count];
-						
-						for (int i = 0; i < rightTextures.Length; i++) 
-						{
-							rightCombinedTextures [i] = rightTextures [i];
-							for (int x = 0; x < rightAlphaMapWidth; x++) 
-								for (int y = 0; y < rightAlphaMapHeight; y++) 
-									rightCombinedAlphaMaps [x, y, i] = rightAlphaMap [x, y, i];
-						}
-						/*for (int i = 0; i < ownTextures.Length; i++) 
-						{
-							for (int x = 0; x < 2; x++)
-							{
-								for (int y = 0; y < rightAlphaMapHeight; y++)
-								{
-									rightCombinedAlphaMaps[x,y,i] = ownAlphaMap[ownAlphaMapWidth-x,y,i];
-								}
-							}
-						}*/
-						index = rightTextures.Length;
-						foreach (SplatPrototype texture in rightNewTextures) 
-						{
-							rightChangeTextures.Add (index);
-							rightCombinedTextures [index] = texture;
-							index++;
-						}
-						
-						tiles [row] [col+1].terrainData.splatPrototypes = rightCombinedTextures;
-						//tiles [row] [col+1].terrainData.splatPrototypes = combinedTextures;
-						tiles [row] [col+1].terrainData.SetAlphamaps (0, 0, rightCombinedAlphaMaps);
-						tiles [row] [col+1].terrainData.RefreshPrototypes ();
+						AddMissingTextures(tiles[row][col+1],tiles[row][col],out rightChangeTextures, out rightDoubleTextures, out rightCombinedTextureMap, out rightCombinedAlphaMaps);
 					}
-					//end right texture
-					int xCnt = 1;
-					float[] heightDifference = new float[tiles [row] [col].terrainData.heightmapHeight];
-					for (int y = 0; y < tiles[row][col].terrainData.heightmapHeight; y++) 
+					//end get missing textures
+					#endregion
+
+					SmoothTerrainHeightMapsX(tiles[row][col], tiles[row][col+1]);
+
+					#region alpha map smoothing
+					if (smoothLeft || smoothRight)
 					{
-						heightDifference [y] = ownHeightMap [tiles [row] [col].terrainData.heightmapWidth - 1, y] - rightHeightMap [0, y];
-					}
-					for (int x = tiles[row][col].terrainData.heightmapWidth - smoothDistance; x < tiles[row][col].terrainData.heightmapWidth; x++) 
-					{
-						for (int y = 0; y < tiles[row][col].terrainData.heightmapHeight; y++) 
+						int xCnt = 1;
+						for (int x = tiles[row][col].terrainData.alphamapWidth - smoothDistance; x < tiles[row][col].terrainData.alphamapWidth; x++) 
 						{
-							ownHeightMap [x, y] = ownHeightMap [x, y] - (heightDifference [y] / 2.0f) * (float)(((float)xCnt / (float)smoothDistance));
-							rightHeightMap [smoothDistance - xCnt, y] = rightHeightMap [smoothDistance - xCnt, y] + (heightDifference [y] / 2.0f) * (float)((((float)xCnt) / (float)smoothDistance));
-							if (x < rightAlphaMapWidth && y < rightAlphaMapHeight) 
+							for (int y = 0; y < tiles[row][col].terrainData.alphamapHeight; y++) 
 							{
 								if(smoothLeft)
 								{
@@ -280,16 +176,16 @@ public class GenerateTerrain : MonoBehaviour
 										if (changeTextures.Contains (i)) 
 										{
 											if(!smoothRight)
-												combinedAlphaMaps [x, y, i] = (rightAlphaMap [smoothDistance - xCnt-1, y, combinedTextureMap [i]] * ((float)xCnt / (float)smoothDistance));// * (xCnt/30.0f);
+												combinedAlphaMaps [x, y, i] = (rightAlphaMap [smoothDistance - xCnt, y, combinedTextureMap [i]] * ((float)xCnt / (float)smoothDistance));// * (xCnt/30.0f);
 											else
-											combinedAlphaMaps [x, y, i] = (rightAlphaMap [smoothDistance - xCnt-1, y, combinedTextureMap [i]] * (((float)xCnt/2.0f) / (float)smoothDistance));// * (xCnt/30.0f);
+											combinedAlphaMaps [x, y, i] = (rightAlphaMap [smoothDistance - xCnt, y, combinedTextureMap [i]] * (((float)xCnt/2.0f) / (float)smoothDistance));// * (xCnt/30.0f);
 										} 
 										else if (doubleTextures.Contains (i)) 
 										{
 											if(!smoothRight)
-												combinedAlphaMaps [x, y, i] = ((rightAlphaMap [smoothDistance - xCnt-1, y, combinedTextureMap [i]] * ((float)xCnt / (float)smoothDistance)) + (ownAlphaMap [x, y, i] * (((float)smoothDistance - (float)xCnt) / (float)smoothDistance)));
+												combinedAlphaMaps [x, y, i] = ((rightAlphaMap [smoothDistance - xCnt, y, combinedTextureMap [i]] * ((float)xCnt / (float)smoothDistance)) + (ownAlphaMap [x, y, i] * (((float)smoothDistance - (float)xCnt) / (float)smoothDistance)));
 											else
-												combinedAlphaMaps [x, y, i] = ((rightAlphaMap [smoothDistance - xCnt-1, y, combinedTextureMap [i]] * (((float)xCnt/2.0f) / (float)smoothDistance)) + (ownAlphaMap [x, y, i] * (((float)smoothDistance - (float)xCnt/2.0f) / (float)smoothDistance)));
+												combinedAlphaMaps [x, y, i] = ((rightAlphaMap [smoothDistance - xCnt, y, combinedTextureMap [i]] * (((float)xCnt/2.0f) / (float)smoothDistance)) + (ownAlphaMap [x, y, i] * (((float)smoothDistance - (float)xCnt/2.0f) / (float)smoothDistance)));
 
 										} 
 										else
@@ -308,49 +204,56 @@ public class GenerateTerrain : MonoBehaviour
 										if(rightChangeTextures.Contains (i))
 										{
 											if(!smoothLeft)
-												rightCombinedAlphaMaps [smoothDistance-xCnt-1, y, i] = (ownAlphaMap[x,y,rightCombinedTextureMap[i]] * (((float)xCnt) / (float)smoothDistance));
+												rightCombinedAlphaMaps [smoothDistance-xCnt, y, i] = (ownAlphaMap[x,y,rightCombinedTextureMap[i]] * (((float)xCnt) / (float)smoothDistance));
 											else
-												rightCombinedAlphaMaps [smoothDistance-xCnt-1, y, i] = (ownAlphaMap[x,y,rightCombinedTextureMap[i]] * (((float)xCnt/2.0f) / (float)smoothDistance));
+												rightCombinedAlphaMaps [smoothDistance-xCnt, y, i] = (ownAlphaMap[x,y,rightCombinedTextureMap[i]] * (((float)xCnt/2.0f) / (float)smoothDistance));
 										}
 										else if (rightDoubleTextures.Contains (i))
 										{
 											if(!smoothLeft)
-												rightCombinedAlphaMaps [smoothDistance-xCnt-1, y, i] = ((ownAlphaMap[x,y,rightCombinedTextureMap[i]] * (((float)xCnt) / (float)smoothDistance)) + (rightAlphaMap [smoothDistance-xCnt-1, y, i] * (((float)smoothDistance-(float)xCnt) / (float)smoothDistance)));
+												rightCombinedAlphaMaps [smoothDistance-xCnt, y, i] = ((ownAlphaMap[x,y,rightCombinedTextureMap[i]] * (((float)xCnt) / (float)smoothDistance)) + (rightAlphaMap [smoothDistance-xCnt, y, i] * (((float)smoothDistance-(float)xCnt) / (float)smoothDistance)));
 											else
-												rightCombinedAlphaMaps [smoothDistance-xCnt-1, y, i] = ((ownAlphaMap[x,y,rightCombinedTextureMap[i]] * (((float)xCnt/2.0f) / (float)smoothDistance)) + (rightAlphaMap [smoothDistance-xCnt-1, y, i] * (((float)smoothDistance-(float)xCnt/2.0f) / (float)smoothDistance)));
+												rightCombinedAlphaMaps [smoothDistance-xCnt, y, i] = ((ownAlphaMap[x,y,rightCombinedTextureMap[i]] * (((float)xCnt/2.0f) / (float)smoothDistance)) + (rightAlphaMap [smoothDistance-xCnt, y, i] * (((float)smoothDistance-(float)xCnt/2.0f) / (float)smoothDistance)));
 
 										}
 										else
 										{
 											if(!smoothLeft)
-												rightCombinedAlphaMaps [smoothDistance-xCnt-1, y, i] = (rightAlphaMap[smoothDistance-xCnt-1, y, i] * (((float)smoothDistance - (float)xCnt) / (float)smoothDistance));
+												rightCombinedAlphaMaps [smoothDistance-xCnt, y, i] = (rightAlphaMap[smoothDistance-xCnt, y, i] * (((float)smoothDistance - (float)xCnt) / (float)smoothDistance));
 											else
-												rightCombinedAlphaMaps [smoothDistance-xCnt-1, y, i] = (rightAlphaMap[smoothDistance-xCnt-1, y, i] * (((float)smoothDistance - (float)xCnt/2.0f) / (float)smoothDistance));
+												rightCombinedAlphaMaps [smoothDistance-xCnt, y, i] = (rightAlphaMap[smoothDistance-xCnt, y, i] * (((float)smoothDistance - (float)xCnt/2.0f) / (float)smoothDistance));
 
 										}
 									}
 								}
-								//Debug.Log ("x: "+x);
 							}
+							xCnt++;
 						}
-						//Debug.Log ("x: "+xCnt);
-						xCnt++;
-					}
 
-					if(smoothLeft)
-						tiles [row] [col].terrainData.SetAlphamaps (0, 0, combinedAlphaMaps);
-					if(smoothRight)
-						tiles [row] [col + 1].terrainData.SetAlphamaps (0, 0, rightCombinedAlphaMaps);
-					tiles [row] [col + 1].terrainData.SetHeights (0, 0, rightHeightMap);
-					//tiles[row][col+1].terrainData.SetDetailLayer (0,0,0,rightDetailMap);
-					tiles [row] [col].terrainData.SetHeights (0, 0, ownHeightMap);
+						if(smoothLeft)
+							tiles [row] [col].terrainData.SetAlphamaps (0, 0, combinedAlphaMaps);
+						if(smoothRight)
+							tiles [row] [col + 1].terrainData.SetAlphamaps (0, 0, rightCombinedAlphaMaps);
+					}
+					#endregion
 
 				}
 
 				//TOP TO BOTTOM
 				if (row != rows - 1) 
 				{
-					ownTextures = tiles [row] [col].terrainData.splatPrototypes;
+					#region texture merging
+					List<int> changeTextures = new List<int> ();
+					List<int> doubleTextures = new List<int> ();
+					Dictionary<int,int> combinedTextureMap = new Dictionary<int,int> ();
+					float[,,] combinedAlphaMaps = new float[1,1,1];
+					int index;
+
+					if (smoothTop)
+					{
+						AddMissingTextures(tiles[row][col],tiles[row+1][col],out changeTextures, out doubleTextures, out combinedTextureMap, out combinedAlphaMaps);
+					}
+
 					ownHeightMap = tiles [row] [col].terrainData.GetHeights (0, 0, ownHeightMapWidth, ownHeightMapHeight);
 					ownAlphaMap = tiles [row] [col].terrainData.GetAlphamaps (0, 0, ownAlphaMapWidth, ownAlphaMapHeight);
 					int bottomHeightMapWidth = tiles [row+1] [col].terrainData.heightmapWidth;
@@ -360,142 +263,28 @@ public class GenerateTerrain : MonoBehaviour
 					int bottomAlphaMapWidth = tiles [row+1] [col].terrainData.alphamapWidth;
 					int bottomAlphaMapHeight = tiles [row+1] [col].terrainData.alphamapHeight;
 					bottomAlphaMap = tiles [row+1] [col].terrainData.GetAlphamaps (0, 0, bottomAlphaMapWidth, bottomAlphaMapHeight);
-					
-					SplatPrototype[] bottomTextures = tiles [row+1] [col].terrainData.splatPrototypes;
-					
-					List<int> changeTextures = new List<int> ();
-					List<int> doubleTextures = new List<int> ();
-					List<SplatPrototype> newTextures = new List<SplatPrototype> ();
-					Dictionary<int,int> combinedTextureMap = new Dictionary<int,int> ();
-					Dictionary<int,float[,,]> bottomTextureMap = new Dictionary<int,float[,,]> ();
-					int texturesToBeAdded = 0;
-					SplatPrototype[] combinedTextures = new SplatPrototype[1];
-					float[,,] combinedAlphaMaps = new float[1,1,1];
-					int index;
 
-					if(smoothTop)
-					{
-						for (int i = 0; i < bottomTextures.Length; i++) 
-						{
-							bool alreadyHasIt = false;
-							for (int j = 0; j < ownTextures.Length; j++) 
-							{
-								if (ownTextures [j].texture == bottomTextures [i].texture) 
-								{
-									alreadyHasIt = true;
-									combinedTextureMap.Add (j, i);
-									doubleTextures.Add (j);
-								}
-							}
-							
-							if (!alreadyHasIt) 
-							{
-								combinedTextureMap.Add (ownTextures.Length + texturesToBeAdded, i);
-								newTextures.Add (bottomTextures [i]);
-								texturesToBeAdded++;
-							}
-						}
-						combinedTextures = new SplatPrototype[ownTextures.Length + newTextures.Count];
-						combinedAlphaMaps = new float[ownAlphaMapWidth, ownAlphaMapHeight, ownTextures.Length + newTextures.Count];
-						
-						for (int i = 0; i < ownTextures.Length; i++) 
-						{
-							combinedTextures [i] = ownTextures [i];
-							for (int x = 0; x < ownAlphaMapWidth; x++) 
-								for (int y = 0; y < ownAlphaMapHeight; y++) 
-									combinedAlphaMaps [x, y, i] = ownAlphaMap [x, y, i];
-						}
-						
-						index = ownTextures.Length;
-						foreach (SplatPrototype texture in newTextures) 
-						{
-							changeTextures.Add (index);
-							combinedTextures [index] = texture;
-							index++;
-						}
-						float cum2 = 0.0f;
-						for (int i = 0; i < combinedAlphaMaps.GetLength(2); i++) {
-							cum2 += combinedAlphaMaps [tiles [row] [col].terrainData.heightmapWidth - 20, 10, i];
-						}
-						Debug.Log ("cum2: " + cum2);
-						tiles [row] [col].terrainData.splatPrototypes = combinedTextures;
-						//tiles [row] [col+1].terrainData.splatPrototypes = combinedTextures;
-						tiles [row] [col].terrainData.SetAlphamaps (0, 0, combinedAlphaMaps);
-						tiles [row] [col].terrainData.RefreshPrototypes ();
-					}
-					//bottom
 
 					List<int> bottomChangeTextures = new List<int> ();
 					List<int> bottomDoubleTextures = new List<int> ();
-					List<SplatPrototype> bottomNewTextures = new List<SplatPrototype> ();
 					Dictionary<int,int> bottomCombinedTextureMap = new Dictionary<int,int> ();
-					Dictionary<int,float[,,]> ownTextureMap = new Dictionary<int,float[,,]> ();
-					texturesToBeAdded = 0;
-					SplatPrototype[] bottomCombinedTextures = new SplatPrototype[1];
 					float[,,] bottomCombinedAlphaMaps = new float[1,1,1];
-					if(smoothBottom)
-					{
-						for (int i = 0; i < ownTextures.Length; i++) 
-						{
-							bool alreadyHasIt = false;
-							for (int j = 0; j < bottomTextures.Length; j++) 
-							{
-								if (bottomTextures [j].texture == ownTextures [i].texture) 
-								{
-									alreadyHasIt = true;
-									bottomCombinedTextureMap.Add (j, i);
-									bottomDoubleTextures.Add (j);
-								}
-							}
-							
-							if (!alreadyHasIt) 
-							{
-								bottomCombinedTextureMap.Add (bottomTextures.Length + texturesToBeAdded, i);
-								bottomNewTextures.Add (ownTextures [i]);
-								texturesToBeAdded++;
-							}
-						}
-						
-						bottomCombinedTextures = new SplatPrototype[bottomTextures.Length + bottomNewTextures.Count];
-						bottomCombinedAlphaMaps = new float[bottomAlphaMapWidth, bottomAlphaMapHeight, bottomTextures.Length + bottomNewTextures.Count];
-						
-						for (int i = 0; i < bottomTextures.Length; i++) 
-						{
-							bottomCombinedTextures [i] = bottomTextures [i];
-							for (int x = 0; x < bottomAlphaMapWidth; x++) 
-								for (int y = 0; y < bottomAlphaMapHeight; y++) 
-									bottomCombinedAlphaMaps [x, y, i] = bottomAlphaMap [x, y, i];
-						}
-						
-						index = bottomTextures.Length;
-						foreach (SplatPrototype texture in bottomNewTextures) 
-						{
-							bottomChangeTextures.Add (index);
-							bottomCombinedTextures [index] = texture;
-							index++;
-						}
-						
-						tiles [row+1] [col].terrainData.splatPrototypes = bottomCombinedTextures;
-						//tiles [row] [col+1].terrainData.splatPrototypes = combinedTextures;
-						tiles [row+1] [col].terrainData.SetAlphamaps (0, 0, bottomCombinedAlphaMaps);
-						tiles [row+1] [col].terrainData.RefreshPrototypes ();
-					}
-					//end bottom
 
-
-					//bottomHeightMap = tiles [row + 1] [col].terrainData.GetHeights (0, 0, 513, 513);
-					int yCnt = 1;
-					float[] difference = new float[tiles [row] [col].terrainData.heightmapHeight];
-					for (int x = 0; x < tiles[row][col].terrainData.heightmapWidth; x++) {
-							difference [x] = ownHeightMap [x, tiles [row] [col].terrainData.heightmapHeight - 1] - bottomHeightMap [x, 0];
-					}
-					for (int y = tiles[row][col].terrainData.heightmapHeight-smoothDistance; y < tiles[row][col].terrainData.heightmapHeight; y++) 
+					if (smoothBottom)
 					{
-						for (int x = 0; x < tiles[row][col].terrainData.heightmapWidth; x++) 
+						AddMissingTextures(tiles[row+1][col],tiles[row][col],out bottomChangeTextures, out bottomDoubleTextures, out bottomCombinedTextureMap, out bottomCombinedAlphaMaps);
+					}
+					#endregion
+
+					SmoothTerrainHeightMapsY(tiles[row][col],tiles[row+1][col]);
+
+					#region alpha map smoothing
+					if(smoothTop || smoothBottom)
+					{
+						int yCnt = 1;
+						for (int y = ownAlphaMapHeight-smoothDistance; y < ownAlphaMapHeight; y++) 
 						{
-							ownHeightMap [x, y] = ownHeightMap [x, y] - (difference [x] / 2) * (float)((yCnt / (float)smoothDistance));///((20-xCnt)/20);//rightHeightMap[20-xCnt,y];
-							bottomHeightMap [x, smoothDistance - yCnt] = bottomHeightMap [x, smoothDistance - yCnt] + (difference [x] / 2) * (float)(((yCnt) / (float)smoothDistance));
-							if (x < bottomAlphaMapWidth && y < bottomAlphaMapHeight) 
+							for (int x = 0; x < ownAlphaMapWidth; x++) 
 							{
 								if(smoothTop)
 								{
@@ -504,16 +293,16 @@ public class GenerateTerrain : MonoBehaviour
 										if (changeTextures.Contains (i)) 
 										{
 											if(!smoothBottom)
-												combinedAlphaMaps [x, y, i] = (bottomAlphaMap [x,smoothDistance - yCnt-1, combinedTextureMap [i]] * (((float)yCnt) / (float)smoothDistance));// * (xCnt/30.0f);
+												combinedAlphaMaps [x, y, i] = (bottomAlphaMap [x,smoothDistance - yCnt, combinedTextureMap [i]] * (((float)yCnt) / (float)smoothDistance));// * (xCnt/30.0f);
 											else
-												combinedAlphaMaps [x, y, i] = (bottomAlphaMap [x,smoothDistance - yCnt-1, combinedTextureMap [i]] * (((float)yCnt/2.0f) / (float)smoothDistance));// * (xCnt/30.0f);
+												combinedAlphaMaps [x, y, i] = (bottomAlphaMap [x,smoothDistance - yCnt, combinedTextureMap [i]] * (((float)yCnt/2.0f) / (float)smoothDistance));// * (xCnt/30.0f);
 										} 
 										else if (doubleTextures.Contains (i)) 
 										{
 											if(!smoothBottom)
-												combinedAlphaMaps [x, y, i] = ((bottomAlphaMap [x, smoothDistance - yCnt-1, combinedTextureMap [i]] * (((float)yCnt) / (float)smoothDistance)) + (ownAlphaMap [x, y, i] * (((float)smoothDistance - (float)yCnt) / (float)smoothDistance)));
+												combinedAlphaMaps [x, y, i] = ((bottomAlphaMap [x, smoothDistance - yCnt, combinedTextureMap [i]] * (((float)yCnt) / (float)smoothDistance)) + (ownAlphaMap [x, y, i] * (((float)smoothDistance - (float)yCnt) / (float)smoothDistance)));
 											else
-												combinedAlphaMaps [x, y, i] = ((bottomAlphaMap [x, smoothDistance - yCnt-1, combinedTextureMap [i]] * (((float)yCnt/2.0f) / (float)smoothDistance)) + (ownAlphaMap [x, y, i] * (((float)smoothDistance - (float)yCnt/2.0f) / (float)smoothDistance)));
+												combinedAlphaMaps [x, y, i] = ((bottomAlphaMap [x, smoothDistance - yCnt, combinedTextureMap [i]] * (((float)yCnt/2.0f) / (float)smoothDistance)) + (ownAlphaMap [x, y, i] * (((float)smoothDistance - (float)yCnt/2.0f) / (float)smoothDistance)));
 										} 
 										else
 										{
@@ -531,40 +320,162 @@ public class GenerateTerrain : MonoBehaviour
 										if(bottomChangeTextures.Contains (i))
 										{
 											if(!smoothTop)
-												bottomCombinedAlphaMaps [x,smoothDistance-yCnt-1, i] = (ownAlphaMap[x,y,bottomCombinedTextureMap[i]] * (((float)yCnt) / (float)smoothDistance));
+												bottomCombinedAlphaMaps [x,smoothDistance-yCnt, i] = (ownAlphaMap[x,y,bottomCombinedTextureMap[i]] * (((float)yCnt) / (float)smoothDistance));
 											else
-												bottomCombinedAlphaMaps [x,smoothDistance-yCnt-1, i] = (ownAlphaMap[x,y,bottomCombinedTextureMap[i]] * (((float)yCnt/2.0f) / (float)smoothDistance));
+												bottomCombinedAlphaMaps [x,smoothDistance-yCnt, i] = (ownAlphaMap[x,y,bottomCombinedTextureMap[i]] * (((float)yCnt/2.0f) / (float)smoothDistance));
 										}
 										else if (bottomDoubleTextures.Contains (i))
 										{
 											if(!smoothTop)
-												bottomCombinedAlphaMaps [x,smoothDistance-yCnt-1, i] = ((ownAlphaMap[x,y,bottomCombinedTextureMap[i]] * (((float)yCnt) / (float)smoothDistance)) + (bottomAlphaMap [x,smoothDistance-yCnt-1, i] * (((float)smoothDistance-(float)yCnt) / (float)smoothDistance)));
+												bottomCombinedAlphaMaps [x,smoothDistance-yCnt, i] = ((ownAlphaMap[x,y,bottomCombinedTextureMap[i]] * (((float)yCnt) / (float)smoothDistance)) + (bottomAlphaMap [x,smoothDistance-yCnt, i] * (((float)smoothDistance-(float)yCnt) / (float)smoothDistance)));
 											else
-												bottomCombinedAlphaMaps [x,smoothDistance-yCnt-1, i] = ((ownAlphaMap[x,y,bottomCombinedTextureMap[i]] * (((float)yCnt/2.0f) / (float)smoothDistance)) + (bottomAlphaMap [x,smoothDistance-yCnt-1, i] * (((float)smoothDistance-(float)yCnt/2.0f) / (float)smoothDistance)));
+												bottomCombinedAlphaMaps [x,smoothDistance-yCnt, i] = ((ownAlphaMap[x,y,bottomCombinedTextureMap[i]] * (((float)yCnt/2.0f) / (float)smoothDistance)) + (bottomAlphaMap [x,smoothDistance-yCnt, i] * (((float)smoothDistance-(float)yCnt/2.0f) / (float)smoothDistance)));
 										}
 										else
 										{
 											if(!smoothTop)
-												bottomCombinedAlphaMaps [x,smoothDistance-yCnt-1, i] = (bottomAlphaMap[x, smoothDistance-yCnt-1, i] * (((float)smoothDistance - (float)yCnt) / (float)smoothDistance));
+												bottomCombinedAlphaMaps [x,smoothDistance-yCnt, i] = (bottomAlphaMap[x, smoothDistance-yCnt, i] * (((float)smoothDistance - (float)yCnt) / (float)smoothDistance));
 											else
-												bottomCombinedAlphaMaps [x,smoothDistance-yCnt-1, i] = (bottomAlphaMap[x, smoothDistance-yCnt-1, i] * (((float)smoothDistance - (float)yCnt/2.0f) / (float)smoothDistance));
+												bottomCombinedAlphaMaps [x,smoothDistance-yCnt, i] = (bottomAlphaMap[x, smoothDistance-yCnt, i] * (((float)smoothDistance - (float)yCnt/2.0f) / (float)smoothDistance));
 										}
 									}
 								}
 							}
+							yCnt++;
 						}
-						yCnt++;
+						if(smoothBottom)
+							tiles [row+1] [col].terrainData.SetAlphamaps (0, 0, bottomCombinedAlphaMaps);
+						if(smoothTop)
+							tiles [row] [col].terrainData.SetAlphamaps (0, 0, combinedAlphaMaps);
 					}
-					if(smoothBottom)
-						tiles [row+1] [col].terrainData.SetAlphamaps (0, 0, bottomCombinedAlphaMaps);
-					if(smoothTop)
-						tiles [row] [col].terrainData.SetAlphamaps (0, 0, combinedAlphaMaps);
-
-					tiles [row + 1] [col].terrainData.SetHeights (0, 0, bottomHeightMap);
-					tiles [row] [col].terrainData.SetHeights (0, 0, ownHeightMap);
+					#endregion
 				}
 			}
 		}
+	}
+
+	void SmoothTerrainHeightMapsX(Terrain terrain1, Terrain terrain2)
+	{
+		int terrain1HeightMapWidth = terrain1.terrainData.heightmapWidth;
+		int terrain1HeightMapHeight = terrain1.terrainData.heightmapHeight;
+		float[,] terrain1HeightMap = terrain1.terrainData.GetHeights (0, 0, terrain1HeightMapWidth, terrain1HeightMapHeight);
+
+		int terrain2HeightMapWidth = terrain2.terrainData.heightmapWidth;
+		int terrain2HeightMapHeight = terrain2.terrainData.heightmapHeight;
+		float[,] terrain2HeightMap = terrain2.terrainData.GetHeights (0, 0, terrain2HeightMapWidth, terrain2HeightMapHeight);
+
+		float[] heightDifference = new float[terrain1HeightMapWidth];
+		for (int y = 0; y < terrain1HeightMapHeight; y++) 
+		{
+			heightDifference [y] = terrain1HeightMap [terrain1HeightMapWidth - 1, y] - terrain2HeightMap [0, y];
+		}
+
+		int xCnt = 1;
+		for (int x = terrain1HeightMapWidth - smoothDistance; x < terrain1HeightMapWidth; x++) 
+		{
+			for (int y = 0; y < terrain1HeightMapHeight; y++) 
+			{
+				terrain1HeightMap [x, y] = terrain1HeightMap [x, y] - (heightDifference [y] / 2.0f) * (float)(((float)xCnt / (float)smoothDistance));
+				terrain2HeightMap [smoothDistance - xCnt, y] = terrain2HeightMap [smoothDistance - xCnt, y] + (heightDifference [y] / 2.0f) * (float)((((float)xCnt) / (float)smoothDistance));
+			}
+			xCnt++;
+		}
+		terrain1.terrainData.SetHeights (0, 0, terrain1HeightMap);
+		terrain2.terrainData.SetHeights (0, 0, terrain2HeightMap);
+	}
+
+	void SmoothTerrainHeightMapsY(Terrain terrain1, Terrain terrain2)
+	{
+		int terrain1HeightMapWidth = terrain1.terrainData.heightmapWidth;
+		int terrain1HeightMapHeight = terrain1.terrainData.heightmapHeight;
+		float[,] terrain1HeightMap = terrain1.terrainData.GetHeights (0, 0, terrain1HeightMapWidth, terrain1HeightMapHeight);
+		
+		int terrain2HeightMapWidth = terrain2.terrainData.heightmapWidth;
+		int terrain2HeightMapHeight = terrain2.terrainData.heightmapHeight;
+		float[,] terrain2HeightMap = terrain2.terrainData.GetHeights (0, 0, terrain2HeightMapWidth, terrain2HeightMapHeight);
+
+
+		float[] heightDifference = new float[terrain1HeightMapHeight];
+		for (int x = 0; x < terrain1HeightMapWidth; x++) 
+		{
+			heightDifference [x] = terrain1HeightMap [x, terrain1HeightMapHeight - 1] - terrain2HeightMap [x, 0];
+		}
+		
+		int yCnt = 1;
+		for (int y = terrain1HeightMapHeight - smoothDistance; y < terrain1HeightMapHeight; y++) 
+		{
+			for (int x = 0; x < terrain1HeightMapWidth; x++) 
+			{
+				terrain1HeightMap [x, y] = terrain1HeightMap [x, y] - (heightDifference [x] / 2.0f) * (float)(((float)yCnt / (float)smoothDistance));
+				terrain2HeightMap [x, smoothDistance - yCnt] = terrain2HeightMap [x, smoothDistance - yCnt] + (heightDifference [x] / 2.0f) * (float)((((float)yCnt) / (float)smoothDistance));
+			}
+			yCnt++;
+		}
+		terrain1.terrainData.SetHeights (0, 0, terrain1HeightMap);
+		terrain2.terrainData.SetHeights (0, 0, terrain2HeightMap);
+	}
+
+	void AddMissingTextures(Terrain targetTerrain, Terrain sourceTerrain, out List<int> changeTextures, out List<int> doubleTextures, out Dictionary<int,int> combinedTextureMap, out float[,,] combinedAlphaMaps)
+	{
+		SplatPrototype[] targetTextures = targetTerrain.terrainData.splatPrototypes;
+		SplatPrototype[] sourceTextures = sourceTerrain.terrainData.splatPrototypes;
+		List<SplatPrototype> newTextures = new List<SplatPrototype> ();
+		combinedTextureMap = new Dictionary<int,int>();
+		doubleTextures = new List<int>();
+		changeTextures = new List<int>();
+		combinedAlphaMaps = new float[1,1,1];
+		Dictionary<int,float[,,]> sourceTextureMap = new Dictionary<int,float[,,]> ();
+		SplatPrototype[] combinedTextures = new SplatPrototype[1];
+		int targetAlphaMapHeight = targetTerrain.terrainData.alphamapHeight;
+		int targetAlphaMapWidth = targetTerrain.terrainData.alphamapWidth;
+		float[,,] targetAlphaMap = targetTerrain.terrainData.GetAlphamaps (0, 0, targetAlphaMapWidth, targetAlphaMapHeight);
+
+		//Dictionary<int,float> ownTextureMap = new Dictionary<int,float> ();
+		int texturesToBeAdded = 0;
+		int index;
+		for (int i = 0; i < sourceTextures.Length; i++) 
+		{
+			bool alreadyHasIt = false;
+			for (int j = 0; j < targetTextures.Length; j++) 
+			{
+				if (targetTextures [j].texture == sourceTextures [i].texture) 
+				{
+					alreadyHasIt = true;
+					combinedTextureMap.Add (j, i);
+					doubleTextures.Add (j);
+				}
+			}
+			
+			if (!alreadyHasIt) 
+			{
+				combinedTextureMap.Add (targetTextures.Length + texturesToBeAdded, i);
+				newTextures.Add (sourceTextures [i]);
+				texturesToBeAdded++;
+			}
+		}
+		combinedTextures = new SplatPrototype[targetTextures.Length + newTextures.Count];
+		combinedAlphaMaps = new float[targetAlphaMapWidth, targetAlphaMapHeight, targetTextures.Length + newTextures.Count];
+		
+		for (int i = 0; i < targetTextures.Length; i++) 
+		{
+			combinedTextures [i] = targetTextures [i];
+			for (int x = 0; x < targetAlphaMapWidth; x++) 
+				for (int y = 0; y < targetAlphaMapHeight; y++) 
+					combinedAlphaMaps [x, y, i] = targetAlphaMap [x, y, i];
+		}
+		
+		index = targetTextures.Length;
+		foreach (SplatPrototype texture in newTextures) 
+		{
+			changeTextures.Add (index);
+			combinedTextures [index] = texture;
+			index++;
+		}
+		
+		targetTerrain.terrainData.splatPrototypes = combinedTextures;
+		//tiles [row] [col+1].terrainData.splatPrototypes = combinedTextures;
+		targetTerrain.terrainData.SetAlphamaps (0, 0, combinedAlphaMaps);
+		targetTerrain.terrainData.RefreshPrototypes ();
 	}
 
 	void CreateNewTerrainData (Terrain terrain)
