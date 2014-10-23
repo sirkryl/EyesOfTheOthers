@@ -261,7 +261,8 @@ public class AIPath : MonoBehaviour {
 	}
 	
 	public virtual void OnTargetReached () {
-		character.Move(Vector3.zero, false, false, target.position);
+		if(character != null && target != null)
+			character.Move(Vector3.zero, false, false, target.position);
 //		Debug.Log ("target reached");
 		//End of path has been reached
 		//If you want custom logic for when the AI has reached it's destination
