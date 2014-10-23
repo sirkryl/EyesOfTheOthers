@@ -6835,7 +6835,7 @@ GameObject:
   - 33: {fileID: 3300494}
   - 23: {fileID: 2300496}
   - 114: {fileID: 11400026}
-  m_Layer: 1
+  m_Layer: 4
   m_Name: Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6850,7 +6850,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400840}
-  m_Layer: 1
+  m_Layer: 4
   m_Name: Specular
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7244,7 +7244,7 @@ GameObject:
   - 114: {fileID: 11400032}
   - 114: {fileID: 11400030}
   - 114: {fileID: 11400028}
-  m_Layer: 1
+  m_Layer: 4
   m_Name: Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35135,7 +35135,7 @@ MonoBehaviour:
   m_TreeMaximumFullLODCount: 50
   m_DetailObjectDistance: 80
   m_DetailObjectDensity: 1
-  m_HeightmapPixelError: 7.30000019
+  m_HeightmapPixelError: 8
   m_SplatMapDistance: 1000
   m_HeightmapMaximumLOD: 0
   m_CastShadows: 1
