@@ -4645,22 +4645,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
---- !u!1 &100570
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 400546}
-  - 195: {fileID: 19500004}
-  m_Layer: 9
-  m_Name: Navmesh Agent
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &100572
 GameObject:
   m_ObjectHideFlags: 1
@@ -15703,7 +15687,7 @@ Transform:
   - {fileID: 401496}
   - {fileID: 401588}
   m_Father: {fileID: 400756}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!4 &400332
 Transform:
   m_ObjectHideFlags: 1
@@ -16994,18 +16978,6 @@ Transform:
   m_Children:
   - {fileID: 401568}
   m_Father: {fileID: 401622}
-  m_RootOrder: 0
---- !u!4 &400546
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100570}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 400756}
   m_RootOrder: 0
 --- !u!4 &400548
 Transform:
@@ -18487,7 +18459,6 @@ Transform:
   m_LocalPosition: {x: 100.519997, y: 50.3380013, z: 254.899994}
   m_LocalScale: {x: 1.200001, y: 1.20000005, z: 1.200001}
   m_Children:
-  - {fileID: 400546}
   - {fileID: 400330}
   m_Father: {fileID: 400896}
   m_RootOrder: 11
@@ -27458,7 +27429,8 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: ed99e0d03e197744e86275c752c3a7d9, type: 2}
+  - {fileID: 0}
+  - {fileID: 2100000, guid: 91ee59c177820414f8e58c034b313eda, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -35708,11 +35680,11 @@ SkinnedMeshRenderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 0c9b0c2784313ab47856b5c933b5b6ed, type: 2}
-  - {fileID: 2100000, guid: f62b52b2d4b721742a0bc5c6b4db468d, type: 2}
-  - {fileID: 2100000, guid: f81fc96eb9a887b4d96469e64e2b08d1, type: 2}
-  - {fileID: 2100000, guid: cbbac042b7fae3b4d9c7dcf6ec8b8401, type: 2}
-  - {fileID: 2100000, guid: d154633170b162144ac11bce2031ed51, type: 2}
+  - {fileID: 2100000, guid: 7b4c29088f0d86e478c3ea77dcbd404d, type: 2}
+  - {fileID: 2100000, guid: f46aa94f8cedb2a4ba0f7f2612e75baa, type: 2}
+  - {fileID: 2100000, guid: 844d1571f3855a645aeda8f5639026fd, type: 2}
+  - {fileID: 2100000, guid: 1b2cb9d310d374542aad54d4fee9e636, type: 2}
+  - {fileID: 2100000, guid: 05b3b78d930c1c94a894160c909a8fea, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -36233,26 +36205,6 @@ NavMeshAgent:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 101598}
-  m_Enabled: 1
-  m_Radius: .5
-  m_Speed: 3.5
-  m_Acceleration: 0
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 2
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
---- !u!195 &19500004
-NavMeshAgent:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100570}
   m_Enabled: 1
   m_Radius: .5
   m_Speed: 3.5
