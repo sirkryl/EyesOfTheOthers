@@ -21282,11 +21282,11 @@ MonoBehaviour:
   noGenerationPlease: 0
   pathFinderScan: 1
   block1inMiddle: 1
-  rows: 5
-  cols: 5
+  rows: 3
+  cols: 3
   smoothBorders: 1
   twoIterations: 1
-  smoothDistance: 30
+  smoothDistance: 100
   smoothLeft: 1
   smoothRight: 1
   smoothTop: 1
