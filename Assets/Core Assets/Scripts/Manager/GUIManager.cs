@@ -8,6 +8,8 @@ public class GUIManager : MonoBehaviour {
 	//private static GUIManager instance = null;
 	public static GUIManager SharedInstance { get; private set; }
 
+	private bool debugMode = false;
+
 	#region canvas
 	public Canvas inventoryCanvas;
 	public Canvas debugCanvas;
@@ -165,21 +167,28 @@ public class GUIManager : MonoBehaviour {
 			debugTimeText.text = timeString;
 
 		if (Input.GetKeyUp("f10"))
-			debugCanvas.enabled = !debugCanvas.enabled;
-		else if (Input.GetKeyUp("i"))
 		{
-			ToggleCanvas(inventoryCanvas);
-			maskItemInfo.GetComponent<Image>().enabled = false;
+			ToggleCanvas(debugCanvas);
+			debugMode = !debugMode;
 		}
-		else if (Input.GetKeyUp("c"))
-			ToggleCanvas(characterCanvas);
-		else if (Input.GetKeyUp ("l"))
-			ToggleCanvas(logCanvas);
-		else if (Input.GetKeyUp ("f5"))
+		if(!debugMode)
 		{
-			Debug.Log ("save variables");
-			GlobalVariableManager.SharedInstance.SaveVariables ();
+			if (Input.GetKeyUp("i"))
+			{
+				ToggleCanvas(inventoryCanvas);
+				maskItemInfo.GetComponent<Image>().enabled = false;
+			}
+			else if (Input.GetKeyUp("c"))
+				ToggleCanvas(characterCanvas);
+			else if (Input.GetKeyUp ("l"))
+				ToggleCanvas(logCanvas);
+			else if (Input.GetKeyUp ("f5"))
+			{
+				Debug.Log ("save variables");
+				GlobalVariableManager.SharedInstance.SaveVariables ();
+			}
 		}
+
 	}
 
 	void ToggleCanvas(Canvas canvas)

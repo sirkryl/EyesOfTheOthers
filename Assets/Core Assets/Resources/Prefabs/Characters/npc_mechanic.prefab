@@ -12,7 +12,7 @@ GameObject:
   - 54: {fileID: 5400000}
   - 65: {fileID: 6500000}
   m_Layer: 0
-  m_Name: Mechanic
+  m_Name: npc_mechanic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
