@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dialog characterName="Apple" startsWith="1">
+<element id="1" type="text" leadsTo="2">
+Ahoi!
+</element>
+<element id="2" type="choice">
+Du you like apples?
+<answer leadsTo="3">
+Ye
+</answer> 
+<answer leadsTo="4">
+Nop
+</answer>
+</element>
+<element id="3" type="text">
+Yay!
+</element>
+<element id="4" type="text">
+Oh..okay.
+</element>
+</dialog>

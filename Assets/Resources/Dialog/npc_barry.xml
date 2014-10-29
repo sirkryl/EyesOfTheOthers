@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<dialog characterName="Barry" startsWith="1">
-<element id="1" type="text">
-Welcome to Cel Shading Desert!
-</element>
-</dialog>
