@@ -51,7 +51,7 @@ namespace UnitySampleAssets.Characters.FirstPerson
         {
             _characterController = GetComponent<CharacterController>();
             _camera = Camera.main;
-            _originalCameraPosition = _camera.transform.localPosition;
+			_originalCameraPosition = _camera.transform.localPosition;
             _cameraRefocus = new CameraRefocus(_camera, transform, _camera.transform.localPosition);
             _fovKick.Setup(_camera);
             _headBob.Setup(_camera, _stepInterval);
@@ -191,15 +191,17 @@ namespace UnitySampleAssets.Characters.FirstPerson
             if (!useHeadBob) return;
             if (_characterController.velocity.magnitude > 0 && _characterController.isGrounded)
             {
-                _camera.transform.localPosition =
-                    _headBob.DoHeadBob(_characterController.velocity.magnitude +
+
+				_camera.transform.localPosition =
+					_headBob.DoHeadBob(_characterController.velocity.magnitude +
                                        (speed*(_isWalking ? 1f : runstepLenghten)));
                 newCameraPosition = _camera.transform.localPosition;
                 newCameraPosition.y = _camera.transform.localPosition.y - _jumpBob.Offset();
             }
             else
             {
-                newCameraPosition = _camera.transform.localPosition;
+
+				newCameraPosition = _camera.transform.localPosition;
 				newCameraPosition.y = _originalCameraPosition.y - _jumpBob.Offset();
             }
             _camera.transform.localPosition = newCameraPosition;

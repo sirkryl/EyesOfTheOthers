@@ -259,7 +259,8 @@ public class AIPath : MonoBehaviour {
 		//We should search from the current position
 		seeker.StartPath (GetFeetPosition(), targetPosition);
 	}
-	
+
+
 	public virtual void OnTargetReached () {
 		if(character != null && target != null)
 			character.Move(Vector3.zero, false, false, target.position);
@@ -430,7 +431,8 @@ public class AIPath : MonoBehaviour {
 				WalkToDialog wtd = GetComponent<WalkToDialog>();
 				if(wtd != null)
 				{
-					if(Vector3.Distance (GetFeetPosition(),GameObject.FindWithTag ("Player").transform.position) <= 1.5f)
+					float currDist = Vector3.Distance(target.position, GetFeetPosition());
+					if(currDist <= alertDistance)
 						wtd.OnTargetReached();
 				}
 			}

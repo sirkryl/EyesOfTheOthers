@@ -18467,7 +18467,7 @@ Transform:
   m_GameObject: {fileID: 100764}
   m_LocalRotation: {x: 0, y: -.998261869, z: 0, w: .058934994}
   m_LocalPosition: {x: 100.519997, y: 50.3380013, z: 254.899994}
-  m_LocalScale: {x: 1.200001, y: 1.20000005, z: 1.200001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400330}
   m_Father: {fileID: 400896}
@@ -18912,8 +18912,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100804}
   m_LocalRotation: {x: 0, y: -.998261869, z: 0, w: .0589353479}
-  m_LocalPosition: {x: 77.4280014, y: 50.3380013, z: 254.899994}
-  m_LocalScale: {x: 1.20000005, y: 1.20000005, z: 1.20000005}
+  m_LocalPosition: {x: 77.4280014, y: 50.0369987, z: 254.899994}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 401606}
   - {fileID: 400734}
@@ -34882,9 +34882,9 @@ MonoBehaviour:
   alertDistance: 20
   repathRate: .5
   target: {fileID: 0}
-  canSearch: 0
-  canMove: 0
-  speed: 10
+  canSearch: 1
+  canMove: 1
+  speed: .400000006
   turningSpeed: 5
   slowdownDistance: .600000024
   pickNextWaypointDist: 2
@@ -35036,7 +35036,7 @@ MonoBehaviour:
   target: {fileID: 0}
   canSearch: 1
   canMove: 1
-  speed: 10
+  speed: .75
   turningSpeed: 5
   slowdownDistance: .600000024
   pickNextWaypointDist: 2
@@ -35270,7 +35270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c5f09c7b70eb824899f37a70935b8a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enabled: 0
+  enabled: 1
 --- !u!114 &11400050
 MonoBehaviour:
   m_ObjectHideFlags: 1

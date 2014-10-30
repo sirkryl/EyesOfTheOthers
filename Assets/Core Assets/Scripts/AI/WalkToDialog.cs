@@ -27,9 +27,11 @@ public class WalkToDialog : MonoBehaviour {
 		{
 			GetComponent<Dialog>().HandleSelection();
 		}
-			pathFinder.canMove = false;
-			pathFinder.canSearch = false;
-			Destroy(this);
+
+		pathFinder.canSearch = false;
+		//pathFinder.character.Move(gameObject.transform.position, false, false, Camera.main.transform.position);
+
+		Destroy(this);
 
 	}
 }
