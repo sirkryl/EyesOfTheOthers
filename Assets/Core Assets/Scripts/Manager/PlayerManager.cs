@@ -28,7 +28,7 @@ public class PlayerManager : MonoBehaviour
 	private float thirstTimer = 2.0f;
 	private float temperatureTimer = 20.0f;
 	//private GUIManager windowManager;
-	public ThrowableItem handItem;
+	public Item handItem;
 	private bool night = false;
 	//private int 
 	private static PlayerManager instance = null;

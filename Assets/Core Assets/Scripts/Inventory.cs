@@ -76,8 +76,8 @@ public class Inventory : MonoBehaviour {
 			//itemInHand.GetComponent<ThrowableItem>().description = item.description;
 			//itemInHand.GetComponent<ThrowableItem>().icon = item.icon;
 			//itemInHand.GetComponent<ThrowableItem>().stackSize = 1;
-			PlayerManager.SharedInstance.handItem = itemInHand.GetComponent<ThrowableItem>();
-			PlayerManager.SharedInstance.handItem.HandlePickUp();
+			PlayerManager.SharedInstance.handItem = itemInHand.GetComponent<Item>();
+			((ThrowableItem)PlayerManager.SharedInstance.handItem).HandlePickUp();
 			RemoveItem(item);
 			//GUIManager.SharedInstance.DeactiveAllWindows();
 		}
@@ -94,7 +94,19 @@ public class Inventory : MonoBehaviour {
 
 	public void EquipItem(Item item)
 	{
-		((Equipable)item).HandleEquip ();
+		if(item != null && PlayerManager.SharedInstance.handItem == null)
+		{
+			GameObject itemInHand = Instantiate(Resources.Load ("Prefabs/Items/"+item.id_string, typeof(GameObject))) as GameObject;
+			//itemInHand.AddComponent<item.GetType ()>();
+			//itemInHand.GetComponent<ThrowableItem>().name = item.id_string;
+			//itemInHand.GetComponent<ThrowableItem>().type = item.GetItemType();
+			//itemInHand.GetComponent<ThrowableItem>().description = item.description;
+			//itemInHand.GetComponent<ThrowableItem>().icon = item.icon;
+			//itemInHand.GetComponent<ThrowableItem>().stackSize = 1;
+			PlayerManager.SharedInstance.handItem = itemInHand.GetComponent<Item>();
+			((Equipable)PlayerManager.SharedInstance.handItem).HandleEquip();
+			//GUIManager.SharedInstance.DeactiveAllWindows();
+		}
 	}
 
 	public Item GetItem(string name)

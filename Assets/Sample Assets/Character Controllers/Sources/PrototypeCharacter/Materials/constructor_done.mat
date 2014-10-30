@@ -45,7 +45,7 @@ Material:
       data:
         first:
           name: _Cutoff
-        second: .5
+        second: .464285702
       data:
         first:
           name: _Shininess
@@ -66,7 +66,7 @@ Material:
       data:
         first:
           name: _RimColor
-        second: {r: 0, g: 0, b: 0, a: .749019623}
+        second: {r: 0, g: 0, b: 0, a: .80392158}
 --- !u!1002 &2100001
 EditorExtensionImpl:
   serializedVersion: 6

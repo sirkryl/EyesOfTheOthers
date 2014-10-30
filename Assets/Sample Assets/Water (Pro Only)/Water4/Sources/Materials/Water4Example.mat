@@ -49,16 +49,16 @@ Material:
       data:
         first:
           name: _FresnelScale
-        second: 1.44000006
+        second: 1.33000004
       data:
         first:
           name: _GerstnerIntensity
-        second: -.180000007
+        second: 1.25999999
     m_Colors:
       data:
         first:
           name: _DistortParams
-        second: {r: .189999998, g: -.0469999984, b: 5.38000011, a: -3}
+        second: {r: .620000005, g: .0199999996, b: 5.38000011, a: -1.64999998}
       data:
         first:
           name: _InvFadeParemeter
@@ -74,7 +74,7 @@ Material:
       data:
         first:
           name: _BumpTiling
-        second: {r: .305200011, g: .308999985, b: .300000012, a: .300000012}
+        second: {r: .270400017, g: .300000012, b: .280000001, a: .300000012}
       data:
         first:
           name: _BumpDirection
@@ -82,11 +82,11 @@ Material:
       data:
         first:
           name: _BaseColor
-        second: {r: .477941185, g: .739215791, b: .764705896, a: .501960814}
+        second: {r: .013516427, g: .0346981771, b: .0367646813, a: .501960814}
       data:
         first:
           name: _ReflectionColor
-        second: {r: .416306227, g: .552854717, b: .566176474, a: .501960814}
+        second: {r: .186851203, g: .276816577, b: .352941155, a: .501960814}
       data:
         first:
           name: _SpecularColor
@@ -102,27 +102,27 @@ Material:
       data:
         first:
           name: _GAmplitude
-        second: {r: .300000012, g: .349999994, b: .25, a: .25}
+        second: {r: .100000001, g: .25, b: .25, a: .25}
       data:
         first:
           name: _GFrequency
-        second: {r: 1.29999995, g: 1.35000002, b: 1.25, a: 1.25}
-      data:
-        first:
-          name: _GSteepness
         second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
+          name: _GSteepness
+        second: {r: 1, g: 1, b: 1.00999999, a: .769999981}
+      data:
+        first:
           name: _GSpeed
-        second: {r: 1.20000005, g: 1.375, b: 1.10000002, a: 1.5}
+        second: {r: .200000003, g: -.200000003, b: .200000003, a: .600000024}
       data:
         first:
           name: _GDirectionAB
-        second: {r: .300000012, g: .850000024, b: .850000024, a: .25}
+        second: {r: 0, g: 0, b: 0, a: 0}
       data:
         first:
           name: _GDirectionCD
-        second: {r: .100000001, g: .899999976, b: .5, a: .5}
+        second: {r: 0, g: .5, b: .5, a: .200000003}
 --- !u!1002 &2100001
 EditorExtensionImpl:
   serializedVersion: 6

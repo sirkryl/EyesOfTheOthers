@@ -49,23 +49,40 @@ public class PlayerSelection : MonoBehaviour {
 
 				if(PlayerManager.SharedInstance.handItem != null)
 				{
-					if (Input.GetMouseButtonUp(0))
+					if (PlayerManager.SharedInstance.handItem is ThrowableItem)
 					{
-						PlayerManager.SharedInstance.handItem.HandleThrow();
-						PlayerManager.SharedInstance.handItem = null;
+						if (Input.GetMouseButtonUp(0))
+						{
+							((ThrowableItem)PlayerManager.SharedInstance.handItem).HandleThrow();
+							PlayerManager.SharedInstance.handItem = null;
+						}
+						else if (Input.GetMouseButtonUp(1) || Input.GetKeyDown(KeyCode.F))
+						{
+							((ThrowableItem)PlayerManager.SharedInstance.handItem).HandleDrop ();
+							PlayerManager.SharedInstance.handItem = null;
+						}
+						else if (Input.GetKeyDown(KeyCode.E))
+						{
+							gameObject.GetComponentInChildren<Inventory>().AddItem(PlayerManager.SharedInstance.handItem);
+							PlayerManager.SharedInstance.handItem.gameObject.SetActive(false);
+							PlayerManager.SharedInstance.handItem = null;
+						}
 					}
-					else if (Input.GetMouseButtonUp(1) || Input.GetKeyDown(KeyCode.F))
+					else if (PlayerManager.SharedInstance.handItem is Equipable)
 					{
-						PlayerManager.SharedInstance.handItem.HandleDrop ();
-						PlayerManager.SharedInstance.handItem = null;
-					}
-					else if (Input.GetKeyDown(KeyCode.E))
-					{
-						gameObject.GetComponentInChildren<Inventory>().AddItem(PlayerManager.SharedInstance.handItem);
-						PlayerManager.SharedInstance.handItem.gameObject.SetActive(false);
-						PlayerManager.SharedInstance.handItem = null;
+						if (Input.GetMouseButton(0) && PlayerManager.SharedInstance.handItem is Weapon)
+						{
+							//PlayerManager.SharedInstance.handItem.gameObject.SetActive(false);
+							((Weapon)PlayerManager.SharedInstance.handItem).HandleAttack ();
+						}
+						if (Input.GetMouseButtonUp(1))
+						{
+							PlayerManager.SharedInstance.handItem.gameObject.SetActive(false);
+							PlayerManager.SharedInstance.handItem = null;
+						}
 					}
 				}
+
 			}
 		}
 

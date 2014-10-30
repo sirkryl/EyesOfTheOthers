@@ -1475,36 +1475,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &100196
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 400196}
-  m_Layer: 0
-  m_Name: annotation1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &100198
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 400198}
-  m_Layer: 0
-  m_Name: locator1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &100200
 GameObject:
   m_ObjectHideFlags: 1
@@ -1939,23 +1909,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &100252
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 400252}
-  - 33: {fileID: 3300044}
-  - 23: {fileID: 2300044}
-  m_Layer: 0
-  m_Name: polySurface93
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &100254
 GameObject:
   m_ObjectHideFlags: 1
@@ -2114,23 +2067,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &100274
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 400274}
-  - 33: {fileID: 3300054}
-  - 23: {fileID: 2300054}
-  m_Layer: 0
-  m_Name: polySurface49
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &100276
 GameObject:
   m_ObjectHideFlags: 1
@@ -2143,23 +2079,6 @@ GameObject:
   - 23: {fileID: 2300056}
   m_Layer: 0
   m_Name: polySurface48
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &100278
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 400278}
-  - 33: {fileID: 3300058}
-  - 23: {fileID: 2300058}
-  m_Layer: 0
-  m_Name: polySurface47
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2209,57 +2128,6 @@ GameObject:
   - 23: {fileID: 2300064}
   m_Layer: 0
   m_Name: polySurface15
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &100286
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 400286}
-  - 33: {fileID: 3300066}
-  - 23: {fileID: 2300066}
-  m_Layer: 0
-  m_Name: polySurface11
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &100288
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 400288}
-  - 33: {fileID: 3300068}
-  - 23: {fileID: 2300068}
-  m_Layer: 0
-  m_Name: polySurface10
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &100290
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 400290}
-  - 33: {fileID: 3300070}
-  - 23: {fileID: 2300070}
-  m_Layer: 0
-  m_Name: polySurface9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4271,23 +4139,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &100548
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 400548}
-  - 33: {fileID: 3300158}
-  - 23: {fileID: 2300158}
-  m_Layer: 0
-  m_Name: autoProjectautoMapMesh
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &100550
 GameObject:
   m_ObjectHideFlags: 0
@@ -4310,9 +4161,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_LocalRotation: {x: 0, y: .748766899, z: 0, w: .662833452}
-  m_LocalPosition: {x: 49.0110016, y: 66.7949982, z: 97.1600037}
-  m_LocalScale: {x: .0544785969, y: .0544786043, z: .0544786043}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: .0321190618, y: .0321190655, z: .0321190655}
   m_Children:
   - {fileID: 400550}
   m_Father: {fileID: 0}
@@ -5486,31 +5337,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 400540}
   m_RootOrder: 0
---- !u!4 &400196
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100196}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 400198}
-  m_RootOrder: 0
---- !u!4 &400198
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100198}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 400196}
-  m_Father: {fileID: 400548}
-  m_RootOrder: 0
 --- !u!4 &400200
 Transform:
   m_ObjectHideFlags: 1
@@ -5522,7 +5348,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 174
+  m_RootOrder: 167
 --- !u!4 &400202
 Transform:
   m_ObjectHideFlags: 1
@@ -5534,7 +5360,7 @@ Transform:
   m_LocalScale: {x: .0480230786, y: .0566586666, z: .232469678}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 173
+  m_RootOrder: 166
 --- !u!4 &400204
 Transform:
   m_ObjectHideFlags: 1
@@ -5546,7 +5372,7 @@ Transform:
   m_LocalScale: {x: .0508831814, y: .057573773, z: .236224368}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 172
+  m_RootOrder: 165
 --- !u!4 &400206
 Transform:
   m_ObjectHideFlags: 1
@@ -5559,7 +5385,7 @@ Transform:
   m_Children:
   - {fileID: 400002}
   m_Father: {fileID: 400550}
-  m_RootOrder: 171
+  m_RootOrder: 164
 --- !u!4 &400208
 Transform:
   m_ObjectHideFlags: 1
@@ -5572,7 +5398,7 @@ Transform:
   m_Children:
   - {fileID: 400004}
   m_Father: {fileID: 400550}
-  m_RootOrder: 170
+  m_RootOrder: 163
 --- !u!4 &400210
 Transform:
   m_ObjectHideFlags: 1
@@ -5584,7 +5410,7 @@ Transform:
   m_LocalScale: {x: .589975893, y: .589975953, z: .589975953}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 169
+  m_RootOrder: 162
 --- !u!4 &400212
 Transform:
   m_ObjectHideFlags: 1
@@ -5596,7 +5422,7 @@ Transform:
   m_LocalScale: {x: 1.09621775, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 168
+  m_RootOrder: 161
 --- !u!4 &400214
 Transform:
   m_ObjectHideFlags: 1
@@ -5608,7 +5434,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 167
+  m_RootOrder: 160
 --- !u!4 &400216
 Transform:
   m_ObjectHideFlags: 1
@@ -5620,7 +5446,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 166
+  m_RootOrder: 159
 --- !u!4 &400218
 Transform:
   m_ObjectHideFlags: 1
@@ -5632,7 +5458,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 165
+  m_RootOrder: 158
 --- !u!4 &400220
 Transform:
   m_ObjectHideFlags: 1
@@ -5645,7 +5471,7 @@ Transform:
   m_Children:
   - {fileID: 400006}
   m_Father: {fileID: 400550}
-  m_RootOrder: 164
+  m_RootOrder: 157
 --- !u!4 &400222
 Transform:
   m_ObjectHideFlags: 1
@@ -5657,7 +5483,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 163
+  m_RootOrder: 156
 --- !u!4 &400224
 Transform:
   m_ObjectHideFlags: 1
@@ -5669,7 +5495,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 162
+  m_RootOrder: 155
 --- !u!4 &400226
 Transform:
   m_ObjectHideFlags: 1
@@ -5681,7 +5507,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 161
+  m_RootOrder: 154
 --- !u!4 &400228
 Transform:
   m_ObjectHideFlags: 1
@@ -5693,7 +5519,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 160
+  m_RootOrder: 153
 --- !u!4 &400230
 Transform:
   m_ObjectHideFlags: 1
@@ -5705,7 +5531,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 159
+  m_RootOrder: 152
 --- !u!4 &400232
 Transform:
   m_ObjectHideFlags: 1
@@ -5717,7 +5543,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1.02828252}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 158
+  m_RootOrder: 151
 --- !u!4 &400234
 Transform:
   m_ObjectHideFlags: 1
@@ -5729,7 +5555,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 157
+  m_RootOrder: 150
 --- !u!4 &400236
 Transform:
   m_ObjectHideFlags: 1
@@ -5741,7 +5567,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 156
+  m_RootOrder: 149
 --- !u!4 &400238
 Transform:
   m_ObjectHideFlags: 1
@@ -5753,7 +5579,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 155
+  m_RootOrder: 148
 --- !u!4 &400240
 Transform:
   m_ObjectHideFlags: 1
@@ -5765,7 +5591,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 154
+  m_RootOrder: 147
 --- !u!4 &400242
 Transform:
   m_ObjectHideFlags: 1
@@ -5777,7 +5603,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 153
+  m_RootOrder: 146
 --- !u!4 &400244
 Transform:
   m_ObjectHideFlags: 1
@@ -5789,7 +5615,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 152
+  m_RootOrder: 145
 --- !u!4 &400246
 Transform:
   m_ObjectHideFlags: 1
@@ -5801,7 +5627,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 151
+  m_RootOrder: 144
 --- !u!4 &400248
 Transform:
   m_ObjectHideFlags: 1
@@ -5813,7 +5639,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 150
+  m_RootOrder: 143
 --- !u!4 &400250
 Transform:
   m_ObjectHideFlags: 1
@@ -5825,19 +5651,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 149
---- !u!4 &400252
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100252}
-  m_LocalRotation: {x: 0, y: -0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 400550}
-  m_RootOrder: 148
+  m_RootOrder: 142
 --- !u!4 &400254
 Transform:
   m_ObjectHideFlags: 1
@@ -5850,7 +5664,7 @@ Transform:
   m_Children:
   - {fileID: 400008}
   m_Father: {fileID: 400550}
-  m_RootOrder: 147
+  m_RootOrder: 141
 --- !u!4 &400256
 Transform:
   m_ObjectHideFlags: 1
@@ -5865,7 +5679,7 @@ Transform:
   - {fileID: 400016}
   - {fileID: 400014}
   m_Father: {fileID: 400550}
-  m_RootOrder: 146
+  m_RootOrder: 140
 --- !u!4 &400258
 Transform:
   m_ObjectHideFlags: 1
@@ -5877,7 +5691,7 @@ Transform:
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 145
+  m_RootOrder: 139
 --- !u!4 &400260
 Transform:
   m_ObjectHideFlags: 1
@@ -5889,7 +5703,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 144
+  m_RootOrder: 138
 --- !u!4 &400262
 Transform:
   m_ObjectHideFlags: 1
@@ -5902,7 +5716,7 @@ Transform:
   m_Children:
   - {fileID: 400020}
   m_Father: {fileID: 400550}
-  m_RootOrder: 143
+  m_RootOrder: 137
 --- !u!4 &400264
 Transform:
   m_ObjectHideFlags: 1
@@ -5914,7 +5728,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 142
+  m_RootOrder: 136
 --- !u!4 &400266
 Transform:
   m_ObjectHideFlags: 1
@@ -5926,7 +5740,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 141
+  m_RootOrder: 135
 --- !u!4 &400268
 Transform:
   m_ObjectHideFlags: 1
@@ -5938,7 +5752,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 140
+  m_RootOrder: 134
 --- !u!4 &400270
 Transform:
   m_ObjectHideFlags: 1
@@ -5952,7 +5766,7 @@ Transform:
   - {fileID: 400026}
   - {fileID: 400024}
   m_Father: {fileID: 400550}
-  m_RootOrder: 139
+  m_RootOrder: 133
 --- !u!4 &400272
 Transform:
   m_ObjectHideFlags: 1
@@ -5965,19 +5779,7 @@ Transform:
   m_Children:
   - {fileID: 400028}
   m_Father: {fileID: 400550}
-  m_RootOrder: 138
---- !u!4 &400274
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100274}
-  m_LocalRotation: {x: 0, y: -0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 400550}
-  m_RootOrder: 137
+  m_RootOrder: 132
 --- !u!4 &400276
 Transform:
   m_ObjectHideFlags: 1
@@ -5989,19 +5791,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 136
---- !u!4 &400278
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100278}
-  m_LocalRotation: {x: 0, y: -0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 400550}
-  m_RootOrder: 135
+  m_RootOrder: 131
 --- !u!4 &400280
 Transform:
   m_ObjectHideFlags: 1
@@ -6014,7 +5804,7 @@ Transform:
   m_Children:
   - {fileID: 400030}
   m_Father: {fileID: 400550}
-  m_RootOrder: 134
+  m_RootOrder: 130
 --- !u!4 &400282
 Transform:
   m_ObjectHideFlags: 1
@@ -6026,7 +5816,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 133
+  m_RootOrder: 129
 --- !u!4 &400284
 Transform:
   m_ObjectHideFlags: 1
@@ -6038,43 +5828,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 132
---- !u!4 &400286
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100286}
-  m_LocalRotation: {x: 0, y: -0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 500, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 400550}
-  m_RootOrder: 131
---- !u!4 &400288
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100288}
-  m_LocalRotation: {x: 0, y: -0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -500, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 400550}
-  m_RootOrder: 130
---- !u!4 &400290
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100290}
-  m_LocalRotation: {x: 0, y: -0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -500, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 400550}
-  m_RootOrder: 129
+  m_RootOrder: 128
 --- !u!4 &400292
 Transform:
   m_ObjectHideFlags: 1
@@ -6086,7 +5840,7 @@ Transform:
   m_LocalScale: {x: 50, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 128
+  m_RootOrder: 127
 --- !u!4 &400294
 Transform:
   m_ObjectHideFlags: 1
@@ -6098,7 +5852,7 @@ Transform:
   m_LocalScale: {x: -5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 127
+  m_RootOrder: 126
 --- !u!4 &400296
 Transform:
   m_ObjectHideFlags: 1
@@ -6110,7 +5864,7 @@ Transform:
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 126
+  m_RootOrder: 125
 --- !u!4 &400298
 Transform:
   m_ObjectHideFlags: 1
@@ -6122,7 +5876,7 @@ Transform:
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 125
+  m_RootOrder: 124
 --- !u!4 &400300
 Transform:
   m_ObjectHideFlags: 1
@@ -6134,7 +5888,7 @@ Transform:
   m_LocalScale: {x: .349009573, y: .416900218, z: .349009603}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 124
+  m_RootOrder: 123
 --- !u!4 &400302
 Transform:
   m_ObjectHideFlags: 1
@@ -6146,7 +5900,7 @@ Transform:
   m_LocalScale: {x: .168290958, y: .168290958, z: .168290958}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 123
+  m_RootOrder: 122
 --- !u!4 &400304
 Transform:
   m_ObjectHideFlags: 1
@@ -6158,7 +5912,7 @@ Transform:
   m_LocalScale: {x: .594649792, y: .710323215, z: .594649792}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 122
+  m_RootOrder: 121
 --- !u!4 &400306
 Transform:
   m_ObjectHideFlags: 1
@@ -6171,7 +5925,7 @@ Transform:
   m_Children:
   - {fileID: 400032}
   m_Father: {fileID: 400550}
-  m_RootOrder: 121
+  m_RootOrder: 120
 --- !u!4 &400308
 Transform:
   m_ObjectHideFlags: 1
@@ -6184,7 +5938,7 @@ Transform:
   m_Children:
   - {fileID: 400034}
   m_Father: {fileID: 400550}
-  m_RootOrder: 120
+  m_RootOrder: 119
 --- !u!4 &400310
 Transform:
   m_ObjectHideFlags: 1
@@ -6197,7 +5951,7 @@ Transform:
   m_Children:
   - {fileID: 400036}
   m_Father: {fileID: 400550}
-  m_RootOrder: 119
+  m_RootOrder: 118
 --- !u!4 &400312
 Transform:
   m_ObjectHideFlags: 1
@@ -6210,7 +5964,7 @@ Transform:
   m_Children:
   - {fileID: 400038}
   m_Father: {fileID: 400550}
-  m_RootOrder: 118
+  m_RootOrder: 117
 --- !u!4 &400314
 Transform:
   m_ObjectHideFlags: 1
@@ -6223,7 +5977,7 @@ Transform:
   m_Children:
   - {fileID: 400040}
   m_Father: {fileID: 400550}
-  m_RootOrder: 117
+  m_RootOrder: 116
 --- !u!4 &400316
 Transform:
   m_ObjectHideFlags: 1
@@ -6235,7 +5989,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 116
+  m_RootOrder: 115
 --- !u!4 &400318
 Transform:
   m_ObjectHideFlags: 1
@@ -6248,7 +6002,7 @@ Transform:
   m_Children:
   - {fileID: 400042}
   m_Father: {fileID: 400550}
-  m_RootOrder: 115
+  m_RootOrder: 114
 --- !u!4 &400320
 Transform:
   m_ObjectHideFlags: 1
@@ -6260,7 +6014,7 @@ Transform:
   m_LocalScale: {x: .0840212554, y: .311019957, z: .0840212554}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 114
+  m_RootOrder: 113
 --- !u!4 &400322
 Transform:
   m_ObjectHideFlags: 1
@@ -6272,7 +6026,7 @@ Transform:
   m_LocalScale: {x: .127749696, y: .311019957, z: .127749696}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 113
+  m_RootOrder: 112
 --- !u!4 &400324
 Transform:
   m_ObjectHideFlags: 1
@@ -6285,7 +6039,7 @@ Transform:
   m_Children:
   - {fileID: 400044}
   m_Father: {fileID: 400550}
-  m_RootOrder: 112
+  m_RootOrder: 111
 --- !u!4 &400326
 Transform:
   m_ObjectHideFlags: 1
@@ -6298,7 +6052,7 @@ Transform:
   m_Children:
   - {fileID: 400046}
   m_Father: {fileID: 400550}
-  m_RootOrder: 111
+  m_RootOrder: 110
 --- !u!4 &400328
 Transform:
   m_ObjectHideFlags: 1
@@ -6311,7 +6065,7 @@ Transform:
   m_Children:
   - {fileID: 400048}
   m_Father: {fileID: 400550}
-  m_RootOrder: 110
+  m_RootOrder: 109
 --- !u!4 &400330
 Transform:
   m_ObjectHideFlags: 1
@@ -6324,7 +6078,7 @@ Transform:
   m_Children:
   - {fileID: 400050}
   m_Father: {fileID: 400550}
-  m_RootOrder: 109
+  m_RootOrder: 108
 --- !u!4 &400332
 Transform:
   m_ObjectHideFlags: 1
@@ -6336,7 +6090,7 @@ Transform:
   m_LocalScale: {x: .0840212554, y: .311019957, z: .0840212554}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 108
+  m_RootOrder: 107
 --- !u!4 &400334
 Transform:
   m_ObjectHideFlags: 1
@@ -6348,7 +6102,7 @@ Transform:
   m_LocalScale: {x: .127749696, y: .311019957, z: .127749696}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 107
+  m_RootOrder: 106
 --- !u!4 &400336
 Transform:
   m_ObjectHideFlags: 1
@@ -6360,7 +6114,7 @@ Transform:
   m_LocalScale: {x: .381653458, y: .381653458, z: .381653458}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 106
+  m_RootOrder: 105
 --- !u!4 &400338
 Transform:
   m_ObjectHideFlags: 1
@@ -6372,7 +6126,7 @@ Transform:
   m_LocalScale: {x: .381653458, y: .381653458, z: .381653458}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 105
+  m_RootOrder: 104
 --- !u!4 &400340
 Transform:
   m_ObjectHideFlags: 1
@@ -6385,7 +6139,7 @@ Transform:
   m_Children:
   - {fileID: 400052}
   m_Father: {fileID: 400550}
-  m_RootOrder: 104
+  m_RootOrder: 103
 --- !u!4 &400342
 Transform:
   m_ObjectHideFlags: 1
@@ -6397,7 +6151,7 @@ Transform:
   m_LocalScale: {x: .370976359, y: .370976359, z: .370976359}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 103
+  m_RootOrder: 102
 --- !u!4 &400344
 Transform:
   m_ObjectHideFlags: 1
@@ -6409,7 +6163,7 @@ Transform:
   m_LocalScale: {x: .370976359, y: .370976359, z: .370976359}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 102
+  m_RootOrder: 101
 --- !u!4 &400346
 Transform:
   m_ObjectHideFlags: 1
@@ -6421,7 +6175,7 @@ Transform:
   m_LocalScale: {x: .370976359, y: .370976359, z: .370976359}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 101
+  m_RootOrder: 100
 --- !u!4 &400348
 Transform:
   m_ObjectHideFlags: 1
@@ -6433,7 +6187,7 @@ Transform:
   m_LocalScale: {x: .306407928, y: .306407928, z: .306407928}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 100
+  m_RootOrder: 99
 --- !u!4 &400350
 Transform:
   m_ObjectHideFlags: 1
@@ -6445,7 +6199,7 @@ Transform:
   m_LocalScale: {x: .306407928, y: .306407928, z: .306407928}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 99
+  m_RootOrder: 98
 --- !u!4 &400352
 Transform:
   m_ObjectHideFlags: 1
@@ -6457,7 +6211,7 @@ Transform:
   m_LocalScale: {x: .306407928, y: .306407928, z: .306407928}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 98
+  m_RootOrder: 97
 --- !u!4 &400354
 Transform:
   m_ObjectHideFlags: 1
@@ -6469,7 +6223,7 @@ Transform:
   m_LocalScale: {x: .402211457, y: .402211487, z: .402211457}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 97
+  m_RootOrder: 96
 --- !u!4 &400356
 Transform:
   m_ObjectHideFlags: 1
@@ -6481,7 +6235,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 96
+  m_RootOrder: 95
 --- !u!4 &400358
 Transform:
   m_ObjectHideFlags: 1
@@ -6494,7 +6248,7 @@ Transform:
   m_Children:
   - {fileID: 400054}
   m_Father: {fileID: 400550}
-  m_RootOrder: 95
+  m_RootOrder: 94
 --- !u!4 &400360
 Transform:
   m_ObjectHideFlags: 1
@@ -6507,7 +6261,7 @@ Transform:
   m_Children:
   - {fileID: 400056}
   m_Father: {fileID: 400550}
-  m_RootOrder: 94
+  m_RootOrder: 93
 --- !u!4 &400362
 Transform:
   m_ObjectHideFlags: 1
@@ -6520,7 +6274,7 @@ Transform:
   m_Children:
   - {fileID: 400058}
   m_Father: {fileID: 400550}
-  m_RootOrder: 93
+  m_RootOrder: 92
 --- !u!4 &400364
 Transform:
   m_ObjectHideFlags: 1
@@ -6533,7 +6287,7 @@ Transform:
   m_Children:
   - {fileID: 400060}
   m_Father: {fileID: 400550}
-  m_RootOrder: 92
+  m_RootOrder: 91
 --- !u!4 &400366
 Transform:
   m_ObjectHideFlags: 1
@@ -6545,7 +6299,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 91
+  m_RootOrder: 90
 --- !u!4 &400368
 Transform:
   m_ObjectHideFlags: 1
@@ -6557,7 +6311,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 90
+  m_RootOrder: 89
 --- !u!4 &400370
 Transform:
   m_ObjectHideFlags: 1
@@ -6570,7 +6324,7 @@ Transform:
   m_Children:
   - {fileID: 400062}
   m_Father: {fileID: 400550}
-  m_RootOrder: 89
+  m_RootOrder: 88
 --- !u!4 &400372
 Transform:
   m_ObjectHideFlags: 1
@@ -6582,7 +6336,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 88
+  m_RootOrder: 87
 --- !u!4 &400374
 Transform:
   m_ObjectHideFlags: 1
@@ -6595,7 +6349,7 @@ Transform:
   m_Children:
   - {fileID: 400064}
   m_Father: {fileID: 400550}
-  m_RootOrder: 87
+  m_RootOrder: 86
 --- !u!4 &400376
 Transform:
   m_ObjectHideFlags: 1
@@ -6608,7 +6362,7 @@ Transform:
   m_Children:
   - {fileID: 400066}
   m_Father: {fileID: 400550}
-  m_RootOrder: 86
+  m_RootOrder: 85
 --- !u!4 &400378
 Transform:
   m_ObjectHideFlags: 1
@@ -6621,7 +6375,7 @@ Transform:
   m_Children:
   - {fileID: 400068}
   m_Father: {fileID: 400550}
-  m_RootOrder: 85
+  m_RootOrder: 84
 --- !u!4 &400380
 Transform:
   m_ObjectHideFlags: 1
@@ -6633,7 +6387,7 @@ Transform:
   m_LocalScale: {x: .512936592, y: .189830229, z: 1.07898593}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 84
+  m_RootOrder: 83
 --- !u!4 &400382
 Transform:
   m_ObjectHideFlags: 1
@@ -6645,7 +6399,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 83
+  m_RootOrder: 82
 --- !u!4 &400384
 Transform:
   m_ObjectHideFlags: 1
@@ -6658,7 +6412,7 @@ Transform:
   m_Children:
   - {fileID: 400070}
   m_Father: {fileID: 400550}
-  m_RootOrder: 82
+  m_RootOrder: 81
 --- !u!4 &400386
 Transform:
   m_ObjectHideFlags: 1
@@ -6670,7 +6424,7 @@ Transform:
   m_LocalScale: {x: .4616054, y: .168330118, z: .25258258}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 81
+  m_RootOrder: 80
 --- !u!4 &400388
 Transform:
   m_ObjectHideFlags: 1
@@ -6682,7 +6436,7 @@ Transform:
   m_LocalScale: {x: .4616054, y: .168330118, z: .25258258}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 80
+  m_RootOrder: 79
 --- !u!4 &400390
 Transform:
   m_ObjectHideFlags: 1
@@ -6694,7 +6448,7 @@ Transform:
   m_LocalScale: {x: .4616054, y: .168330118, z: .25258258}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 79
+  m_RootOrder: 78
 --- !u!4 &400392
 Transform:
   m_ObjectHideFlags: 1
@@ -6706,7 +6460,7 @@ Transform:
   m_LocalScale: {x: .4616054, y: .168330118, z: .25258258}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 78
+  m_RootOrder: 77
 --- !u!4 &400394
 Transform:
   m_ObjectHideFlags: 1
@@ -6718,7 +6472,7 @@ Transform:
   m_LocalScale: {x: .4616054, y: .168330118, z: 22.1399136}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 77
+  m_RootOrder: 76
 --- !u!4 &400396
 Transform:
   m_ObjectHideFlags: 1
@@ -6730,7 +6484,7 @@ Transform:
   m_LocalScale: {x: .4616054, y: .168330118, z: .25258258}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 76
+  m_RootOrder: 75
 --- !u!4 &400398
 Transform:
   m_ObjectHideFlags: 1
@@ -6742,7 +6496,7 @@ Transform:
   m_LocalScale: {x: .4616054, y: .168330118, z: .25258258}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 75
+  m_RootOrder: 74
 --- !u!4 &400400
 Transform:
   m_ObjectHideFlags: 1
@@ -6754,7 +6508,7 @@ Transform:
   m_LocalScale: {x: .4616054, y: .168330118, z: .25258258}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 74
+  m_RootOrder: 73
 --- !u!4 &400402
 Transform:
   m_ObjectHideFlags: 1
@@ -6766,7 +6520,7 @@ Transform:
   m_LocalScale: {x: .4616054, y: .168330118, z: .25258258}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 73
+  m_RootOrder: 72
 --- !u!4 &400404
 Transform:
   m_ObjectHideFlags: 1
@@ -6778,7 +6532,7 @@ Transform:
   m_LocalScale: {x: .4616054, y: .168330118, z: .25258258}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 72
+  m_RootOrder: 71
 --- !u!4 &400406
 Transform:
   m_ObjectHideFlags: 1
@@ -6790,7 +6544,7 @@ Transform:
   m_LocalScale: {x: .4616054, y: .168330118, z: .25258258}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 71
+  m_RootOrder: 70
 --- !u!4 &400408
 Transform:
   m_ObjectHideFlags: 1
@@ -6802,7 +6556,7 @@ Transform:
   m_LocalScale: {x: .4616054, y: .168330118, z: .25258258}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 70
+  m_RootOrder: 69
 --- !u!4 &400410
 Transform:
   m_ObjectHideFlags: 1
@@ -6814,7 +6568,7 @@ Transform:
   m_LocalScale: {x: .4616054, y: .168330118, z: .25258258}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 69
+  m_RootOrder: 68
 --- !u!4 &400412
 Transform:
   m_ObjectHideFlags: 1
@@ -6826,7 +6580,7 @@ Transform:
   m_LocalScale: {x: .4616054, y: .168330118, z: .25258258}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 68
+  m_RootOrder: 67
 --- !u!4 &400414
 Transform:
   m_ObjectHideFlags: 1
@@ -6838,7 +6592,7 @@ Transform:
   m_LocalScale: {x: .4616054, y: .168330118, z: .25258258}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 67
+  m_RootOrder: 66
 --- !u!4 &400416
 Transform:
   m_ObjectHideFlags: 1
@@ -6850,7 +6604,7 @@ Transform:
   m_LocalScale: {x: .4616054, y: .168330118, z: .25258258}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 66
+  m_RootOrder: 65
 --- !u!4 &400418
 Transform:
   m_ObjectHideFlags: 1
@@ -6862,7 +6616,7 @@ Transform:
   m_LocalScale: {x: .4616054, y: .168330118, z: .25258258}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 65
+  m_RootOrder: 64
 --- !u!4 &400420
 Transform:
   m_ObjectHideFlags: 1
@@ -6874,7 +6628,7 @@ Transform:
   m_LocalScale: {x: .4616054, y: .168330118, z: .25258258}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 64
+  m_RootOrder: 63
 --- !u!4 &400422
 Transform:
   m_ObjectHideFlags: 1
@@ -6886,7 +6640,7 @@ Transform:
   m_LocalScale: {x: .4616054, y: .168330118, z: .25258258}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 63
+  m_RootOrder: 62
 --- !u!4 &400424
 Transform:
   m_ObjectHideFlags: 1
@@ -6898,7 +6652,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 62
+  m_RootOrder: 61
 --- !u!4 &400426
 Transform:
   m_ObjectHideFlags: 1
@@ -6911,7 +6665,7 @@ Transform:
   m_Children:
   - {fileID: 400072}
   m_Father: {fileID: 400550}
-  m_RootOrder: 61
+  m_RootOrder: 60
 --- !u!4 &400428
 Transform:
   m_ObjectHideFlags: 1
@@ -6924,7 +6678,7 @@ Transform:
   m_Children:
   - {fileID: 400074}
   m_Father: {fileID: 400550}
-  m_RootOrder: 60
+  m_RootOrder: 59
 --- !u!4 &400430
 Transform:
   m_ObjectHideFlags: 1
@@ -6937,7 +6691,7 @@ Transform:
   m_Children:
   - {fileID: 400076}
   m_Father: {fileID: 400550}
-  m_RootOrder: 59
+  m_RootOrder: 58
 --- !u!4 &400432
 Transform:
   m_ObjectHideFlags: 1
@@ -6950,7 +6704,7 @@ Transform:
   m_Children:
   - {fileID: 400078}
   m_Father: {fileID: 400550}
-  m_RootOrder: 58
+  m_RootOrder: 57
 --- !u!4 &400434
 Transform:
   m_ObjectHideFlags: 1
@@ -6965,7 +6719,7 @@ Transform:
   - {fileID: 400086}
   - {fileID: 400084}
   m_Father: {fileID: 400550}
-  m_RootOrder: 57
+  m_RootOrder: 56
 --- !u!4 &400436
 Transform:
   m_ObjectHideFlags: 1
@@ -6978,7 +6732,7 @@ Transform:
   m_Children:
   - {fileID: 400090}
   m_Father: {fileID: 400550}
-  m_RootOrder: 56
+  m_RootOrder: 55
 --- !u!4 &400438
 Transform:
   m_ObjectHideFlags: 1
@@ -6991,7 +6745,7 @@ Transform:
   m_Children:
   - {fileID: 400092}
   m_Father: {fileID: 400550}
-  m_RootOrder: 55
+  m_RootOrder: 54
 --- !u!4 &400440
 Transform:
   m_ObjectHideFlags: 1
@@ -7004,7 +6758,7 @@ Transform:
   m_Children:
   - {fileID: 400094}
   m_Father: {fileID: 400550}
-  m_RootOrder: 54
+  m_RootOrder: 53
 --- !u!4 &400442
 Transform:
   m_ObjectHideFlags: 1
@@ -7017,7 +6771,7 @@ Transform:
   m_Children:
   - {fileID: 400096}
   m_Father: {fileID: 400550}
-  m_RootOrder: 53
+  m_RootOrder: 52
 --- !u!4 &400444
 Transform:
   m_ObjectHideFlags: 1
@@ -7030,7 +6784,7 @@ Transform:
   m_Children:
   - {fileID: 400098}
   m_Father: {fileID: 400550}
-  m_RootOrder: 52
+  m_RootOrder: 51
 --- !u!4 &400446
 Transform:
   m_ObjectHideFlags: 1
@@ -7043,7 +6797,7 @@ Transform:
   m_Children:
   - {fileID: 400100}
   m_Father: {fileID: 400550}
-  m_RootOrder: 51
+  m_RootOrder: 50
 --- !u!4 &400448
 Transform:
   m_ObjectHideFlags: 1
@@ -7056,7 +6810,7 @@ Transform:
   m_Children:
   - {fileID: 400102}
   m_Father: {fileID: 400550}
-  m_RootOrder: 50
+  m_RootOrder: 49
 --- !u!4 &400450
 Transform:
   m_ObjectHideFlags: 1
@@ -7069,7 +6823,7 @@ Transform:
   m_Children:
   - {fileID: 400104}
   m_Father: {fileID: 400550}
-  m_RootOrder: 49
+  m_RootOrder: 48
 --- !u!4 &400452
 Transform:
   m_ObjectHideFlags: 1
@@ -7082,7 +6836,7 @@ Transform:
   m_Children:
   - {fileID: 400106}
   m_Father: {fileID: 400550}
-  m_RootOrder: 48
+  m_RootOrder: 47
 --- !u!4 &400454
 Transform:
   m_ObjectHideFlags: 1
@@ -7095,7 +6849,7 @@ Transform:
   m_Children:
   - {fileID: 400108}
   m_Father: {fileID: 400550}
-  m_RootOrder: 47
+  m_RootOrder: 46
 --- !u!4 &400456
 Transform:
   m_ObjectHideFlags: 1
@@ -7108,7 +6862,7 @@ Transform:
   m_Children:
   - {fileID: 400110}
   m_Father: {fileID: 400550}
-  m_RootOrder: 46
+  m_RootOrder: 45
 --- !u!4 &400458
 Transform:
   m_ObjectHideFlags: 1
@@ -7121,7 +6875,7 @@ Transform:
   m_Children:
   - {fileID: 400112}
   m_Father: {fileID: 400550}
-  m_RootOrder: 45
+  m_RootOrder: 44
 --- !u!4 &400460
 Transform:
   m_ObjectHideFlags: 1
@@ -7134,7 +6888,7 @@ Transform:
   m_Children:
   - {fileID: 400114}
   m_Father: {fileID: 400550}
-  m_RootOrder: 44
+  m_RootOrder: 43
 --- !u!4 &400462
 Transform:
   m_ObjectHideFlags: 1
@@ -7147,7 +6901,7 @@ Transform:
   m_Children:
   - {fileID: 400116}
   m_Father: {fileID: 400550}
-  m_RootOrder: 43
+  m_RootOrder: 42
 --- !u!4 &400464
 Transform:
   m_ObjectHideFlags: 1
@@ -7160,7 +6914,7 @@ Transform:
   m_Children:
   - {fileID: 400118}
   m_Father: {fileID: 400550}
-  m_RootOrder: 42
+  m_RootOrder: 41
 --- !u!4 &400466
 Transform:
   m_ObjectHideFlags: 1
@@ -7173,7 +6927,7 @@ Transform:
   m_Children:
   - {fileID: 400120}
   m_Father: {fileID: 400550}
-  m_RootOrder: 41
+  m_RootOrder: 40
 --- !u!4 &400468
 Transform:
   m_ObjectHideFlags: 1
@@ -7186,7 +6940,7 @@ Transform:
   m_Children:
   - {fileID: 400122}
   m_Father: {fileID: 400550}
-  m_RootOrder: 40
+  m_RootOrder: 39
 --- !u!4 &400470
 Transform:
   m_ObjectHideFlags: 1
@@ -7199,7 +6953,7 @@ Transform:
   m_Children:
   - {fileID: 400124}
   m_Father: {fileID: 400550}
-  m_RootOrder: 39
+  m_RootOrder: 38
 --- !u!4 &400472
 Transform:
   m_ObjectHideFlags: 1
@@ -7212,7 +6966,7 @@ Transform:
   m_Children:
   - {fileID: 400126}
   m_Father: {fileID: 400550}
-  m_RootOrder: 38
+  m_RootOrder: 37
 --- !u!4 &400474
 Transform:
   m_ObjectHideFlags: 1
@@ -7225,7 +6979,7 @@ Transform:
   m_Children:
   - {fileID: 400128}
   m_Father: {fileID: 400550}
-  m_RootOrder: 37
+  m_RootOrder: 36
 --- !u!4 &400476
 Transform:
   m_ObjectHideFlags: 1
@@ -7238,7 +6992,7 @@ Transform:
   m_Children:
   - {fileID: 400130}
   m_Father: {fileID: 400550}
-  m_RootOrder: 36
+  m_RootOrder: 35
 --- !u!4 &400478
 Transform:
   m_ObjectHideFlags: 1
@@ -7251,7 +7005,7 @@ Transform:
   m_Children:
   - {fileID: 400132}
   m_Father: {fileID: 400550}
-  m_RootOrder: 35
+  m_RootOrder: 34
 --- !u!4 &400480
 Transform:
   m_ObjectHideFlags: 1
@@ -7264,7 +7018,7 @@ Transform:
   m_Children:
   - {fileID: 400134}
   m_Father: {fileID: 400550}
-  m_RootOrder: 34
+  m_RootOrder: 33
 --- !u!4 &400482
 Transform:
   m_ObjectHideFlags: 1
@@ -7277,7 +7031,7 @@ Transform:
   m_Children:
   - {fileID: 400136}
   m_Father: {fileID: 400550}
-  m_RootOrder: 33
+  m_RootOrder: 32
 --- !u!4 &400484
 Transform:
   m_ObjectHideFlags: 1
@@ -7290,7 +7044,7 @@ Transform:
   m_Children:
   - {fileID: 400138}
   m_Father: {fileID: 400550}
-  m_RootOrder: 32
+  m_RootOrder: 31
 --- !u!4 &400486
 Transform:
   m_ObjectHideFlags: 1
@@ -7303,7 +7057,7 @@ Transform:
   m_Children:
   - {fileID: 400140}
   m_Father: {fileID: 400550}
-  m_RootOrder: 31
+  m_RootOrder: 30
 --- !u!4 &400488
 Transform:
   m_ObjectHideFlags: 1
@@ -7316,7 +7070,7 @@ Transform:
   m_Children:
   - {fileID: 400142}
   m_Father: {fileID: 400550}
-  m_RootOrder: 30
+  m_RootOrder: 29
 --- !u!4 &400490
 Transform:
   m_ObjectHideFlags: 1
@@ -7329,7 +7083,7 @@ Transform:
   m_Children:
   - {fileID: 400144}
   m_Father: {fileID: 400550}
-  m_RootOrder: 29
+  m_RootOrder: 28
 --- !u!4 &400492
 Transform:
   m_ObjectHideFlags: 1
@@ -7342,7 +7096,7 @@ Transform:
   m_Children:
   - {fileID: 400146}
   m_Father: {fileID: 400550}
-  m_RootOrder: 28
+  m_RootOrder: 27
 --- !u!4 &400494
 Transform:
   m_ObjectHideFlags: 1
@@ -7355,7 +7109,7 @@ Transform:
   m_Children:
   - {fileID: 400148}
   m_Father: {fileID: 400550}
-  m_RootOrder: 27
+  m_RootOrder: 26
 --- !u!4 &400496
 Transform:
   m_ObjectHideFlags: 1
@@ -7368,7 +7122,7 @@ Transform:
   m_Children:
   - {fileID: 400150}
   m_Father: {fileID: 400550}
-  m_RootOrder: 26
+  m_RootOrder: 25
 --- !u!4 &400498
 Transform:
   m_ObjectHideFlags: 1
@@ -7381,7 +7135,7 @@ Transform:
   m_Children:
   - {fileID: 400152}
   m_Father: {fileID: 400550}
-  m_RootOrder: 25
+  m_RootOrder: 24
 --- !u!4 &400500
 Transform:
   m_ObjectHideFlags: 1
@@ -7394,7 +7148,7 @@ Transform:
   m_Children:
   - {fileID: 400154}
   m_Father: {fileID: 400550}
-  m_RootOrder: 24
+  m_RootOrder: 23
 --- !u!4 &400502
 Transform:
   m_ObjectHideFlags: 1
@@ -7407,7 +7161,7 @@ Transform:
   m_Children:
   - {fileID: 400156}
   m_Father: {fileID: 400550}
-  m_RootOrder: 23
+  m_RootOrder: 22
 --- !u!4 &400504
 Transform:
   m_ObjectHideFlags: 1
@@ -7420,7 +7174,7 @@ Transform:
   m_Children:
   - {fileID: 400158}
   m_Father: {fileID: 400550}
-  m_RootOrder: 22
+  m_RootOrder: 21
 --- !u!4 &400506
 Transform:
   m_ObjectHideFlags: 1
@@ -7433,7 +7187,7 @@ Transform:
   m_Children:
   - {fileID: 400160}
   m_Father: {fileID: 400550}
-  m_RootOrder: 21
+  m_RootOrder: 20
 --- !u!4 &400508
 Transform:
   m_ObjectHideFlags: 1
@@ -7446,7 +7200,7 @@ Transform:
   m_Children:
   - {fileID: 400162}
   m_Father: {fileID: 400550}
-  m_RootOrder: 20
+  m_RootOrder: 19
 --- !u!4 &400510
 Transform:
   m_ObjectHideFlags: 1
@@ -7459,7 +7213,7 @@ Transform:
   m_Children:
   - {fileID: 400164}
   m_Father: {fileID: 400550}
-  m_RootOrder: 19
+  m_RootOrder: 18
 --- !u!4 &400512
 Transform:
   m_ObjectHideFlags: 1
@@ -7472,7 +7226,7 @@ Transform:
   m_Children:
   - {fileID: 400166}
   m_Father: {fileID: 400550}
-  m_RootOrder: 18
+  m_RootOrder: 17
 --- !u!4 &400514
 Transform:
   m_ObjectHideFlags: 1
@@ -7485,7 +7239,7 @@ Transform:
   m_Children:
   - {fileID: 400168}
   m_Father: {fileID: 400550}
-  m_RootOrder: 17
+  m_RootOrder: 16
 --- !u!4 &400516
 Transform:
   m_ObjectHideFlags: 1
@@ -7498,7 +7252,7 @@ Transform:
   m_Children:
   - {fileID: 400170}
   m_Father: {fileID: 400550}
-  m_RootOrder: 16
+  m_RootOrder: 15
 --- !u!4 &400518
 Transform:
   m_ObjectHideFlags: 1
@@ -7511,7 +7265,7 @@ Transform:
   m_Children:
   - {fileID: 400172}
   m_Father: {fileID: 400550}
-  m_RootOrder: 15
+  m_RootOrder: 14
 --- !u!4 &400520
 Transform:
   m_ObjectHideFlags: 1
@@ -7524,7 +7278,7 @@ Transform:
   m_Children:
   - {fileID: 400174}
   m_Father: {fileID: 400550}
-  m_RootOrder: 14
+  m_RootOrder: 13
 --- !u!4 &400522
 Transform:
   m_ObjectHideFlags: 1
@@ -7537,7 +7291,7 @@ Transform:
   m_Children:
   - {fileID: 400176}
   m_Father: {fileID: 400550}
-  m_RootOrder: 13
+  m_RootOrder: 12
 --- !u!4 &400524
 Transform:
   m_ObjectHideFlags: 1
@@ -7550,7 +7304,7 @@ Transform:
   m_Children:
   - {fileID: 400178}
   m_Father: {fileID: 400550}
-  m_RootOrder: 12
+  m_RootOrder: 11
 --- !u!4 &400526
 Transform:
   m_ObjectHideFlags: 1
@@ -7563,7 +7317,7 @@ Transform:
   m_Children:
   - {fileID: 400180}
   m_Father: {fileID: 400550}
-  m_RootOrder: 11
+  m_RootOrder: 10
 --- !u!4 &400528
 Transform:
   m_ObjectHideFlags: 1
@@ -7576,7 +7330,7 @@ Transform:
   m_Children:
   - {fileID: 400182}
   m_Father: {fileID: 400550}
-  m_RootOrder: 10
+  m_RootOrder: 9
 --- !u!4 &400530
 Transform:
   m_ObjectHideFlags: 1
@@ -7589,7 +7343,7 @@ Transform:
   m_Children:
   - {fileID: 400184}
   m_Father: {fileID: 400550}
-  m_RootOrder: 9
+  m_RootOrder: 8
 --- !u!4 &400532
 Transform:
   m_ObjectHideFlags: 1
@@ -7602,7 +7356,7 @@ Transform:
   m_Children:
   - {fileID: 400186}
   m_Father: {fileID: 400550}
-  m_RootOrder: 8
+  m_RootOrder: 7
 --- !u!4 &400534
 Transform:
   m_ObjectHideFlags: 1
@@ -7615,7 +7369,7 @@ Transform:
   m_Children:
   - {fileID: 400188}
   m_Father: {fileID: 400550}
-  m_RootOrder: 7
+  m_RootOrder: 6
 --- !u!4 &400536
 Transform:
   m_ObjectHideFlags: 1
@@ -7628,7 +7382,7 @@ Transform:
   m_Children:
   - {fileID: 400190}
   m_Father: {fileID: 400550}
-  m_RootOrder: 6
+  m_RootOrder: 5
 --- !u!4 &400538
 Transform:
   m_ObjectHideFlags: 1
@@ -7641,7 +7395,7 @@ Transform:
   m_Children:
   - {fileID: 400192}
   m_Father: {fileID: 400550}
-  m_RootOrder: 5
+  m_RootOrder: 4
 --- !u!4 &400540
 Transform:
   m_ObjectHideFlags: 1
@@ -7654,7 +7408,7 @@ Transform:
   m_Children:
   - {fileID: 400194}
   m_Father: {fileID: 400550}
-  m_RootOrder: 4
+  m_RootOrder: 3
 --- !u!4 &400542
 Transform:
   m_ObjectHideFlags: 1
@@ -7666,7 +7420,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!4 &400544
 Transform:
   m_ObjectHideFlags: 1
@@ -7678,7 +7432,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!4 &400546
 Transform:
   m_ObjectHideFlags: 1
@@ -7690,19 +7444,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400550}
-  m_RootOrder: 1
---- !u!4 &400548
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100548}
-  m_LocalRotation: {x: 0, y: -0, z: 0, w: 1}
-  m_LocalPosition: {x: 1593.23486, y: -1.06327462, z: -.298485756}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 400198}
-  m_Father: {fileID: 400550}
   m_RootOrder: 0
 --- !u!4 &400550
 Transform:
@@ -7710,11 +7451,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100550}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: -4.37113883e-08}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 400548}
   - {fileID: 400546}
   - {fileID: 400544}
   - {fileID: 400542}
@@ -7843,15 +7583,10 @@ Transform:
   - {fileID: 400296}
   - {fileID: 400294}
   - {fileID: 400292}
-  - {fileID: 400290}
-  - {fileID: 400288}
-  - {fileID: 400286}
   - {fileID: 400284}
   - {fileID: 400282}
   - {fileID: 400280}
-  - {fileID: 400278}
   - {fileID: 400276}
-  - {fileID: 400274}
   - {fileID: 400272}
   - {fileID: 400270}
   - {fileID: 400268}
@@ -7862,7 +7597,6 @@ Transform:
   - {fileID: 400258}
   - {fileID: 400256}
   - {fileID: 400254}
-  - {fileID: 400252}
   - {fileID: 400250}
   - {fileID: 400248}
   - {fileID: 400246}
@@ -7943,7 +7677,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 45369565398a99f4bb1ad86af0b74cd3, type: 2}
+  - {fileID: 2100000, guid: 0418d78a730d1664cbe1d137c56ba3b2, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -8331,26 +8065,6 @@ Renderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!23 &2300044
-Renderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100252}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
-  m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
 --- !u!23 &2300046
 Renderer:
   m_ObjectHideFlags: 1
@@ -8431,26 +8145,6 @@ Renderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!23 &2300054
-Renderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100274}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
-  m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
 --- !u!23 &2300056
 Renderer:
   m_ObjectHideFlags: 1
@@ -8464,26 +8158,6 @@ Renderer:
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
   - {fileID: 2100000, guid: 45369565398a99f4bb1ad86af0b74cd3, type: 2}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
---- !u!23 &2300058
-Renderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100278}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
-  m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -8544,66 +8218,6 @@ Renderer:
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
   - {fileID: 2100000, guid: 1c10c73497080a447a60ec2cb31415c7, type: 2}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
---- !u!23 &2300066
-Renderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100286}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
-  m_Materials:
-  - {fileID: 2100000, guid: 45369565398a99f4bb1ad86af0b74cd3, type: 2}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
---- !u!23 &2300068
-Renderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100288}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
-  m_Materials:
-  - {fileID: 2100000, guid: 45369565398a99f4bb1ad86af0b74cd3, type: 2}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
---- !u!23 &2300070
-Renderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100290}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
-  m_Materials:
-  - {fileID: 2100000, guid: 45369565398a99f4bb1ad86af0b74cd3, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -8963,7 +8577,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 45369565398a99f4bb1ad86af0b74cd3, type: 2}
+  - {fileID: 2100000, guid: 0418d78a730d1664cbe1d137c56ba3b2, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -8983,7 +8597,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 45369565398a99f4bb1ad86af0b74cd3, type: 2}
+  - {fileID: 2100000, guid: 0418d78a730d1664cbe1d137c56ba3b2, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -9043,7 +8657,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 45369565398a99f4bb1ad86af0b74cd3, type: 2}
+  - {fileID: 2100000, guid: 0418d78a730d1664cbe1d137c56ba3b2, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -9143,7 +8757,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 45369565398a99f4bb1ad86af0b74cd3, type: 2}
+  - {fileID: 2100000, guid: 0418d78a730d1664cbe1d137c56ba3b2, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -9423,7 +9037,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 45369565398a99f4bb1ad86af0b74cd3, type: 2}
+  - {fileID: 2100000, guid: 0418d78a730d1664cbe1d137c56ba3b2, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -9443,7 +9057,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 45369565398a99f4bb1ad86af0b74cd3, type: 2}
+  - {fileID: 2100000, guid: 0418d78a730d1664cbe1d137c56ba3b2, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -9463,29 +9077,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 45369565398a99f4bb1ad86af0b74cd3, type: 2}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
---- !u!23 &2300158
-Renderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100548}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
-  m_Materials:
-  - {fileID: 2100000, guid: 45369565398a99f4bb1ad86af0b74cd3, type: 2}
-  - {fileID: 2100000, guid: 1c10c73497080a447a60ec2cb31415c7, type: 2}
-  - {fileID: 2100000, guid: cd2f667934375944c90a01ba56a7d8e0, type: 2}
+  - {fileID: 2100000, guid: 0418d78a730d1664cbe1d137c56ba3b2, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -9647,13 +9239,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100250}
   m_Mesh: {fileID: 4300104, guid: 287a1b7b5a2f681459dc9ffa5bf04e95, type: 3}
---- !u!33 &3300044
-MeshFilter:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100252}
-  m_Mesh: {fileID: 4300102, guid: 287a1b7b5a2f681459dc9ffa5bf04e95, type: 3}
 --- !u!33 &3300046
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -9682,13 +9267,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100268}
   m_Mesh: {fileID: 4300042, guid: 287a1b7b5a2f681459dc9ffa5bf04e95, type: 3}
---- !u!33 &3300054
-MeshFilter:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100274}
-  m_Mesh: {fileID: 4300040, guid: 287a1b7b5a2f681459dc9ffa5bf04e95, type: 3}
 --- !u!33 &3300056
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -9696,13 +9274,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100276}
   m_Mesh: {fileID: 4300038, guid: 287a1b7b5a2f681459dc9ffa5bf04e95, type: 3}
---- !u!33 &3300058
-MeshFilter:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100278}
-  m_Mesh: {fileID: 4300036, guid: 287a1b7b5a2f681459dc9ffa5bf04e95, type: 3}
 --- !u!33 &3300060
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -9724,27 +9295,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100284}
   m_Mesh: {fileID: 4300026, guid: 287a1b7b5a2f681459dc9ffa5bf04e95, type: 3}
---- !u!33 &3300066
-MeshFilter:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100286}
-  m_Mesh: {fileID: 4300024, guid: 287a1b7b5a2f681459dc9ffa5bf04e95, type: 3}
---- !u!33 &3300068
-MeshFilter:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100288}
-  m_Mesh: {fileID: 4300022, guid: 287a1b7b5a2f681459dc9ffa5bf04e95, type: 3}
---- !u!33 &3300070
-MeshFilter:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100290}
-  m_Mesh: {fileID: 4300020, guid: 287a1b7b5a2f681459dc9ffa5bf04e95, type: 3}
 --- !u!33 &3300072
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -10046,13 +9596,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100542}
   m_Mesh: {fileID: 4300000, guid: 287a1b7b5a2f681459dc9ffa5bf04e95, type: 3}
---- !u!33 &3300158
-MeshFilter:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100548}
-  m_Mesh: {fileID: 4300144, guid: 287a1b7b5a2f681459dc9ffa5bf04e95, type: 3}
 --- !u!54 &5400000
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -10103,18 +9646,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f02852d51b76a244866ecb0777d103f, type: 3}
+  m_Script: {fileID: 11500000, guid: e2dd0455f5758724c90b85aa0b875668, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   id_string: item_weapon
   name: Weapon of the Otti
   icon: {fileID: 21300000, guid: 687555fbc8f80fd4e8e9648b1965f257, type: 3}
   stackSize: 1
-  description: What a model.
+  description: A weapon. Discuss
   stackable: 0
   maxStackSize: 10
   weight: 0
   damage: 0
+  shotDelay: .200000003
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
